@@ -88,6 +88,7 @@ export class AuthServiceProvider {
         if(res.status = "success") {
           this.setToken(res.token);
           this.setAuthUser(res.user);
+          this.setCurrentSite(res.user.sites[0]);
           this.authenticated$.emit();
         }
       }, err => {
