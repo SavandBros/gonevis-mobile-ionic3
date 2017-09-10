@@ -1,68 +1,66 @@
 import { Component, ViewChild } from '@angular/core';
 import { Platform, Nav, Config } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { CardsPage } from '../pages/cards/cards';
-import { ContentPage } from '../pages/content/content';
 import { FirstRunPage } from '../pages/pages';
-import { ListMasterPage } from '../pages/list-master/list-master';
-import { LoginPage } from '../pages/login/login';
-import { MapPage } from '../pages/map/map';
-import { MenuPage } from '../pages/menu/menu';
-import { SearchPage } from '../pages/search/search';
-import { SettingsPage } from '../pages/settings/settings';
-import { SignupPage } from '../pages/signup/signup';
-import { TabsPage } from '../pages/tabs/tabs';
-import { TutorialPage } from '../pages/tutorial/tutorial';
-import { WelcomePage } from '../pages/welcome/welcome';
-
-import { Settings } from '../providers/providers';
-
+import { EntrancePage } from '../pages/entrance/entrance';
+import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { TranslateService } from '@ngx-translate/core'
+import { SignupPage } from "../pages/signup/signup";
+import { LoginPage } from "../pages/login/login";
+import { TutorialPage } from "../pages/tutorial/tutorial";
+import { EntriesPage } from "../pages/entries/entries";
+import { Account } from "../models/account";
 
 @Component({
-  template: `<ion-menu [content]="content">
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Pages</ion-title>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-content>
-      <ion-list>
-        <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-          {{p.title}}
-        </button>
-      </ion-list>
-    </ion-content>
-
-  </ion-menu>
-  <ion-nav #content [root]="rootPage"></ion-nav>`
+  templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage = FirstRunPage;
+  public rootPage: object;
+  authService: AuthServiceProvider;
+  account: Account;
+  storage;
 
   @ViewChild(Nav) nav: Nav;
 
-  pages: any[] = [
-    { title: 'Tutorial', component: TutorialPage },
-    { title: 'Welcome', component: WelcomePage },
-    { title: 'Tabs', component: TabsPage },
-    { title: 'Cards', component: CardsPage },
-    { title: 'Content', component: ContentPage },
-    { title: 'Login', component: LoginPage },
-    { title: 'Signup', component: SignupPage },
-    { title: 'Map', component: MapPage },
-    { title: 'Master Detail', component: ListMasterPage },
-    { title: 'Menu', component: MenuPage },
-    { title: 'Settings', component: SettingsPage },
-    { title: 'Search', component: SearchPage }
-  ]
+  // pages: any[] = [
+  //   { title: 'Tutorial', component: TutorialPage },
+  //   { title: 'Login', component: LoginPage },
+  //   { title: 'Signup', component: SignupPage },
+  // ]
 
-  constructor(private translate: TranslateService, private platform: Platform, settings: Settings, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen) {
+  constructor(private translate: TranslateService, storage: Storage, private platform: Platform, authService: AuthServiceProvider, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen) {
     this.initTranslate();
+    this.storage = storage;
+    this.platform.ready().then(() => {
+      if(authService.isAuth()) {
+        this.rootPage = EntriesPage;
+      } else {
+        this.rootPage = TutorialPage;
+      }
+    });
+    this.authService = authService;
+    // Events
+    this.authService.authenticated$.subscribe(() => this.onAuthenticate());
+    this.authService.signOut$.subscribe(() => this.onSignOut());
+    this.authService.currentSite$.subscribe(() => this.onCurrentSite());
+    this.account = this.authService.getAuthUser(true);
+  }
+
+  onAuthenticate() {
+    this.account = this.authService.getAuthUser(true);
+  }
+
+  onSignOut() {
+    this.authService.unAuth();
+    this.nav.setRoot(EntrancePage);
+  }
+
+  onCurrentSite() {
+    this.nav.setRoot(EntriesPage);
   }
 
   ionViewDidLoad() {

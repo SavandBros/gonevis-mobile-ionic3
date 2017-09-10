@@ -1,0 +1,50 @@
+<ion-menu [content]="content">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Dashboard</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <!-- Avatar -->
+    <ion-list>
+      <button ion-item *ngIf="authService.isAuth()">
+        <ion-avatar item-start>
+          <img src="{{ account.user.getAvatar('tiny') }}">
+        </ion-avatar>
+        <h2>{{ account.user.username }}</h2>
+      </button>
+    </ion-list>
+    <!-- Views -->
+    <ion-list no-lines>
+      <button menuClose ion-item>
+        <ion-icon name="add-circle" item-start></ion-icon> New Post
+      </button>
+      <button menuClose ion-item>
+        <ion-icon name="list-box" item-start></ion-icon> Entries
+      </button>
+      <button menuClose ion-item>
+        <ion-icon name="pricetags" item-start></ion-icon> Tags
+      </button>
+      <button menuClose ion-item>
+        <ion-icon name="text" item-start></ion-icon> Comments
+      </button>
+      <button menuClose ion-item><ion-icon name="settings" item-start></ion-icon> Settings</button>
+    </ion-list>
+    <!-- Sites -->
+    <ion-list no-lines *ngIf="authService.isAuth()">
+      <ion-list-header>Sites</ion-list-header>
+      <button ion-item menuClose *ngFor="let site of account.user.sites" (click)="authService.setCurrentSite(site)">
+        {{ site.title }}
+      </button>
+    </ion-list>
+    <ion-list>
+      <ion-list-header>Logout</ion-list-header>
+      <button menuClose ion-item (click)="authService.signOut()">
+        <ion-icon name="log-out" item-start></ion-icon> Logout
+      </button>
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+  <ion-nav #content [root]="rootPage"></ion-nav>

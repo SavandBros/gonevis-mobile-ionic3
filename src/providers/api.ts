@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Http, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
+import {JwtInterceptorProvider} from "./jwt-interceptor/jwt-interceptor";
 
 /**
  * Api is a generic REST Api handler. Set your API url first.
  */
 @Injectable()
 export class Api {
-  url: string = 'https://example.com/api/v1';
+  url: string = 'https://www.gonevis.com/api/v1';
 
-  constructor(public http: Http) {
-  }
+  constructor(public http: JwtInterceptorProvider) {}
 
   get(endpoint: string, params?: any, options?: RequestOptions) {
     if (!options) {

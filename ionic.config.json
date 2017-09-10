@@ -1,5 +1,6 @@
 {
-  "name": "gonevis-mobile",
-  "app_id": "",
-  "type": "ionic-angular"
+  "name": "gonevis",
+  "app_id": "c06eef92",
+  "type": "ionic-angular",
+  "integrations": {}
 }
