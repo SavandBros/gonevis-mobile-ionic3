@@ -1,20 +1,20 @@
-import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import {Injectable} from '@angular/core';
+import {Response} from '@angular/http';
 import 'rxjs/add/operator/map';
-import { Api } from "../api";
-import { AuthServiceProvider } from "../auth-service/auth-service";
+import {Api} from "../api";
+import {AuthServiceProvider} from "../auth-service/auth-service";
 import {Entry} from "../../models/entry";
 
 /*
-  Generated class for the EntryProvider provider.
+ Generated class for the EntryProvider provider.
 
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular DI.
-*/
+ See https://angular.io/docs/ts/latest/guide/dependency-injection.html
+ for more info on providers and Angular DI.
+ */
 @Injectable()
 export class EntryProvider {
 
-  constructor(public http: Http, public api: Api, public authService: AuthServiceProvider) {
+  constructor(public api: Api, public authService: AuthServiceProvider) {
     console.log('Hello EntryProvider Provider');
     console.log(this.authService.getCurrentSite().id);
   }
