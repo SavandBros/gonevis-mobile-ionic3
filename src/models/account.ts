@@ -5,12 +5,14 @@ import {Media} from "./media";
 class User {
   name: string;
   username: string;
+  id: string;
   media: Media;
   sites: Array<UserSite> = [];
 
-  constructor(name: string, username:string, media: Media, sites: Array<UserSite>) {
+  constructor(name: string, username:string, id: string, media: Media, sites: Array<UserSite>) {
     this.name = name;
     this.username = username;
+    this.id = id;
     this.media = media;
     this.sites = sites;
   }
@@ -67,6 +69,6 @@ export class Account {
     for (let siteData of data.sites) {
       sites.push(new UserSite(siteData['id'], siteData['role'], siteData['title'], siteData['url']));
     }
-    this.user = new User(data.name, data.username, media, sites);
+    this.user = new User(data.name, data.username, data.id, media, sites);
   }
 }
