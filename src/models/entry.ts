@@ -67,7 +67,12 @@ export class Entry {
     this.pending_comment_count = data.pending_comment_count;
     this.created = new Date(data.created);
 
-    this.media = new EntryMedia(new DolphinFile(data.media.cover_image));
+    let entryMedia = null;
+    if (data.media.cover_image) {
+      entryMedia = new DolphinFile(data.media.cover_image);
+    }
+    this.media = new EntryMedia(entryMedia);
+
     for (let tag of data.tags) {
       let tagMedia = null;
       if (tag.media.cover_image) {
