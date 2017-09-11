@@ -1,8 +1,8 @@
 {
   "name": "gonevis-mobile",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "author": "Savand Bros.",
+  "homepage": "https://www.gonevis.com/",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
@@ -45,7 +45,7 @@
     "@ionic/app-scripts": "2.1.4",
     "typescript": "2.3.4"
   },
-  "description": "An Ionic project",
+  "description": "GoNevis.com Mobile Application.",
   "cordova": {
     "plugins": {
       "cordova-plugin-console": {},
