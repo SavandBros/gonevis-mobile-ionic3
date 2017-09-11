@@ -39,8 +39,6 @@ export class Entry {
   media: EntryMedia;
   tags: Array<Tag> = [];
 
-  isDeleted: boolean = false;
-
   constructor(data: any) {
     this.id = data.id;
     this.title = data.title;
@@ -81,6 +79,4 @@ export class Entry {
       this.tags.push(new Tag(tag.id, tag.name, tag.slug, tag.description, tag.meta_description, tag.site, tag.tagged_items_count, tag.absolute_uri, tagMedia));
     }
   }
-
-
 }
