@@ -16,7 +16,7 @@
 
 <ion-content padding>
   <ion-card *ngFor="let entry of entries">
-    <img src="{{ entry.media.cover_image.thumbnail_256x256 }}" *ngIf="entry.media.cover_image">
+    <img src="{{ entry.media.cover_image.file }}" *ngIf="entry.media.cover_image">
     <ion-card-content>
       <ion-card-title>{{ entry.title }}</ion-card-title>
       <p>{{ entry.lead ? entry.lead : entry.excerpt }}</p>
