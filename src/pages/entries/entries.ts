@@ -1,8 +1,9 @@
 import {Component} from '@angular/core';
-import {IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {IonicPage, LoadingController, NavController, ModalController} from 'ionic-angular';
 import {EntryProvider} from "../../providers/entry/entry";
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 import {Entry} from "../../models/entry";
+import {CommentModalPage} from "../comment-modal/comment-modal";
 
 /**
  * Generated class for the EntriesPage page.
@@ -20,11 +21,12 @@ export class EntriesPage {
 
   entries: Array<Entry>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-              public authService: AuthServiceProvider, public entryService: EntryProvider,
-              public loadingCtrl: LoadingController) {
+  constructor(public authService: AuthServiceProvider,
+              public entryService: EntryProvider, public loadingCtrl: LoadingController,
+              public modalCtrl: ModalController) {
     let loader = this.loadingCtrl.create({content: "Please wait..."});
     loader.present();
+
     this.entryService.entries().subscribe((resp) => {
       this.entries = resp.results;
       loader.dismiss();
@@ -32,6 +34,11 @@ export class EntriesPage {
       loader.dismiss();
       console.log(err)
     });
+  }
+
+  presentCommentModal(entry: Entry) {
+    let commentModal = this.modalCtrl.create(CommentModalPage, { entry: entry });
+    commentModal.present();
   }
 }
 
