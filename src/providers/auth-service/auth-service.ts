@@ -6,24 +6,14 @@ import { Api } from '../api';
 import { Account } from '../../models/account';
 import 'rxjs/add/operator/map';
 
-/*
-  Generated class for the AuthServiceProvider provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular DI.
-*/
 @Injectable()
 export class AuthServiceProvider {
 
   public authenticated$: EventEmitter<null> = new EventEmitter();
   public signOut$: EventEmitter<null> = new EventEmitter();
   public currentSite$: EventEmitter<null> = new EventEmitter();
-  storage: Storage;
 
-  constructor(public http: Http, public api: Api, storage: Storage) {
-    this.storage = storage;
-    console.log('Hello AuthServiceProvider Provider');
-  }
+  constructor(public http: Http, public api: Api) {}
 
   getAuthUser(useInstance) {
     if(!this.isAuth()) {
