@@ -2,5 +2,7 @@
   "name": "gonevis",
   "app_id": "c06eef92",
   "type": "ionic-angular",
-  "integrations": {}
+  "integrations": {
+    "cordova": {}
+  }
 }
