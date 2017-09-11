@@ -28,6 +28,8 @@ import {AuthServiceProvider} from '../providers/auth-service/auth-service';
 import {DolphinProvider} from '../providers/dolphin/dolphin';
 import {EntryProvider} from '../providers/entry/entry';
 import {JwtInterceptorProvider} from '../providers/jwt-interceptor/jwt-interceptor';
+import { CommentProvider } from '../providers/comment/comment';
+import {CommentModalPage} from "../pages/comment-modal/comment-modal";
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -57,7 +59,8 @@ export function provideSettings(storage: Storage) {
     SignupPage,
     TutorialPage,
     EntrancePage,
-    EntriesPage
+    EntriesPage,
+    CommentModalPage
   ],
   imports: [
     BrowserModule,
@@ -79,7 +82,8 @@ export function provideSettings(storage: Storage) {
     SignupPage,
     TutorialPage,
     EntrancePage,
-    EntriesPage
+    EntriesPage,
+    CommentModalPage
   ],
   providers: [
     Api,
@@ -101,7 +105,8 @@ export function provideSettings(storage: Storage) {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,
     DolphinProvider,
-    EntryProvider
+    EntryProvider,
+    CommentProvider
   ]
 })
 export class AppModule {
