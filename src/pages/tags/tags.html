@@ -23,7 +23,7 @@
       <ion-thumbnail item-start>
         <img src="{{ tag.media.cover_image ? tag.media.cover_image.thumbnail_128x128 : '../../assets/img/avatar.png' }}">
       </ion-thumbnail>
-      <h2 class="text-primary">{{ tag.name }}</h2>
+      <h2>{{ tag.name }}</h2>
       <p>{{ tag.description }}</p>
       <button ion-button clear item-end (click)="editTag(tag)">Edit</button>
     </ion-item>
