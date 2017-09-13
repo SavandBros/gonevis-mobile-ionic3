@@ -17,19 +17,9 @@
     </ion-list>
     <!-- Views -->
     <ion-list no-lines>
-      <button menuClose ion-item>
-        <ion-icon name="add-circle" item-start></ion-icon> New Post
+      <button menuClose ion-item *ngFor="let page of pages" (click)="openPage(page)">
+        <ion-icon name="{{ page.icon }}" item-start></ion-icon> {{ page.title }}
       </button>
-      <button menuClose ion-item>
-        <ion-icon name="list-box" item-start></ion-icon> Entries
-      </button>
-      <button menuClose ion-item>
-        <ion-icon name="pricetags" item-start></ion-icon> Tags
-      </button>
-      <button menuClose ion-item>
-        <ion-icon name="text" item-start></ion-icon> Comments
-      </button>
-      <button menuClose ion-item><ion-icon name="settings" item-start></ion-icon> Settings</button>
     </ion-list>
     <!-- Sites -->
     <ion-list no-lines *ngIf="authService.isAuth()">
