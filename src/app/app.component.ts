@@ -5,15 +5,14 @@ import { Storage } from '@ionic/storage';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { FirstRunPage } from '../pages/pages';
 import { EntrancePage } from '../pages/entrance/entrance';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { TranslateService } from '@ngx-translate/core'
-import { SignupPage } from "../pages/signup/signup";
-import { LoginPage } from "../pages/login/login";
 import { TutorialPage } from "../pages/tutorial/tutorial";
 import { EntriesPage } from "../pages/entries/entries";
 import { Account } from "../models/account";
+import {TagsPage} from "../pages/tags/tags";
+import {DolphinsPage} from "../pages/dolphins/dolphins";
 
 @Component({
   templateUrl: 'app.html'
@@ -26,11 +25,11 @@ export class MyApp {
 
   @ViewChild(Nav) nav: Nav;
 
-  // pages: any[] = [
-  //   { title: 'Tutorial', component: TutorialPage },
-  //   { title: 'Login', component: LoginPage },
-  //   { title: 'Signup', component: SignupPage },
-  // ]
+  pages: any[] = [
+    { title: 'Entries', component: EntriesPage, icon: 'list-box' },
+    { title: 'Tags', component: TagsPage, icon: 'pricetags' },
+    { title: 'Dolphins', component: DolphinsPage, icon: 'images' },
+  ];
 
   constructor(private translate: TranslateService, storage: Storage, private platform: Platform, authService: AuthServiceProvider, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen) {
     this.initTranslate();
