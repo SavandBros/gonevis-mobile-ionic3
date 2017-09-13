@@ -1,4 +1,13 @@
 import {DolphinFile} from "./dolphin-file";
+
+class TagMedia {
+  cover_image: DolphinFile;
+
+  constructor(cover_image: DolphinFile) {
+    this.cover_image = cover_image;
+  }
+}
+
 export class Tag {
   id: string;
   name: string;
@@ -8,19 +17,22 @@ export class Tag {
   site: string;
   tagged_items_count: number;
   absolute_uri: string;
-  media: DolphinFile;
+  media: TagMedia;
 
-  constructor(id: string, name: string, slug: string, description: string,
-              meta_description: string, site: string, tagged_items_count: number,
-              absolute_uri: string, media: DolphinFile) {
-    this.id = id;
-    this.name = name;
-    this.slug = slug;
-    this.description = description;
-    this.meta_description = meta_description;
-    this.absolute_uri = absolute_uri;
-    this.site = site;
-    this.tagged_items_count = tagged_items_count;
-    this.media = media;
+  constructor(data: any) {
+    this.id = data.id;
+    this.name = data.name;
+    this.slug = data.slug;
+    this.description = data.description;
+    this.meta_description = data.meta_description;
+    this.absolute_uri = data.absolute_uri;
+    this.site = data.site;
+    this.tagged_items_count = data.tagged_items_count;
+
+    let tagMedia = null;
+    if (data.media.cover_image) {
+      tagMedia = new DolphinFile(data.media.cover_image);
+    }
+    this.media = new TagMedia(tagMedia);
   }
 }
