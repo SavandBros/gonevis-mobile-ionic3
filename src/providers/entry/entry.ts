@@ -14,10 +14,7 @@ import {Entry} from "../../models/entry";
 @Injectable()
 export class EntryProvider {
 
-  constructor(public api: Api, public authService: AuthServiceProvider) {
-    console.log('Hello EntryProvider Provider');
-    console.log(this.authService.getCurrentSite().id);
-  }
+  constructor(public api: Api, public authService: AuthServiceProvider) {}
 
   entries() {
     return this.api.get("website/entry/", {site: this.authService.getCurrentSite().id})
