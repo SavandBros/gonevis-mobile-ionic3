@@ -72,11 +72,7 @@ export class Entry {
     this.media = new EntryMedia(entryMedia);
 
     for (let tag of data.tags) {
-      let tagMedia = null;
-      if (tag.media.cover_image) {
-        tagMedia = new DolphinFile(tag.media.cover_image);
-      }
-      this.tags.push(new Tag(tag.id, tag.name, tag.slug, tag.description, tag.meta_description, tag.site, tag.tagged_items_count, tag.absolute_uri, tagMedia));
+      this.tags.push(new Tag(tag));
     }
   }
 }
