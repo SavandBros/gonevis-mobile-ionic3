@@ -4,6 +4,7 @@ import {EntryProvider} from "../../providers/entry/entry";
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 import {Entry} from "../../models/entry";
 import {CommentModalPage} from "../comment-modal/comment-modal";
+import {EntryPage} from "../entry/entry";
 
 /**
  * Generated class for the EntriesPage page.
@@ -21,7 +22,7 @@ export class EntriesPage {
 
   entries: Array<Entry>;
 
-  constructor(public authService: AuthServiceProvider,
+  constructor(public navCtrl: NavController, public authService: AuthServiceProvider,
               public entryService: EntryProvider, public loadingCtrl: LoadingController,
               public modalCtrl: ModalController) {
     let loader = this.loadingCtrl.create({content: "Please wait..."});
@@ -39,6 +40,10 @@ export class EntriesPage {
   presentCommentModal(entry: Entry) {
     let commentModal = this.modalCtrl.create(CommentModalPage, { entry: entry });
     commentModal.present();
+  }
+
+  editEntry(entry: Entry) {
+    this.navCtrl.push(EntryPage, { entry: entry });
   }
 }
 
