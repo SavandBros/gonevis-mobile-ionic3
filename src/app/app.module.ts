@@ -11,6 +11,10 @@ import {SignupPage} from '../pages/signup/signup';
 import {TutorialPage} from '../pages/tutorial/tutorial';
 import {EntrancePage} from '../pages/entrance/entrance';
 import {EntriesPage} from "../pages/entries/entries";
+import {EntryPage} from "../pages/entry/entry";
+import {TagsPage} from "../pages/tags/tags";
+import {TagPage} from "../pages/tag/tag";
+import {DolphinsPage} from "../pages/dolphins/dolphins";
 
 import {Api} from '../providers/api';
 import {Items} from '../mocks/providers/items';
@@ -28,8 +32,9 @@ import {AuthServiceProvider} from '../providers/auth-service/auth-service';
 import {DolphinProvider} from '../providers/dolphin/dolphin';
 import {EntryProvider} from '../providers/entry/entry';
 import {JwtInterceptorProvider} from '../providers/jwt-interceptor/jwt-interceptor';
-import { CommentProvider } from '../providers/comment/comment';
+import {CommentProvider} from '../providers/comment/comment';
 import {CommentModalPage} from "../pages/comment-modal/comment-modal";
+import {TagProvider} from '../providers/tag/tag';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -60,7 +65,11 @@ export function provideSettings(storage: Storage) {
     TutorialPage,
     EntrancePage,
     EntriesPage,
-    CommentModalPage
+    CommentModalPage,
+    EntryPage,
+    TagsPage,
+    TagPage,
+    DolphinsPage
   ],
   imports: [
     BrowserModule,
@@ -83,7 +92,11 @@ export function provideSettings(storage: Storage) {
     TutorialPage,
     EntrancePage,
     EntriesPage,
-    CommentModalPage
+    CommentModalPage,
+    EntryPage,
+    TagsPage,
+    TagPage,
+    DolphinsPage
   ],
   providers: [
     Api,
@@ -106,7 +119,8 @@ export function provideSettings(storage: Storage) {
     AuthServiceProvider,
     DolphinProvider,
     EntryProvider,
-    CommentProvider
+    CommentProvider,
+    TagProvider
   ]
 })
 export class AppModule {
