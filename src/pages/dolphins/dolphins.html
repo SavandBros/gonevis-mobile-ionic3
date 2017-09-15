@@ -15,31 +15,39 @@
 
 
 <ion-content padding>
-  <ion-card *ngFor="let dolphin of dolphins">
-    <img src="{{dolphin.file}}" *ngIf="dolphin.isImage">
-    <ion-card-content>
-      <ion-card-title text-center>{{ dolphin.metaData.name }}</ion-card-title>
-      <p>{{ dolphin.metaData.description }}</p>
-    </ion-card-content>
-    <ion-row>
-      <ion-col>
-        <button ion-button small clear icon-left>
-          <ion-icon name="disc"></ion-icon>
-          {{ dolphin.sizeHuman }}
-        </button>
-      </ion-col>
-      <ion-col text-center>
-        <button ion-button small clear icon-left>
-          <ion-icon name="image" *ngIf="dolphin.isImage"></ion-icon>
-          <ion-icon name="document" *ngIf="!dolphin.isImage"></ion-icon>
-          <div>{{ dolphin.getExt() }}</div>
-        </button>
-      </ion-col>
-      <ion-col text-right>
-        <button ion-button clear small icon-only>
-          <ion-icon name="create"></ion-icon>
-        </button>
-      </ion-col>
-    </ion-row>
-  </ion-card>
+  <span *ngFor="let dolphin of dolphins">
+    <ion-card [ngClass]="{'animated fadeIn': !dolphin.isDeleted}" *ngIf="!dolphin.isDeleted">
+      <img src="{{dolphin.file}}" *ngIf="dolphin.isImage">
+      <div class="is-file" *ngIf="!dolphin.isImage">
+        <ion-icon name="document"></ion-icon>
+      </div>
+      <ion-card-content>
+        <ion-card-title text-center>{{ dolphin.metaData.name }}</ion-card-title>
+        <p>{{ dolphin.metaData.description }}</p>
+      </ion-card-content>
+      <ion-row>
+        <ion-col>
+          <button ion-button small clear icon-left>
+            <ion-icon name="disc"></ion-icon>
+            {{ dolphin.sizeHuman }}
+          </button>
+        </ion-col>
+        <ion-col text-center>
+          <button ion-button small clear icon-left>
+            <ion-icon name="image" *ngIf="dolphin.isImage"></ion-icon>
+            <ion-icon name="document" *ngIf="!dolphin.isImage"></ion-icon>
+            <div>{{ dolphin.getExt() }}</div>
+          </button>
+        </ion-col>
+        <ion-col text-right>
+          <button ion-button clear small icon-only (click)="options(dolphin)">
+            <ion-icon name="settings"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+  </span>
+  <div text-center>
+    <button ion-button clear (click)="doInfinite()" *ngIf="next" [disabled]="paginating">More</button>
+  </div>
 </ion-content>
