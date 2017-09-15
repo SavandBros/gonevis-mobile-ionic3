@@ -15,6 +15,7 @@ import {EntryPage} from "../pages/entry/entry";
 import {TagsPage} from "../pages/tags/tags";
 import {TagPage} from "../pages/tag/tag";
 import {DolphinsPage} from "../pages/dolphins/dolphins";
+import {DolphinPage} from "../pages/dolphin/dolphin";
 
 import {Api} from '../providers/api';
 import {Items} from '../mocks/providers/items';
@@ -71,7 +72,8 @@ export function provideSettings(storage: Storage) {
     EntryPage,
     TagsPage,
     TagPage,
-    DolphinsPage
+    DolphinsPage,
+    DolphinPage
   ],
   imports: [
     BrowserModule,
@@ -98,7 +100,8 @@ export function provideSettings(storage: Storage) {
     EntryPage,
     TagsPage,
     TagPage,
-    DolphinsPage
+    DolphinsPage,
+    DolphinPage
   ],
   providers: [
     Api,
