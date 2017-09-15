@@ -4,7 +4,7 @@ import 'rxjs/add/operator/map';
 import {DolphinFile} from "../../models/dolphin-file";
 import {Api} from "../api";
 import {AuthServiceProvider} from "../auth-service/auth-service";
-
+import 'rxjs/add/operator/map';
 /*
  Generated class for the DolphinProvider provider.
 
@@ -15,7 +15,6 @@ import {AuthServiceProvider} from "../auth-service/auth-service";
 export class DolphinProvider {
 
   constructor(public api: Api, public authService: AuthServiceProvider) {
-    console.log('Hello DolphinProvider Provider');
   }
 
   dolphins() {
@@ -31,5 +30,9 @@ export class DolphinProvider {
         data.results = dolphins;
         return data;
       });
+  }
+
+  delete(id) {
+    return this.api.delete(`dolphin/file/${id}/`, {siteId: this.authService.getCurrentSite().id}).map(() => {});
   }
 }
