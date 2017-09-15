@@ -35,6 +35,8 @@ import {JwtInterceptorProvider} from '../providers/jwt-interceptor/jwt-intercept
 import {CommentProvider} from '../providers/comment/comment';
 import {CommentModalPage} from "../pages/comment-modal/comment-modal";
 import {TagProvider} from '../providers/tag/tag';
+import { AlertProvider } from '../providers/alert/alert';
+import { PaginationProvider } from '../providers/pagination/pagination';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -120,7 +122,9 @@ export function provideSettings(storage: Storage) {
     DolphinProvider,
     EntryProvider,
     CommentProvider,
-    TagProvider
+    TagProvider,
+    AlertProvider,
+    PaginationProvider
   ]
 })
 export class AppModule {
