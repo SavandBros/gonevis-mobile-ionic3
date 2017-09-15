@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import {
-  ActionSheetController, Alert, AlertController, IonicPage, LoadingController, NavController,
+  ActionSheetController, Alert, AlertController, IonicPage, LoadingController, ModalController, NavController,
   NavParams
 } from 'ionic-angular';
 import {DolphinProvider} from "../../providers/dolphin/dolphin";
 import {DolphinFile} from "../../models/dolphin-file";
 import {AlertProvider} from "../../providers/alert/alert";
 import {PaginationProvider} from "../../providers/pagination/pagination";
+import {DolphinPage} from "../dolphin/dolphin";
 
 /**
  * Generated class for the DolphinsPage page.
@@ -22,13 +23,14 @@ import {PaginationProvider} from "../../providers/pagination/pagination";
 })
 export class DolphinsPage {
 
-  dolphins: Array<DolphinFile> [];
+  dolphins: Array<DolphinFile> = [];
   paginating: boolean;
   next: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public loadingCtrl: LoadingController, public dolphinService: DolphinProvider,
-              public actionSheetCtrl: ActionSheetController, public alertService: AlertProvider, public paginationService: PaginationProvider) {
+              public actionSheetCtrl: ActionSheetController, public alertService: AlertProvider,
+              public paginationService: PaginationProvider, public modalCtrl: ModalController) {
 
     this.paginating = false;
     let loader = this.loadingCtrl.create({content: "Please wait..."});
@@ -52,6 +54,7 @@ export class DolphinsPage {
           text: 'Edit',
           icon: 'create',
           cssClass: 'action-icon-primary',
+          handler: () => this.editDolphin(dolphin)
         },
         {
           text: 'Delete',
@@ -75,6 +78,22 @@ export class DolphinsPage {
     });
 
     actionSheet.present();
+  }
+
+  editDolphin(dolphin: DolphinFile) {
+    let dolphinModal = this.modalCtrl.create(DolphinPage, { dolphin: dolphin });
+
+    // Set new data on modal dismiss.
+    dolphinModal.onDidDismiss(data => {
+      for (let dolphin of this.dolphins) {
+        if (data.id == dolphin.id) {
+          dolphin = data;
+        }
+      }
+    });
+
+    // Present modal
+    dolphinModal.present();
   }
 
   delete(dolphin) {
