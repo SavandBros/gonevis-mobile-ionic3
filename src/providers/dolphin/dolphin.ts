@@ -32,6 +32,17 @@ export class DolphinProvider {
       });
   }
 
+  update(id, dolphin) {
+    return this.api.put(`dolphin/file/${id}/`, dolphin, { siteId: this.authService.getCurrentSite().id })
+      .map((res: Response) => {
+        let data = res.json();
+        let dolphin: DolphinFile = new DolphinFile(data);
+
+        data = dolphin;
+        return data;
+      });
+  }
+
   delete(id) {
     return this.api.delete(`dolphin/file/${id}/`, {siteId: this.authService.getCurrentSite().id}).map(() => {});
   }
