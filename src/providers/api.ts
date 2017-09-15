@@ -8,7 +8,7 @@ import {JwtInterceptorProvider} from "./jwt-interceptor/jwt-interceptor";
  */
 @Injectable()
 export class Api {
-  url: string = 'https://www.gonevis.com/api/v1';
+  url: string = 'http://draft.gonevis.com/api/v1';
 
   constructor(public http: JwtInterceptorProvider) {}
 
@@ -67,11 +67,41 @@ export class Api {
     return this.http.put(this.url + '/' + endpoint, body, options);
   }
 
-  delete(endpoint: string, options?: RequestOptions) {
+  delete(endpoint: string, params?: any, options?: RequestOptions) {
+    if (!options) {
+      options = new RequestOptions();
+    }
+    // Support easy query params for GET requests
+    if (params) {
+      let p = new URLSearchParams();
+      for (let k in params) {
+        p.set(k, params[k]);
+      }
+      // Set the search field if we have params and don't already have
+      // a search field set in options.
+      options.search = !options.search && p || options.search;
+    }
     return this.http.delete(this.url + '/' + endpoint, options);
   }
 
   patch(endpoint: string, body: any, options?: RequestOptions) {
     return this.http.put(this.url + '/' + endpoint, body, options);
+  }
+
+  next(next: string, params?: any, options?: RequestOptions) {
+    if (!options) {
+      options = new RequestOptions();
+    }
+    // Support easy query params for GET requests
+    if (params) {
+      let p = new URLSearchParams();
+      for (let k in params) {
+        p.set(k, params[k]);
+      }
+      // Set the search field if we have params and don't already have
+      // a search field set in options.
+      options.search = !options.search && p || options.search;
+    }
+    return this.http.get(next, options);
   }
 }
