@@ -48,6 +48,6 @@
     </ion-card>
   </span>
   <div text-center>
-    <button ion-button clear (click)="doInfinite()" *ngIf="next" [disabled]="paginating">More</button>
+    <button ion-button clear (click)="loadMore()" *ngIf="next" [disabled]="paginating">More</button>
   </div>
 </ion-content>
