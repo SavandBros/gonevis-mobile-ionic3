@@ -1,0 +1,36 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Dolphin</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="dismiss(dolphin)" color="light"><ion-icon name="close"></ion-icon></button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list no-lines no-margin>
+    <ion-item *ngIf="dolphin.isImage">
+      <img src="{{ dolphin.file }}">
+    </ion-item>
+  </ion-list>
+  <form (ngSubmit)="update()">
+    <ion-item>
+      <ion-label floating>Name</ion-label>
+      <ion-input type="text" [(ngModel)]="dolphin.metaData.name" name="name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Description</ion-label>
+      <ion-input [(ngModel)]="dolphin.metaData.description" name="description"></ion-input>
+    </ion-item>
+    <ion-grid>
+      <ion-row margin-vertical>
+        <ion-col text-right>
+          <button ion-button type="submit" fixed outline>Update</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
