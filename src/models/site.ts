@@ -1,4 +1,3 @@
-import {DateTime} from "ionic-angular";
 import {DolphinFile} from "./dolphin-file";
 
 class SiteMedia {
@@ -16,10 +15,36 @@ export class Site {
   user: string;
   title: string;
   url: string;
-  absolute_url: string;
+  absoluteUri: string;
   description: string;
-  meta_description: string;
+  metaDescription: string;
   media: SiteMedia;
-  updated: DateTime;
-  created: DateTime;
+  updated: Date;
+  created: Date;
+
+  constructor (data: any) {
+    this.id = data.id;
+    this.user = data.user;
+    this.title = data.title;
+    this.url = data.url;
+    this.absoluteUri = data.absolute_uri;
+    this.description = data.description;
+    this.metaDescription = data.meta_description;
+
+    let siteCover = null;
+    let siteLogo = null;
+    if (data.media) {
+      if (data.media.cover_image) {
+        siteCover = new DolphinFile(data.media.cover_image);
+      }
+      if (data.media.logo) {
+        siteLogo = new DolphinFile(data.media.logo);
+      }
+    }
+
+    this.media = new SiteMedia(siteCover, siteLogo);
+
+    this.updated = new Date(data.updated);
+    this.created = new Date(data.created);
+  }
 }
