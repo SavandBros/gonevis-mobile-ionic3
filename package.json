@@ -29,6 +29,8 @@
     "@ngx-translate/core": "6.0.1",
     "@ngx-translate/http-loader": "0.0.3",
     "cordova-android": "^6.2.3",
+    "cordova-browser": "^4.1.0",
+    "cordova-plugin-add-swift-support": "^1.6.1",
     "cordova-plugin-console": "^1.0.5",
     "cordova-plugin-device": "^1.1.4",
     "cordova-plugin-splashscreen": "^4.0.3",
@@ -56,7 +58,8 @@
       "ionic-plugin-keyboard": {}
     },
     "platforms": [
-      "android"
+      "android",
+      "browser"
     ]
   }
 }
