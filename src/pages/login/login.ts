@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
-import { NavController, ToastController, LoadingController, MenuController } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {NavController, ToastController, LoadingController, MenuController} from 'ionic-angular';
 
-import { MainPage } from '../../pages/pages';
+import {MainPage} from '../../pages/pages';
 
-import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import {AuthServiceProvider} from '../../providers/auth-service/auth-service';
 
-import { TranslateService } from '@ngx-translate/core';
+import {TranslateService} from '@ngx-translate/core';
 
 class LoginCredential {
   username: string = '';
@@ -51,7 +51,7 @@ export class LoginPage {
       this.navCtrl.push(MainPage);
       loader.dismiss();
       let toast = this.toastCtrl.create({
-        message: 'Welcome back '+ this.account.username +'',
+        message: 'Welcome back ' + this.account.username + '',
         duration: 3000,
         position: 'bottom'
       });
