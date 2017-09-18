@@ -39,8 +39,7 @@ import {TagProvider} from '../providers/tag/tag';
 import {AlertProvider} from '../providers/alert/alert';
 import {PaginationProvider} from '../providers/pagination/pagination';
 import {SettingsPage} from "../pages/settings/settings";
-import { SiteProvider } from '../providers/site/site';
-import { BaseProvider } from '../providers/base/base';
+import {SiteProvider} from '../providers/site/site';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -133,8 +132,7 @@ export function provideSettings(storage: Storage) {
     TagProvider,
     AlertProvider,
     PaginationProvider,
-    SiteProvider,
-    BaseProvider
+    SiteProvider
   ]
 })
 export class AppModule {
