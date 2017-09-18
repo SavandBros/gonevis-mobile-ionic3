@@ -36,8 +36,11 @@ import {JwtInterceptorProvider} from '../providers/jwt-interceptor/jwt-intercept
 import {CommentProvider} from '../providers/comment/comment';
 import {CommentModalPage} from "../pages/comment-modal/comment-modal";
 import {TagProvider} from '../providers/tag/tag';
-import { AlertProvider } from '../providers/alert/alert';
-import { PaginationProvider } from '../providers/pagination/pagination';
+import {AlertProvider} from '../providers/alert/alert';
+import {PaginationProvider} from '../providers/pagination/pagination';
+import {SettingsPage} from "../pages/settings/settings";
+import { SiteProvider } from '../providers/site/site';
+import { BaseProvider } from '../providers/base/base';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -73,7 +76,8 @@ export function provideSettings(storage: Storage) {
     TagsPage,
     TagPage,
     DolphinsPage,
-    DolphinPage
+    DolphinPage,
+    SettingsPage
   ],
   imports: [
     BrowserModule,
@@ -101,7 +105,8 @@ export function provideSettings(storage: Storage) {
     TagsPage,
     TagPage,
     DolphinsPage,
-    DolphinPage
+    DolphinPage,
+    SettingsPage
   ],
   providers: [
     Api,
@@ -127,7 +132,9 @@ export function provideSettings(storage: Storage) {
     CommentProvider,
     TagProvider,
     AlertProvider,
-    PaginationProvider
+    PaginationProvider,
+    SiteProvider,
+    BaseProvider
   ]
 })
 export class AppModule {
