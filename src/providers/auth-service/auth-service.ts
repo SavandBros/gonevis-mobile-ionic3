@@ -1,6 +1,5 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import { Http } from '@angular/http';
-import { Storage } from '@ionic/storage';
 
 import { Api } from '../api';
 import { Account } from '../../models/account';
