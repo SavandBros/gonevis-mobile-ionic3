@@ -1,18 +1,19 @@
-import { Component, ViewChild } from '@angular/core';
-import { Platform, Nav, Config } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
+import {Component, ViewChild} from '@angular/core';
+import {Platform, Nav, Config} from 'ionic-angular';
+import {Storage} from '@ionic/storage';
 
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import {StatusBar} from '@ionic-native/status-bar';
+import {SplashScreen} from '@ionic-native/splash-screen';
 
-import { EntrancePage } from '../pages/entrance/entrance';
-import { AuthServiceProvider } from '../providers/auth-service/auth-service';
-import { TranslateService } from '@ngx-translate/core'
-import { TutorialPage } from "../pages/tutorial/tutorial";
-import { EntriesPage } from "../pages/entries/entries";
-import { Account } from "../models/account";
+import {EntrancePage} from '../pages/entrance/entrance';
+import {AuthServiceProvider} from '../providers/auth-service/auth-service';
+import {TranslateService} from '@ngx-translate/core'
+import {TutorialPage} from "../pages/tutorial/tutorial";
+import {EntriesPage} from "../pages/entries/entries";
+import {Account} from "../models/account";
 import {TagsPage} from "../pages/tags/tags";
 import {DolphinsPage} from "../pages/dolphins/dolphins";
+import {SettingsPage} from "../pages/settings/settings";
 
 @Component({
   templateUrl: 'app.html'
@@ -26,16 +27,17 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   pages: any[] = [
-    { title: 'Entries', component: EntriesPage, icon: 'list-box' },
-    { title: 'Tags', component: TagsPage, icon: 'pricetags' },
-    { title: 'Dolphins', component: DolphinsPage, icon: 'images' },
+    {title: 'Entries', component: EntriesPage, icon: 'list-box'},
+    {title: 'Tags', component: TagsPage, icon: 'pricetags'},
+    {title: 'Files', component: DolphinsPage, icon: 'images'},
+    {title: 'Settings', component: SettingsPage, icon: 'settings'}
   ];
 
   constructor(private translate: TranslateService, storage: Storage, private platform: Platform, authService: AuthServiceProvider, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen) {
     this.initTranslate();
     this.storage = storage;
     this.platform.ready().then(() => {
-      if(authService.isAuth()) {
+      if (authService.isAuth()) {
         this.rootPage = EntriesPage;
       } else {
         this.rootPage = TutorialPage;
