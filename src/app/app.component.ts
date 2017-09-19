@@ -27,7 +27,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   pages: any[] = [
-    {title: 'Posts', component: EntriesPage, icon: 'list-box'},
+    {title: 'Posts', component: EntriesPage, icon: 'paper'},
     {title: 'Tags', component: TagsPage, icon: 'pricetags'},
     {title: 'Files', component: DolphinsPage, icon: 'images'},
     {title: 'Settings', component: SettingsPage, icon: 'settings'}
