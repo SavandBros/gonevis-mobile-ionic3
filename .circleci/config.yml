@@ -1,0 +1,28 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/gonevis-mobile
+    docker:
+      - image: circleci/node:4.8.2
+    steps:
+      - checkout
+      - run:
+          name: update-npm
+          command: 'sudo npm install -g npm@latest'
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: install-npm-wee
+          command: |
+            npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: test
+          command: |
+            npm run test-coverage-ci
+      - run:
+          name: code-coverage
+          command: bash <(curl -s https://codecov.io/bash) -t 778b3bba-cff1-467a-a3f9-d21278cda4c8
