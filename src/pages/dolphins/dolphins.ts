@@ -27,12 +27,14 @@ export class DolphinsPage {
   paginating: boolean;
   next: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-              public loadingCtrl: LoadingController, public dolphinService: DolphinProvider,
-              public actionSheetCtrl: ActionSheetController, public alertService: AlertProvider,
-              public paginationService: PaginationProvider, public modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController,
+              public dolphinService: DolphinProvider, public actionSheetCtrl: ActionSheetController,
+              public alertService: AlertProvider, public paginationService: PaginationProvider,
+              public modalCtrl: ModalController) {
 
     this.paginating = false;
+    this.dolphinService.dolphinUpdate$.subscribe((data) => this.onDolphinUpdate(data));
+
     let loader = this.loadingCtrl.create({content: "Please wait..."});
     loader.present();
 
@@ -65,10 +67,10 @@ export class DolphinsPage {
 
             this.alertService.createAlert(
               'Are you sure?',
-              'Do you wish to delete this file?',
+              'Remove this file permanently',
               [
                 {text: 'Cancel', role: 'cancel'},
-                {text: 'Yes', handler: () => this.delete(dolphin)}
+                {text: 'Delete', handler: () => this.delete(dolphin)}
               ]);
 
             return false;
@@ -83,17 +85,16 @@ export class DolphinsPage {
   editDolphin(dolphin: DolphinFile) {
     let dolphinModal = this.modalCtrl.create(DolphinPage, { dolphin: dolphin });
 
-    // Set new data on modal dismiss.
-    dolphinModal.onDidDismiss(data => {
-      for (let dolphin of this.dolphins) {
-        if (data.id == dolphin.id) {
-          dolphin = data;
-        }
-      }
-    });
-
     // Present modal
     dolphinModal.present();
+  }
+
+  onDolphinUpdate(data) {
+    this.dolphins.forEach((dolphin, index) => {
+      if (dolphin.id == data.id) {
+        this.dolphins[index] = data;
+      }
+    });
   }
 
   delete(dolphin) {
