@@ -8,7 +8,7 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {MyApp} from './app.component';
 import {
   AuthServiceProviderMock,
-  PlatformMock,
+  PlatformMock, SiteProviderMock,
   SplashScreenMock,
   StatusBarMock,
   StorageMock,
@@ -16,6 +16,7 @@ import {
 } from '../../test-config/mocks-ionic';
 import {TranslateService} from "@ngx-translate/core";
 import {AuthServiceProvider} from "../providers/auth-service/auth-service";
+import {SiteProvider} from "../providers/site/site";
 
 describe('MyApp Component', () => {
   let fixture;
@@ -34,6 +35,7 @@ describe('MyApp Component', () => {
         {provide: TranslateService, useClass: TranslateServiceMock},
         {provide: Storage, useClass: StorageMock},
         {provide: AuthServiceProvider, useClass: AuthServiceProviderMock},
+        {provide: SiteProvider, useClass: SiteProviderMock}
       ]
     })
   }));

@@ -33,7 +33,7 @@ export class MyApp {
     {title: 'Settings', component: SettingsPage, icon: 'settings'}
   ];
 
-  constructor(private translate: TranslateService, private platform: Platform,
+  constructor(public translate: TranslateService, private platform: Platform,
               authService: AuthServiceProvider, private config: Config, private statusBar: StatusBar,
               private splashScreen: SplashScreen, public siteService: SiteProvider) {
     this.initTranslate();

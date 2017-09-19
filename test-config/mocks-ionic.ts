@@ -152,4 +152,13 @@ export class AuthServiceProviderMock {
   isAuth(): boolean {
     return false;
   }
+
+  getCurrentSite(): any {
+    return {'site': 'currentSite'}
+  }
+
+}
+
+export class SiteProviderMock {
+  public siteUpdated$: EventEmitter<Account> = new EventEmitter();
 }
