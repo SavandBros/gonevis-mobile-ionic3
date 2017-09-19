@@ -26,4 +26,4 @@ jobs:
             npm run test-coverage-ci
       - run:
           name: code-coverage
-          command: bash <(curl -s https://codecov.io/bash) -t 778b3bba-cff1-467a-a3f9-d21278cda4c8
+          command: bash <(curl -s https://codecov.io/bash)
