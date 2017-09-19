@@ -10,7 +10,7 @@ jobs:
           name: update-npm
           command: |
             sudo npm install -g npm@latest
-            sudo npm install -gionic@latest cordova
+            sudo npm install -g ionic@latest cordova
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
