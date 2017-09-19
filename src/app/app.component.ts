@@ -33,7 +33,7 @@ export class MyApp {
     {title: 'Settings', component: SettingsPage, icon: 'settings'}
   ];
 
-  constructor(private translate: TranslateService, storage: Storage, private platform: Platform, authService: AuthServiceProvider, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen) {
+  constructor(public translate: TranslateService, storage: Storage, private platform: Platform, authService: AuthServiceProvider, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen) {
     this.initTranslate();
     this.storage = storage;
     this.platform.ready().then(() => {
@@ -51,20 +51,20 @@ export class MyApp {
     this.account = this.authService.getAuthUser(true);
   }
 
-  onAuthenticate() {
+  onAuthenticate(): void {
     this.account = this.authService.getAuthUser(true);
   }
 
-  onSignOut() {
+  onSignOut(): void {
     this.authService.unAuth();
     this.nav.setRoot(EntrancePage);
   }
 
-  onCurrentSite() {
+  onCurrentSite(): void {
     this.nav.setRoot(EntriesPage);
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad(): void {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -73,7 +73,7 @@ export class MyApp {
     });
   }
 
-  initTranslate() {
+  initTranslate(): void {
     // Set the default language for translation strings, and the current language.
     this.translate.setDefaultLang('en');
 
@@ -88,7 +88,7 @@ export class MyApp {
     });
   }
 
-  openPage(page) {
+  openPage(page): void {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
