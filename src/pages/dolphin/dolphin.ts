@@ -21,8 +21,7 @@ export class DolphinPage {
   updating: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public viewCtrl: ViewController, public dolphinService: DolphinProvider,
-              public toastCtrl: ToastController) {
+              public viewCtrl: ViewController, public dolphinService: DolphinProvider) {
   }
 
   update() {
@@ -38,14 +37,7 @@ export class DolphinPage {
       this.updating = false;
 
       this.dolphin = resp;
-
-      let toast = this.toastCtrl.create({
-        message: 'File successfully updated',
-        duration: 3000,
-        position: 'bottom'
-      });
-
-      toast.present();
+      this.dismiss();
     }, (err) => {
       this.updating = false;
       console.log(err);
