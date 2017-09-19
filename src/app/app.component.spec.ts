@@ -1,3 +1,4 @@
+import {} from 'jasmine';
 import {async, TestBed} from '@angular/core/testing';
 import {IonicModule, Platform} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
@@ -8,7 +9,8 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {MyApp} from './app.component';
 import {
   AuthServiceProviderMock,
-  PlatformMock, SiteProviderMock,
+  PlatformMock,
+  SiteProviderMock,
   SplashScreenMock,
   StatusBarMock,
   StorageMock,
