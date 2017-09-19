@@ -6,13 +6,51 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
     <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>
-    <ion-title>Settings</ion-title>
+    <ion-title>{{ site.title }}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
+  <ion-fab top right edge>
+    <button ion-fab mini type="submit" form="siteForm" color="light"><ion-icon name="checkmark"></ion-icon></button>
+  </ion-fab>
+  <div class="cover" text-center [style.background-image]="coverImage" *ngIf="site.media.coverImage"></div>
+  <form (ngSubmit)="updateSite()" margin-top id="siteForm">
+    <!-- Inputs -->
+    <ion-item>
+      <ion-label floating>Title</ion-label>
+      <ion-input type="text" [(ngModel)]="site.title" name="title"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Description</ion-label>
+      <ion-input [(ngModel)]="site.description" name="description"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Meta Description</ion-label>
+      <ion-input [(ngModel)]="site.metaDescription" name="metaDescription"></ion-input>
+    </ion-item>
+    <!-- Checkboxes -->
+    <ion-item margin-top no-lines>
+      <ion-label>Let visitors to comment on my site</ion-label>
+      <ion-checkbox [(ngModel)]="site.commenting" name="commenting"></ion-checkbox>
+    </ion-item>
+    <ion-item no-lines>
+      <ion-label>Let visitors to vote on my site</ion-label>
+      <ion-checkbox [(ngModel)]="site.voting" name="voting"></ion-checkbox>
+    </ion-item>
+    <ion-grid>
+      <ion-row margin-vertical>
+        <ion-col>
+          <button ion-button block type="button" outline>Upload Cover Image</button>
+        </ion-col>
+        <ion-col>
+          <button ion-button block type="button" outline>Upload logo</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
 </ion-content>
