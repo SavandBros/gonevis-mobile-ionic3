@@ -1,4 +1,7 @@
-# The Ionic Super Starter 🎮
+# GoNevis Mobile
+
+[![codecov](https://codecov.io/gh/SavandBros/gonevis-mobile/branch/master/graph/badge.svg)](https://codecov.io/gh/SavandBros/gonevis-mobile)
+
 
 _Note: the Ionic Super Starter requires Ionic CLI 3._
 
