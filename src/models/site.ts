@@ -11,23 +11,21 @@ class SiteMedia {
 }
 
 export class Site {
-  id: string;
-  user: string;
   title: string;
   url: string;
   absoluteUri: string;
+  commenting: boolean;
+  voting: boolean;
   description: string;
   metaDescription: string;
   media: SiteMedia;
-  updated: Date;
-  created: Date;
 
   constructor (data: any) {
-    this.id = data.id;
-    this.user = data.user;
     this.title = data.title;
     this.url = data.url;
     this.absoluteUri = data.absolute_uri;
+    this.commenting = data.commenting;
+    this.voting = data.voting;
     this.description = data.description;
     this.metaDescription = data.meta_description;
 
@@ -44,7 +42,5 @@ export class Site {
 
     this.media = new SiteMedia(siteCover, siteLogo);
 
-    this.updated = new Date(data.updated);
-    this.created = new Date(data.created);
   }
 }
