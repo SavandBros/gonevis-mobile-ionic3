@@ -14,6 +14,8 @@ export class AuthServiceProvider {
 
   constructor(public http: Http, public api: Api) {}
 
+  // If useInstance is true, user data should be an Account model
+  // Else return a normal user object
   getAuthUser(useInstance: boolean): Account | any {
     if(!this.isAuth()) {
       return false;
