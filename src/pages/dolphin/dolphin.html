@@ -1,9 +1,15 @@
 <ion-header>
 
   <ion-navbar color="primary">
+    <ion-buttons left padding-left>
+      <button ion-button icon-only color="white" (click)="dismiss()"><ion-icon name="close"></ion-icon></button>
+    </ion-buttons>
     <ion-title>Dolphin</ion-title>
-    <ion-buttons end>
-      <button ion-button (click)="dismiss(dolphin)" color="light"><ion-icon name="close"></ion-icon></button>
+    <ion-buttons end padding-right>
+      <button ion-button icon-only color="white" type="submit" form="tagForm" [disabled]="updating">
+        <ion-icon name="checkmark" *ngIf="!updating"></ion-icon>
+        <ion-spinner *ngIf="updating" color="light"></ion-spinner>
+      </button>
     </ion-buttons>
   </ion-navbar>
 
@@ -16,7 +22,7 @@
       <img src="{{ dolphin.file }}">
     </ion-item>
   </ion-list>
-  <form (ngSubmit)="update()">
+  <form (ngSubmit)="update()" id="tagForm">
     <ion-item>
       <ion-label floating>Name</ion-label>
       <ion-input type="text" [(ngModel)]="dolphin.metaData.name" name="name"></ion-input>
@@ -25,12 +31,5 @@
       <ion-label floating>Description</ion-label>
       <ion-input [(ngModel)]="dolphin.metaData.description" name="description"></ion-input>
     </ion-item>
-    <ion-grid>
-      <ion-row margin-vertical>
-        <ion-col text-right>
-          <button ion-button type="submit" fixed outline>Update</button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
   </form>
 </ion-content>
