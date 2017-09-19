@@ -132,7 +132,7 @@ export function provideSettings(storage: Storage) {
     TagProvider,
     AlertProvider,
     PaginationProvider,
-    SiteProvider,
+    SiteProvider
   ]
 })
 export class AppModule {
