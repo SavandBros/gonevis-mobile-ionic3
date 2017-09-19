@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/gonevis-mobile
     docker:
-      - image: circleci/node:8.1.4
+      - image: circleci/node:7
     steps:
       - checkout
       - run:
