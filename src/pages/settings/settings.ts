@@ -4,6 +4,7 @@ import {Site} from "../../models/site";
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 import {SiteProvider} from "../../providers/site/site";
 import {DomSanitizer, SafeStyle} from "@angular/platform-browser";
+import {EntriesPage} from "../entries/entries";
 
 @IonicPage()
 @Component({
@@ -16,9 +17,12 @@ export class SettingsPage {
   coverImage: SafeStyle;
   updating: boolean;
 
-  constructor(public navCtrl: NavController, public siteService: SiteProvider, public sanitizer: DomSanitizer,
-              public loadingCtrl: LoadingController, public authService: AuthServiceProvider, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public siteService: SiteProvider,
+              public sanitizer: DomSanitizer, public authService: AuthServiceProvider, public loadingCtrl: LoadingController,) {
+    this.get();
+  }
 
+  get() {
     let loader = this.loadingCtrl.create({content: "Please wait..."});
     loader.present();
 
@@ -49,12 +53,7 @@ export class SettingsPage {
     this.siteService.updateSite(payload).subscribe((resp) => {
       this.updating = false;
       this.site = resp;
-      let toast = this.toastCtrl.create({
-        message: 'Site updated',
-        duration: 3000,
-        position: 'bottom'
-      });
-      toast.present();
+      this.navCtrl.setRoot(EntriesPage);
     }, (err) => {
       this.updating = false;
       console.log(err);
