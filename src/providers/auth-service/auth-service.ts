@@ -14,7 +14,7 @@ export class AuthServiceProvider {
 
   constructor(public http: Http, public api: Api) {}
 
-  getAuthUser(useInstance) {
+  getAuthUser(useInstance: boolean): Account | any {
     if(!this.isAuth()) {
       return false;
     }
@@ -29,17 +29,17 @@ export class AuthServiceProvider {
     return userData;
   }
 
-  unAuth() {
+  unAuth(): void {
     localStorage.removeItem("JWT");
     localStorage.removeItem("user");
   }
 
-  setToken(token: string) {
+  setToken(token: string): void {
     localStorage.setItem("JWT", token);
   }
 
 
-  getToken() {
+  getToken(): string {
     return localStorage.getItem("JWT");
   }
 
@@ -54,17 +54,17 @@ export class AuthServiceProvider {
     }
   }
 
-  setAuthUser(userData) {
+  setAuthUser(userData): Account {
     localStorage.setItem("user", JSON.stringify(userData));
     return this.getAuthUser(true);
   }
 
-  setCurrentSite(siteData) {
+  setCurrentSite(siteData): void {
     localStorage.setItem("site", JSON.stringify(siteData));
     this.currentSite$.emit();
   }
 
-  getCurrentSite() {
+  getCurrentSite(): any {
     return JSON.parse(localStorage.getItem("site"));
   }
 
@@ -87,7 +87,7 @@ export class AuthServiceProvider {
     return seq;
   }
 
-  signOut() {
+  signOut(): void {
     this.unAuth();
     this.signOut$.emit();
   }
