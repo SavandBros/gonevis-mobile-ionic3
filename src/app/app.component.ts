@@ -1,6 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
 import {Platform, Nav, Config} from 'ionic-angular';
-import {Storage} from '@ionic/storage';
 
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
@@ -14,6 +13,7 @@ import {Account} from "../models/account";
 import {TagsPage} from "../pages/tags/tags";
 import {DolphinsPage} from "../pages/dolphins/dolphins";
 import {SettingsPage} from "../pages/settings/settings";
+import {SiteProvider} from "../providers/site/site";
 
 @Component({
   templateUrl: 'app.html'
@@ -22,20 +22,21 @@ export class MyApp {
   public rootPage: object;
   authService: AuthServiceProvider;
   account: Account;
-  storage;
+  currentSite: any;
 
   @ViewChild(Nav) nav: Nav;
 
   pages: any[] = [
-    {title: 'Entries', component: EntriesPage, icon: 'list-box'},
+    {title: 'Posts', component: EntriesPage, icon: 'list-box'},
     {title: 'Tags', component: TagsPage, icon: 'pricetags'},
     {title: 'Files', component: DolphinsPage, icon: 'images'},
     {title: 'Settings', component: SettingsPage, icon: 'settings'}
   ];
 
-  constructor(private translate: TranslateService, storage: Storage, private platform: Platform, authService: AuthServiceProvider, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen) {
+  constructor(private translate: TranslateService, private platform: Platform,
+              authService: AuthServiceProvider, private config: Config, private statusBar: StatusBar,
+              private splashScreen: SplashScreen, public siteService: SiteProvider) {
     this.initTranslate();
-    this.storage = storage;
     this.platform.ready().then(() => {
       if (authService.isAuth()) {
         this.rootPage = EntriesPage;
@@ -44,11 +45,13 @@ export class MyApp {
       }
     });
     this.authService = authService;
+    this.account = this.authService.getAuthUser(true);
+    this.currentSite = this.authService.getCurrentSite();
     // Events
     this.authService.authenticated$.subscribe(() => this.onAuthenticate());
     this.authService.signOut$.subscribe(() => this.onSignOut());
     this.authService.currentSite$.subscribe(() => this.onCurrentSite());
-    this.account = this.authService.getAuthUser(true);
+    this.siteService.siteUpdated$.subscribe((data) => this.siteUpdated(data))
   }
 
   onAuthenticate() {
@@ -62,6 +65,14 @@ export class MyApp {
 
   onCurrentSite() {
     this.nav.setRoot(EntriesPage);
+  }
+
+  siteUpdated(data) {
+    for (let site of this.account.user.sites) {
+      if (site.id == this.currentSite.id) {
+        site.title = data.title;
+      }
+    }
   }
 
   ionViewDidLoad() {
