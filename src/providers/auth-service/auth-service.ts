@@ -14,7 +14,8 @@ export class AuthServiceProvider {
 
   constructor(public http: Http, public api: Api) {}
 
-  getAuthUser(useInstance) {
+  // TODO: (Arsalan) What the hell is useInstance ?
+  getAuthUser(useInstance): boolean | any {
     if(!this.isAuth()) {
       return false;
     }
