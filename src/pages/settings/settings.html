@@ -7,17 +7,20 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>
+    <button ion-button menuToggle color="white"><ion-icon name="menu"></ion-icon></button>
     <ion-title>{{ site.title }}</ion-title>
+    <ion-buttons end padding-right>
+      <button ion-button icon-only color="white" type="submit" form="siteForm" [disabled]="updating">
+        <ion-icon name="checkmark" *ngIf="!updating"></ion-icon>
+        <ion-spinner *ngIf="updating" color="light"></ion-spinner>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
-  <ion-fab top right edge>
-    <button ion-fab mini type="submit" form="siteForm" color="light"><ion-icon name="checkmark"></ion-icon></button>
-  </ion-fab>
   <div class="cover" text-center [style.background-image]="coverImage" *ngIf="site.media.coverImage"></div>
   <form (ngSubmit)="updateSite()" margin-top id="siteForm">
     <!-- Inputs -->
@@ -35,12 +38,12 @@
     </ion-item>
     <!-- Checkboxes -->
     <ion-item margin-top no-lines>
-      <ion-label>Let visitors to comment on my site</ion-label>
-      <ion-checkbox [(ngModel)]="site.commenting" name="commenting"></ion-checkbox>
+      <ion-label>Allow commenting on my site</ion-label>
+      <ion-toggle [(ngModel)]="site.commenting" name="commenting"></ion-toggle>
     </ion-item>
     <ion-item no-lines>
-      <ion-label>Let visitors to vote on my site</ion-label>
-      <ion-checkbox [(ngModel)]="site.voting" name="voting"></ion-checkbox>
+      <ion-label>Allow voting on my site</ion-label>
+      <ion-toggle [(ngModel)]="site.voting" name="voting"></ion-toggle>
     </ion-item>
     <ion-grid>
       <ion-row margin-vertical>
