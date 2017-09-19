@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, EventEmitter} from '@angular/core';
 import {Response} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {DolphinFile} from "../../models/dolphin-file";
@@ -13,6 +13,8 @@ import 'rxjs/add/operator/map';
  */
 @Injectable()
 export class DolphinProvider {
+
+  public dolphinUpdate$: EventEmitter<DolphinFile> = new EventEmitter();
 
   constructor(public api: Api, public authService: AuthServiceProvider) {
   }
@@ -36,9 +38,9 @@ export class DolphinProvider {
     return this.api.put(`dolphin/file/${id}/`, dolphin, { siteId: this.authService.getCurrentSite().id })
       .map((res: Response) => {
         let data = res.json();
-        let dolphin: DolphinFile = new DolphinFile(data);
 
-        data = dolphin;
+        data = new DolphinFile(data);
+        this.dolphinUpdate$.emit(data);
         return data;
       });
   }
