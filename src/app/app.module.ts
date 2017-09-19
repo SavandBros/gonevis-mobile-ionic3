@@ -1,8 +1,8 @@
-import {NgModule, ErrorHandler} from '@angular/core';
+import {ErrorHandler, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {HttpModule, Http, RequestOptions, XHRBackend} from '@angular/http';
-import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
-import {Storage, IonicStorageModule} from '@ionic/storage';
+import {Http, HttpModule, RequestOptions, XHRBackend} from '@angular/http';
+import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
+import {IonicStorageModule, Storage} from '@ionic/storage';
 
 import {MyApp} from './app.component';
 
@@ -27,7 +27,7 @@ import {GoogleMaps} from '@ionic-native/google-maps';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
 
-import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {AuthServiceProvider} from '../providers/auth-service/auth-service';
 import {DolphinProvider} from '../providers/dolphin/dolphin';
@@ -132,7 +132,7 @@ export function provideSettings(storage: Storage) {
     TagProvider,
     AlertProvider,
     PaginationProvider,
-    SiteProvider
+    SiteProvider,
   ]
 })
 export class AppModule {

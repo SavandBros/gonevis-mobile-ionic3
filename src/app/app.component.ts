@@ -54,16 +54,16 @@ export class MyApp {
     this.siteService.siteUpdated$.subscribe((data) => this.siteUpdated(data))
   }
 
-  onAuthenticate() {
+  onAuthenticate(): void {
     this.account = this.authService.getAuthUser(true);
   }
 
-  onSignOut() {
+  onSignOut(): void {
     this.authService.unAuth();
     this.nav.setRoot(EntrancePage);
   }
 
-  onCurrentSite() {
+  onCurrentSite(): void {
     this.nav.setRoot(EntriesPage);
   }
 
@@ -75,7 +75,7 @@ export class MyApp {
     }
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad(): void {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -84,7 +84,7 @@ export class MyApp {
     });
   }
 
-  initTranslate() {
+  initTranslate(): void {
     // Set the default language for translation strings, and the current language.
     this.translate.setDefaultLang('en');
 
@@ -99,7 +99,7 @@ export class MyApp {
     });
   }
 
-  openPage(page) {
+  openPage(page): void {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
