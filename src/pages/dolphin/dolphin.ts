@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {IonicPage, LoadingController, NavController, NavParams, ToastController, ViewController} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ToastController, ViewController} from 'ionic-angular';
 import {DolphinFile} from "../../models/dolphin-file";
 import {DolphinProvider} from "../../providers/dolphin/dolphin";
 
@@ -17,15 +17,16 @@ import {DolphinProvider} from "../../providers/dolphin/dolphin";
 })
 export class DolphinPage {
 
-  dolphin: DolphinFile;
+  dolphin = <DolphinFile> JSON.parse(JSON.stringify(this.navParams.get("dolphin")));
+  updating: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public viewCtrl: ViewController, public loadingCtrl: LoadingController,
-              public dolphinService: DolphinProvider, public toastCtrl: ToastController) {
-    this.dolphin = this.navParams.get("dolphin");
+              public viewCtrl: ViewController, public dolphinService: DolphinProvider,
+              public toastCtrl: ToastController) {
   }
 
   update() {
+    this.updating = true;
     let payload = {
       meta_data: {
         name: this.dolphin.metaData.name,
@@ -33,12 +34,10 @@ export class DolphinPage {
       }
     };
 
-    let loader = this.loadingCtrl.create({content: "Updating..."});
-    loader.present();
-
     this.dolphinService.update(this.dolphin.id, payload).subscribe((resp) => {
+      this.updating = false;
+
       this.dolphin = resp;
-      loader.dismiss();
 
       let toast = this.toastCtrl.create({
         message: 'File successfully updated',
@@ -48,12 +47,12 @@ export class DolphinPage {
 
       toast.present();
     }, (err) => {
-      loader.dismiss();
+      this.updating = false;
       console.log(err);
     });
   }
 
-  dismiss(dolphin) {
-    this.viewCtrl.dismiss(dolphin);
+  dismiss() {
+    this.viewCtrl.dismiss();
   }
 }
