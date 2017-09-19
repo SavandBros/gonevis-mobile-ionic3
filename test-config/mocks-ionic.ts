@@ -1,5 +1,8 @@
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
+import {Observable} from "rxjs/Observable";
+import {Observer} from "rxjs/Observer";
+import {EventEmitter} from "@angular/core";
 
 
 export class PlatformMock {
@@ -113,4 +116,40 @@ export class NavMock {
 
 export class DeepLinkerMock {
 
+}
+
+export class TranslateServiceMock {
+  defaultLang: string;
+
+  setDefaultLang(lang: string): void {
+    this.defaultLang = lang;
+  }
+
+  getBrowserLang(): string {
+    return 'EN'
+  }
+
+  use(lang: string): Observable<any> {
+    return Observable.create((observer: Observer<any>) => {});
+  }
+
+  get(key: string | Array<string>, interpolateParams?: Object): Observable<string | any> {
+    return Observable.create((observer: Observer<string>) => {});
+  }
+}
+
+export class StorageMock {}
+
+export class AuthServiceProviderMock {
+  public authenticated$: EventEmitter<null> = new EventEmitter();
+  public signOut$: EventEmitter<null> = new EventEmitter();
+  public currentSite$: EventEmitter<null> = new EventEmitter();
+
+  getAuthUser(useInstance): boolean | any {
+    return {'name': 'Alireza'}
+  }
+
+  isAuth(): boolean {
+    return false;
+  }
 }
