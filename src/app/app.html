@@ -12,7 +12,8 @@
         <ion-avatar item-start>
           <img src="{{ account.user.getAvatar('tiny') }}">
         </ion-avatar>
-        <h2>{{ account.user.username }}</h2>
+        <h2>{{ this.account.user.getFullName() }}</h2>
+        <ion-note><small>{{ account.user.email }}</small></ion-note>
       </button>
     </ion-list>
     <!-- Views -->
