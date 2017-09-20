@@ -9,8 +9,14 @@
 
 
 <ion-content padding>
+  <!-- Pull To Refresh -->
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Loading -->
   <div text-center class="page-loader">
-    <ion-spinner *ngIf="loading"></ion-spinner>
+    <ion-spinner *ngIf="loading" name="dots"></ion-spinner>
   </div>
   <ion-card *ngFor="let entry of entries" class="animated fadeIn">
     <img src="{{ entry.media.cover_image.file }}" *ngIf="entry.media.cover_image">
