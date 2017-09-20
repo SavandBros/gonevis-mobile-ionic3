@@ -18,10 +18,17 @@ import {TagPage} from "../tag/tag";
 })
 export class TagsPage {
 
-  tags: Array<Tag> = [];
+  tags: Array<Tag>;
 
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController,
               public tagService: TagProvider, public modalCtrl: ModalController) {
+    this.get();
+
+    this.tagService.updated$.subscribe((tag) => this.onUpdate(tag));
+    this.tagService.created$.subscribe((tag) => this.onCreate(tag));
+  }
+
+  get() {
     let loader = this.loadingCtrl.create({content: "Please wait..."});
     loader.present();
 
@@ -32,8 +39,6 @@ export class TagsPage {
       console.log(err);
       loader.dismiss();
     });
-    this.tagService.updated$.subscribe((tag) => this.onUpdate(tag));
-    this.tagService.created$.subscribe((tag) => this.onCreate(tag));
   }
 
   editTag(tag: Tag) {
@@ -46,13 +51,12 @@ export class TagsPage {
     tagModal.present();
   }
 
-  onUpdate(tag: Tag) {
-    for (let mainTag of this.tags) {
-      if (mainTag.id == tag.id) {
-        mainTag = tag;
-        console.log(mainTag);
+  onUpdate(data: Tag) {
+    this.tags.forEach((tag, index) => {
+      if (tag.id == data.id) {
+        this.tags[index] = data;
       }
-    }
+    });
   }
 
   onCreate(tag: Tag) {
