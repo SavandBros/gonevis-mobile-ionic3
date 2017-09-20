@@ -23,6 +23,18 @@
   color: #f53d3d;
 }
 
+.page-loader ion-spinner.spinner {
+  position: absolute;
+  margin: auto;
+  top: 0 ;left: 0;bottom: 0;right: 0;
+}
+
+.img-circle {
+  border-radius: 50%;
+}
+
+// Animations
+
 .animated {
   animation-duration: 1s;
   animation-fill-mode: both;
@@ -40,8 +52,4 @@
 
 .fadeIn {
   animation-name: fadeIn;
-}
-
-.img-circle {
-  border-radius: 50%;
 }
