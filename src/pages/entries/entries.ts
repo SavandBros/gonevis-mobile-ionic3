@@ -28,7 +28,7 @@ export class EntriesPage {
     this.get();
   }
 
-  doRefresh(refresher): void {
+  reloadPage(refresher): void {
     this.get(refresher);
   }
 
