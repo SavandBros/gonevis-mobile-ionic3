@@ -25,6 +25,10 @@ export class EntriesPage {
   constructor(public navCtrl: NavController, public authService: AuthServiceProvider,
               public entryService: EntryProvider, public loadingCtrl: LoadingController,
               public modalCtrl: ModalController) {
+    this.get();
+  }
+
+  get() {
     let loader = this.loadingCtrl.create({content: "Please wait..."});
     loader.present();
 
@@ -37,12 +41,12 @@ export class EntriesPage {
     });
   }
 
-  presentCommentModal(entry: Entry) {
+  presentCommentModal(entry: Entry): void{
     let commentModal = this.modalCtrl.create(CommentModalPage, { entry: entry });
     commentModal.present();
   }
 
-  editEntry(entry: Entry) {
+  editEntry(entry: Entry): void {
     this.navCtrl.push(EntryPage, { entry: entry });
   }
 }
