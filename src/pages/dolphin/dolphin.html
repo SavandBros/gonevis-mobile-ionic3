@@ -6,7 +6,7 @@
     </ion-buttons>
     <ion-title>{{ dolphin.metaData.name }}</ion-title>
     <ion-buttons end padding-right>
-      <button ion-button icon-only color="white" type="submit" form="tagForm" [disabled]="updating">
+      <button ion-button icon-only color="white" type="submit" form="dolphinForm" [disabled]="updating">
         <ion-icon name="checkmark" *ngIf="!updating"></ion-icon>
         <ion-spinner *ngIf="updating" color="light"></ion-spinner>
       </button>
@@ -22,7 +22,7 @@
       <img src="{{ dolphin.file }}">
     </ion-item>
   </ion-list>
-  <form (ngSubmit)="update()" id="tagForm">
+  <form (ngSubmit)="update()" id="dolphinForm">
     <ion-item>
       <ion-label floating>Name</ion-label>
       <ion-input type="text" [(ngModel)]="dolphin.metaData.name" name="name"></ion-input>
