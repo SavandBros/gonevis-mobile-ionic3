@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, LoadingController, NavController, ModalController} from 'ionic-angular';
+import {IonicPage, NavController, ModalController, Refresher} from 'ionic-angular';
 import {EntryProvider} from "../../providers/entry/entry";
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 import {Entry} from "../../models/entry";
@@ -24,17 +24,24 @@ export class EntriesPage {
   loading: boolean;
 
   constructor(public navCtrl: NavController, public authService: AuthServiceProvider,
-              public entryService: EntryProvider, public loadingCtrl: LoadingController,
-              public modalCtrl: ModalController) {
+              public entryService: EntryProvider, public modalCtrl: ModalController) {
     this.get();
   }
 
-  get() {
+  doRefresh(refresher): void {
+    this.get(refresher);
+  }
+
+  get(refresh?: Refresher) {
     this.loading = true;
 
     this.entryService.entries().subscribe((resp) => {
       this.entries = resp.results;
       this.loading = false;
+
+      if (refresh) {
+        refresh.complete();
+      }
     }, (err) => {
       this.loading = false;
       console.log(err)
@@ -50,4 +57,3 @@ export class EntriesPage {
     this.navCtrl.push(EntryPage, { entry: entry });
   }
 }
-
