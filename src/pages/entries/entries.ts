@@ -21,6 +21,7 @@ import {EntryPage} from "../entry/entry";
 export class EntriesPage {
 
   entries: Array<Entry>;
+  loading: boolean;
 
   constructor(public navCtrl: NavController, public authService: AuthServiceProvider,
               public entryService: EntryProvider, public loadingCtrl: LoadingController,
@@ -29,14 +30,13 @@ export class EntriesPage {
   }
 
   get() {
-    let loader = this.loadingCtrl.create({content: "Please wait..."});
-    loader.present();
+    this.loading = true;
 
     this.entryService.entries().subscribe((resp) => {
       this.entries = resp.results;
-      loader.dismiss();
+      this.loading = false;
     }, (err) => {
-      loader.dismiss();
+      this.loading = false;
       console.log(err)
     });
   }
