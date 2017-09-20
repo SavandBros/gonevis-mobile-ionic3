@@ -3,8 +3,10 @@ import {Entry} from "../../models/entry";
 import {BaseModelProvider} from "../base-model/base-model";
 import {JwtInterceptorProvider} from "../jwt-interceptor/jwt-interceptor";
 import {AuthServiceProvider} from "../auth-service/auth-service";
+import {Injectable} from "@angular/core";
 
 
+@Injectable()
 export class EntryProvider extends BaseModelProvider<Entry> {
   constructor(public http: JwtInterceptorProvider, public authService: AuthServiceProvider){
     super(http, authService);
