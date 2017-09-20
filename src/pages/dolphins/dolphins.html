@@ -15,6 +15,17 @@
 
 
 <ion-content padding>
+  <!-- Pull To Refresh -->
+  <ion-refresher (ionRefresh)="reloadPage($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Loading -->
+  <div text-center class="page-loader">
+    <ion-spinner *ngIf="loading" name="dots"></ion-spinner>
+  </div>
+
+  <!-- Dolphins -->
   <span *ngFor="let dolphin of dolphins">
     <ion-card [ngClass]="{'animated fadeIn': !dolphin.isDeleted}" *ngIf="!dolphin.isDeleted">
       <img src="{{dolphin.file}}" *ngIf="dolphin.isImage">
@@ -47,6 +58,8 @@
       </ion-row>
     </ion-card>
   </span>
+
+  <!-- Load More -->
   <div text-center>
     <button ion-button clear (click)="loadMore()" *ngIf="next" [disabled]="paginating">More</button>
   </div>
