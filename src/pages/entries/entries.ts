@@ -28,7 +28,8 @@ export class EntriesPage {
     let loader = this.loadingCtrl.create({content: "Please wait..."});
     loader.present();
 
-    this.entryService.entries().subscribe((resp) => {
+    this.entryService.all().subscribe((resp) => {
+      console.log(resp);
       this.entries = resp.results;
       loader.dismiss();
     }, (err) => {
