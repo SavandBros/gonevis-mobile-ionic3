@@ -7,9 +7,15 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>Tag</ion-title>
-    <ion-buttons end>
-      <button ion-button (click)="closeModal()" color="light"><ion-icon name="close"></ion-icon></button>
+    <ion-buttons left padding-left>
+      <button ion-button icon-only color="white" (click)="dismiss()"><ion-icon name="close"></ion-icon></button>
+    </ion-buttons>
+    <ion-title>{{ editing ? tag.name : 'Create' }}</ion-title>
+    <ion-buttons end padding-right>
+      <button ion-button icon-only color="white" type="submit" form="tagForm" [disabled]="updating">
+        <ion-icon name="checkmark" *ngIf="!updating"></ion-icon>
+        <ion-spinner *ngIf="updating" color="light"></ion-spinner>
+      </button>
     </ion-buttons>
   </ion-navbar>
 
@@ -17,7 +23,7 @@
 
 
 <ion-content padding>
-  <form (ngSubmit)="save()">
+  <form (ngSubmit)="save()" id="tagForm">
     <ion-item>
       <ion-label floating>Name</ion-label>
       <ion-input type="text" [(ngModel)]="tag.name" name="name"></ion-input>
@@ -28,11 +34,8 @@
     </ion-item>
     <ion-grid>
       <ion-row margin-vertical>
-        <ion-col text-left>
-          <button ion-button icon-only type="button"><ion-icon name="image"></ion-icon></button>
-        </ion-col>
-        <ion-col text-right>
-          <button ion-button type="submit" outline>{{ submitText }}</button>
+        <ion-col col-12 text-center>
+          <button ion-button outline type="button">Upload image</button>
         </ion-col>
       </ion-row>
     </ion-grid>
