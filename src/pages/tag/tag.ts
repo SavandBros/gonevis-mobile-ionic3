@@ -29,8 +29,7 @@ export class TagPage {
   submitText: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
-              public authService: AuthServiceProvider, public tagService: TagProvider, public loadingCtrl: LoadingController,
-              public toastCtrl: ToastController) {
+              public authService: AuthServiceProvider, public tagService: TagProvider, public toastCtrl: ToastController) {
     this.tag = new TagForm(this.authService.getCurrentSite().id);
     this.editing = false;
     this.submitText = "create";
