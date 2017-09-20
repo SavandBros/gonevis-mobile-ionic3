@@ -21,8 +21,14 @@
 
 
 <ion-content>
+  <!-- Loading -->
+  <div text-center class="page-loader">
+    <ion-spinner *ngIf="loading" name="dots"></ion-spinner>
+  </div>
+
+  <!-- Site Settings -->
   <div class="cover" text-center [style.background-image]="coverImage" *ngIf="site.media.coverImage"></div>
-  <form (ngSubmit)="updateSite()" margin-top id="siteForm">
+  <form (ngSubmit)="updateSite()" margin-top id="siteForm" *ngIf="!loading">
     <!-- Inputs -->
     <ion-item>
       <ion-label floating>Title</ion-label>
