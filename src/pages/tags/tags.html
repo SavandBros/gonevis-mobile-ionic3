@@ -15,6 +15,17 @@
 
 
 <ion-content padding>
+  <!-- Pull To Refresh -->
+  <ion-refresher (ionRefresh)="reloadPage($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Loading -->
+  <div text-center class="page-loader">
+    <ion-spinner *ngIf="loading" name="dots"></ion-spinner>
+  </div>
+
+  <!-- Dolphins -->
   <ion-fab top right edge>
     <button ion-fab mini (click)="createTag()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
