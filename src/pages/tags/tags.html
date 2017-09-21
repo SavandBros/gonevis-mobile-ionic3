@@ -29,7 +29,7 @@
   <ion-fab top right edge>
     <button ion-fab mini (click)="createTag()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
-  <ion-list>
+  <ion-list class="animated blur">
     <ion-item *ngFor="let tag of tags">
       <ion-thumbnail item-start>
         <img src="{{ tag.media.cover_image ? tag.media.cover_image.thumbnail_128x128 : '../../assets/img/avatar.png' }}">
