@@ -1,0 +1,61 @@
+<!--
+  Generated template for the DolphinSelectionPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Select an image</ion-title>
+    <ion-buttons left padding-left>
+      <button ion-button icon-only color="white" (click)="dismiss()"><ion-icon name="close"></ion-icon></button>
+    </ion-buttons>
+  </ion-navbar>
+
+  <ion-toolbar no-border-top color="primary">
+    <ion-segment [(ngModel)]="files" color="white">
+      <ion-segment-button value="files">Files</ion-segment-button>
+      <ion-segment-button value="upload">Upload</ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content padding [ngSwitch]="files">
+  <!-- Dolphins -->
+  <span *ngSwitchCase="'files'">
+    <!-- Loading -->
+    <div text-center class="page-loader">
+      <ion-spinner *ngIf="loading"></ion-spinner>
+    </div>
+
+    <!-- Dolphins -->
+    <ion-grid>
+      <ion-row>
+        <ion-col col-6 *ngFor="let dolphin of dolphins" [ngClass]="{'dis-none': !dolphin.isImage }">
+          <ion-card class="animated blur">
+            <img src="{{ dolphin.thumbnail_256x256 }}">
+            <div class="card-img-container">
+              <button ion-button small clear>{{ dolphin.sizeHuman }}</button>
+              <button ion-button clear small float-right (click)="select(dolphin)"><ion-icon name="checkmark"></ion-icon></button>
+            </div>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <!-- Load More -->
+    <div text-center>
+      <button ion-button clear (click)="loadMore()" *ngIf="next" [disabled]="paginating">
+        <ion-spinner *ngIf="paginating"></ion-spinner><span *ngIf="!paginating">More</span>
+      </button>
+    </div>
+  </span>
+
+  <!-- Upload -->
+  <div *ngSwitchCase="'upload'" text-center>
+    <button ion-button>Upload from library</button>
+  </div>
+</ion-content>
