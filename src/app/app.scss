@@ -36,20 +36,20 @@
 // Animations
 
 .animated {
-  animation-duration: 1s;
+  animation-duration: 1.4s;
   animation-fill-mode: both;
 }
 
-@keyframes fadeIn {
+@keyframes blur {
   from {
-    opacity: 0;
+    filter: blur(1px);
   }
 
   to {
-    opacity: 1;
+    filter: blur(0);
   }
 }
 
-.fadeIn {
-  animation-name: fadeIn;
+.blur {
+  animation-name: blur;
 }
