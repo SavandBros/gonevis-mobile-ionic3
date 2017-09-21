@@ -20,7 +20,7 @@
   </div>
 
   <!-- Entries -->
-  <ion-card *ngFor="let entry of entries" class="animated fadeIn">
+  <ion-card *ngFor="let entry of entries" class="animated blur">
     <img src="{{ entry.media.cover_image.file }}" *ngIf="entry.media.cover_image">
     <ion-card-content>
       <ion-card-title>{{ entry.title }}</ion-card-title>

@@ -27,7 +27,7 @@
 
   <!-- Dolphins -->
   <span *ngFor="let dolphin of dolphins">
-    <ion-card [ngClass]="{'animated fadeIn': !dolphin.isDeleted}" *ngIf="!dolphin.isDeleted">
+    <ion-card [ngClass]="{'animated blur': !dolphin.isDeleted}" *ngIf="!dolphin.isDeleted">
       <img src="{{dolphin.file}}" *ngIf="dolphin.isImage">
       <div class="is-file" *ngIf="!dolphin.isImage">
         <ion-icon name="document"></ion-icon>
