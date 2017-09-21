@@ -36,7 +36,7 @@
     </ion-item>
     <ion-item>
       <ion-label floating>Description</ion-label>
-      <ion-input [(ngModel)]="site.description" name="description"></ion-input>
+      <ion-input [(ngModel)]="site.description" name="description"></ion-input>EventEmitter
     </ion-item>
     <ion-item>
       <ion-label floating>Meta Description</ion-label>
@@ -54,10 +54,10 @@
     <ion-grid>
       <ion-row margin-vertical>
         <ion-col>
-          <button ion-button block type="button" outline>Upload Cover Image</button>
+          <button ion-button block type="button" (click)="selectImage('coverImage')" outline>Upload Cover Image</button>
         </ion-col>
         <ion-col>
-          <button ion-button block type="button" outline>Upload logo</button>
+          <button ion-button block type="button" outline (click)="selectImage('logo')">Upload logo</button>
         </ion-col>
       </ion-row>
     </ion-grid>
