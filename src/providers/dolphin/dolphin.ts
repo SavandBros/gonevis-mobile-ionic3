@@ -19,8 +19,8 @@ export class DolphinProvider {
   constructor(public api: Api, public authService: AuthServiceProvider) {
   }
 
-  dolphins() {
-    return this.api.get("dolphin/file/", {site: this.authService.getCurrentSite().id})
+  dolphins(limit?: number) {
+    return this.api.get("dolphin/file/", {site: this.authService.getCurrentSite().id, limit: limit})
       .map((res: Response) => {
         let data = res.json();
         let dolphins: Array<DolphinFile> = [];
