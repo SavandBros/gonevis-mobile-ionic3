@@ -36,13 +36,13 @@
 // Animations
 
 .animated {
-  animation-duration: 1.4s;
+  animation-duration: 0.5s;
   animation-fill-mode: both;
 }
 
 @keyframes blur {
   from {
-    filter: blur(1px);
+    filter: blur(2px);
   }
 
   to {
