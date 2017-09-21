@@ -1,10 +1,11 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController} from 'ionic-angular';
+import {Events, IonicPage, ModalController, NavController} from 'ionic-angular';
 import {Site} from "../../models/site";
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 import {SiteProvider} from "../../providers/site/site";
 import {DomSanitizer, SafeStyle} from "@angular/platform-browser";
 import {EntriesPage} from "../entries/entries";
+import {DolphinSelectionPage} from "../dolphin-selection/dolphin-selection";
 
 @IonicPage()
 @Component({
@@ -14,13 +15,16 @@ import {EntriesPage} from "../entries/entries";
 export class SettingsPage {
 
   site: Site = new Site({});
+  editing: string;
   coverImage: SafeStyle;
   updating: boolean;
   loading: boolean;
 
   constructor(public navCtrl: NavController, public siteService: SiteProvider,
-              public sanitizer: DomSanitizer, public authService: AuthServiceProvider) {
+              public sanitizer: DomSanitizer, public authService: AuthServiceProvider,
+              public modalCtrl: ModalController, public events: Events) {
     this.get();
+    events.subscribe('image:selected', (dolphin, source) => this.onImageSelect(dolphin, source));
   }
 
   get(): void {
@@ -47,7 +51,9 @@ export class SettingsPage {
       description: this.site.description,
       meta_description: this.site.metaDescription,
       commenting: this.site.commenting,
-      voting: this.site.voting
+      voting: this.site.voting,
+      cover_image: this.site.media.coverImage.id,
+      logo: this.site.media.logo.id
     };
 
     this.siteService.updateSite(payload).subscribe((resp) => {
@@ -58,5 +64,14 @@ export class SettingsPage {
       this.updating = false;
       console.log(err);
     })
+  }
+
+  selectImage(image): void{
+    let selectionModal = this.modalCtrl.create(DolphinSelectionPage, {source: image});
+    selectionModal.present();
+  }
+
+  onImageSelect(dolphin, source) {
+    this.site.media[source] = dolphin;
   }
 }
