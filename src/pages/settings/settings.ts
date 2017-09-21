@@ -4,7 +4,6 @@ import {Site} from "../../models/site";
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 import {SiteProvider} from "../../providers/site/site";
 import {DomSanitizer, SafeStyle} from "@angular/platform-browser";
-import {EntriesPage} from "../entries/entries";
 import {DolphinSelectionPage} from "../dolphin-selection/dolphin-selection";
 
 @IonicPage()
@@ -59,7 +58,7 @@ export class SettingsPage {
     this.siteService.updateSite(payload).subscribe((resp) => {
       this.updating = false;
       this.site = resp;
-      this.navCtrl.setRoot(EntriesPage);
+      this.coverImage = this.sanitizer.bypassSecurityTrustStyle(`url(${this.site.media.coverImage.file})`);
     }, (err) => {
       this.updating = false;
       console.log(err);
