@@ -41,7 +41,7 @@ export class DolphinsPage {
   get(refresh?: Refresher): void {
     this.loading = true;
 
-    this.dolphinService.dolphins().subscribe((resp) => {
+    this.dolphinService.dolphins(5).subscribe((resp) => {
       this.loading = false;
       this.dolphins = resp.results;
       this.next = resp.next;
