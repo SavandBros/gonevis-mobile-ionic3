@@ -6,7 +6,7 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 
 import {EntrancePage} from '../pages/entrance/entrance';
 import {AuthServiceProvider} from '../providers/auth-service/auth-service';
-import {TranslateService} from '@ngx-translate/core'
+import {LangChangeEvent, TranslateService} from '@ngx-translate/core'
 import {TutorialPage} from "../pages/tutorial/tutorial";
 import {EntriesPage} from "../pages/entries/entries";
 import {Account} from "../models/account";
@@ -51,7 +51,17 @@ export class MyApp {
     this.authService.authenticated$.subscribe(() => this.onAuthenticate());
     this.authService.signOut$.subscribe(() => this.onSignOut());
     this.authService.currentSite$.subscribe(() => this.onCurrentSite());
-    this.siteService.siteUpdated$.subscribe((data) => this.siteUpdated(data))
+    this.siteService.siteUpdated$.subscribe((data) => this.siteUpdated(data));
+
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      if (event.lang == 'ar' || event.lang == 'fa') {
+        this.platform.setDir('rtl', true);
+        this.platform.setDir('ltr', false);
+      } else {
+        this.platform.setDir('ltr', true);
+        this.platform.setDir('rtl', false);
+      }
+    });
   }
 
   onAuthenticate(): void {
