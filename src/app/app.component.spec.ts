@@ -1,4 +1,4 @@
-import {} from 'jasmine';
+///<reference path="../../node_modules/@types/jasmine/index.d.ts"/>
 import {async, TestBed} from '@angular/core/testing';
 import {IonicModule, Platform} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
