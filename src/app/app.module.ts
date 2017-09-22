@@ -19,7 +19,6 @@ import {DolphinPage} from "../pages/dolphin/dolphin";
 import {DolphinSelectionPage} from '../pages/dolphin-selection/dolphin-selection';
 
 import {Api} from '../providers/api';
-import {Items} from '../mocks/providers/items';
 import {Settings} from '../providers/settings';
 import {User} from '../providers/user';
 
@@ -119,7 +118,6 @@ export function provideSettings(storage: Storage) {
       },
       deps: [XHRBackend, RequestOptions]
     },
-    Items,
     User,
     Camera,
     GoogleMaps,
