@@ -154,7 +154,7 @@ export class AuthServiceProviderMock {
   }
 
   getCurrentSite(): any {
-    return {'site': 'currentSite'}
+    return {'site': 'currentSite', 'id': 'site-id'}
   }
 
 }
