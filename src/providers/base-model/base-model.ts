@@ -31,8 +31,6 @@ export class BaseModelProvider<T> {
           results.push(new this.modelClass(modelData));
         }
 
-        console.log(data);
-
         return new GoNevisAPIResponse(data.count, data.next, data.previous, results);
       });
   }
