@@ -9,7 +9,6 @@ import {DocumentDirection} from "ionic-angular/platform/platform";
 
 export class PlatformMock {
   private _dir: DocumentDirection;
-  public last_dir;
 
   public ready(): Promise<string> {
     return new Promise((resolve) => {
