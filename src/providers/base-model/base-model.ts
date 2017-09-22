@@ -4,11 +4,7 @@ import {Observable} from "rxjs/Observable";
 import {JwtInterceptorProvider} from "../jwt-interceptor/jwt-interceptor";
 import {AuthServiceProvider} from "../auth-service/auth-service";
 import {Injectable} from "@angular/core";
-
-
-export class GoNevisAPIResponse<T> {
-  constructor(public count: Number, public next: string | null, public previous: string | null, public results: Array<T>) {}
-}
+import {GoNevisAPIResponse} from "./gonevis-api-response";
 
 
 @Injectable()
