@@ -33,7 +33,7 @@ export class MyApp {
     {title: 'Settings', component: SettingsPage, icon: 'settings'}
   ];
 
-  constructor(public translate: TranslateService, private platform: Platform,
+  constructor(public translate: TranslateService, public platform: Platform,
               authService: AuthServiceProvider, private config: Config, private statusBar: StatusBar,
               private splashScreen: SplashScreen, public siteService: SiteProvider) {
     this.initTranslate();
@@ -55,11 +55,11 @@ export class MyApp {
 
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
       if (event.lang == 'ar' || event.lang == 'fa') {
-        this.platform.setDir('rtl', true);
         this.platform.setDir('ltr', false);
+        this.platform.setDir('rtl', true);
       } else {
-        this.platform.setDir('ltr', true);
         this.platform.setDir('rtl', false);
+        this.platform.setDir('ltr', true);
       }
     });
   }

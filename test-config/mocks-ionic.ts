@@ -3,13 +3,26 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {Observable} from "rxjs/Observable";
 import {Observer} from "rxjs/Observer";
 import {EventEmitter} from "@angular/core";
+import {LangChangeEvent} from "@ngx-translate/core";
+import {DocumentDirection} from "ionic-angular/platform/platform";
 
 
 export class PlatformMock {
+  private _dir: DocumentDirection;
+  public last_dir;
+
   public ready(): Promise<string> {
     return new Promise((resolve) => {
       resolve('READY');
     });
+  }
+
+  setDir(dir: DocumentDirection, updateDocument: boolean): void {
+    this._dir = dir;
+  }
+
+  dir(): DocumentDirection {
+    return this._dir;
   }
 
   public getQueryParam() {
@@ -120,9 +133,15 @@ export class DeepLinkerMock {
 
 export class TranslateServiceMock {
   defaultLang: string;
+  private _onLangChange: EventEmitter<LangChangeEvent> = new EventEmitter<LangChangeEvent>();
+
 
   setDefaultLang(lang: string): void {
     this.defaultLang = lang;
+  }
+
+  get onLangChange(): EventEmitter<LangChangeEvent> {
+    return this._onLangChange
   }
 
   getBrowserLang(): string {

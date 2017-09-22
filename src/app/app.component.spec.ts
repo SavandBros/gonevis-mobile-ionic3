@@ -16,7 +16,7 @@ import {
   StorageMock,
   TranslateServiceMock
 } from '../../test-config/mocks-ionic';
-import {TranslateService} from "@ngx-translate/core";
+import {LangChangeEvent, TranslateService} from "@ngx-translate/core";
 import {AuthServiceProvider} from "../providers/auth-service/auth-service";
 import {SiteProvider} from "../providers/site/site";
 
@@ -58,5 +58,16 @@ describe('MyApp Component', () => {
   it('should set the default language to EN', () => {
     expect(component.translate.defaultLang).toBe('en');
   });
+
+  it('should change the platform direction when setting to FA or AR language', () => {
+    component.translate.onLangChange.emit({lang: 'fa', translations: 'fa'});
+    expect(component.platform.dir()).toEqual('rtl');
+
+    component.translate.onLangChange.emit({lang: 'en', translations: 'en'});
+    expect(component.platform.dir()).toEqual('ltr');
+
+    component.translate.onLangChange.emit({lang: 'ar', translations: 'ar'});
+    expect(component.platform.dir()).toEqual('rtl');
+  })
 
 });
