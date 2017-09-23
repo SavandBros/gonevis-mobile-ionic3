@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {Platform, Nav, Config} from 'ionic-angular';
+import {Config, Nav, Platform} from 'ionic-angular';
 
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
@@ -23,6 +23,7 @@ export class MyApp {
   authService: AuthServiceProvider;
   account: Account;
   currentSite: any;
+  menuSide: string;
 
   @ViewChild(Nav) nav: Nav;
 
@@ -37,6 +38,7 @@ export class MyApp {
               authService: AuthServiceProvider, private config: Config, private statusBar: StatusBar,
               private splashScreen: SplashScreen, public siteService: SiteProvider) {
     this.initTranslate();
+
     this.platform.ready().then(() => {
       if (authService.isAuth()) {
         this.rootPage = EntriesPage;
@@ -44,9 +46,11 @@ export class MyApp {
         this.rootPage = TutorialPage;
       }
     });
+
     this.authService = authService;
     this.account = this.authService.getAuthUser(true);
     this.currentSite = this.authService.getCurrentSite();
+
     // Events
     this.authService.authenticated$.subscribe(() => this.onAuthenticate());
     this.authService.signOut$.subscribe(() => this.onSignOut());
@@ -54,13 +58,17 @@ export class MyApp {
     this.siteService.siteUpdated$.subscribe((data) => this.siteUpdated(data));
 
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      console.info(`Language change to ${event.lang}`);
+
       if (event.lang == 'ar' || event.lang == 'fa') {
-        this.platform.setDir('ltr', false);
         this.platform.setDir('rtl', true);
+        this.menuSide = 'right';
       } else {
-        this.platform.setDir('rtl', false);
         this.platform.setDir('ltr', true);
+        this.menuSide = 'left';
       }
+
+      this.platform.setLang(event.lang, true);
     });
   }
 
@@ -85,6 +93,7 @@ export class MyApp {
     }
   }
 
+  // TODO: We're not using this. should we remove ?
   ionViewDidLoad(): void {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -95,14 +104,14 @@ export class MyApp {
   }
 
   initTranslate(): void {
-    // Set the default language for translation strings, and the current language.
     this.translate.setDefaultLang('en');
 
     if (this.translate.getBrowserLang() !== undefined) {
       this.translate.use(this.translate.getBrowserLang());
     } else {
-      this.translate.use('en'); // Set your language here
+      this.translate.use('en');
     }
+    this.translate.use('fa');
 
     this.translate.get(['BACK_BUTTON_TEXT']).subscribe(values => {
       this.config.set('ios', 'backButtonText', values.BACK_BUTTON_TEXT);
