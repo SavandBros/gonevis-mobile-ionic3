@@ -1,7 +1,7 @@
 import {Component, EventEmitter} from '@angular/core';
 import {IonicPage, LoadingController, NavController, NavParams, ToastController, ViewController} from 'ionic-angular';
 import {Tag} from "../../models/tag";
-import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
+import {AuthProvider} from "../../providers/auth/auth-service";
 import {TagProvider} from "../../providers/tag/tag";
 import {TagsPage} from "../tags/tags";
 
@@ -29,7 +29,7 @@ export class TagPage {
   submitText: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
-              public authService: AuthServiceProvider, public tagService: TagProvider, public toastCtrl: ToastController) {
+              public authService: AuthProvider, public tagService: TagProvider, public toastCtrl: ToastController) {
     this.tag = new TagForm(this.authService.getCurrentSite().id);
     this.editing = false;
     this.submitText = "create";

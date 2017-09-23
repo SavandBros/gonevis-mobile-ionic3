@@ -1,7 +1,7 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {Response} from '@angular/http';
 import 'rxjs/add/operator/map';
-import {AuthServiceProvider} from "../auth-service/auth-service";
+import {AuthProvider} from "../auth/auth-service";
 import {Api} from "../api";
 import {Tag} from "../../models/tag";
 
@@ -17,7 +17,7 @@ export class TagProvider {
   updated$: EventEmitter<Tag> = new EventEmitter();
   created$: EventEmitter<Tag> = new EventEmitter();
 
-  constructor(public api: Api, public authService: AuthServiceProvider) {}
+  constructor(public api: Api, public authService: AuthProvider) {}
 
   tags() {
     return this.api.get("tagool/tag/", {site: this.authService.getCurrentSite().id})

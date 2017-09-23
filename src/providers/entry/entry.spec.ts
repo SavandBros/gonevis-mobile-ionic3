@@ -1,11 +1,11 @@
-import {AuthServiceProvider} from "../auth-service/auth-service";
+import {AuthProvider} from "../auth/auth-service";
 import {BaseRequestOptions} from "@angular/http";
 import {inject, TestBed} from "@angular/core/testing";
 import {MockBackend} from "@angular/http/testing";
-import {AuthServiceProviderMock} from "../../../test-config/mocks-ionic";
 import {JwtInterceptorProvider} from "../jwt-interceptor/jwt-interceptor";
 import {EntryProvider} from "./entry";
 import {Entry} from "../../models/entry";
+import {AuthServiceProviderMock} from "../../../test-config/mocks/gonevis/auth-mock";
 
 
 describe("Testing EntryProvider", () => {
@@ -23,13 +23,13 @@ describe("Testing EntryProvider", () => {
           useFactory: (backend: MockBackend, options: BaseRequestOptions) => new JwtInterceptorProvider(backend, options),
           deps: [MockBackend, BaseRequestOptions]
         },
-        {provide: AuthServiceProvider, useClass: AuthServiceProviderMock}
+        {provide: AuthProvider, useClass: AuthServiceProviderMock}
       ]
     });
   });
 
-  beforeEach(inject([MockBackend, JwtInterceptorProvider, AuthServiceProvider],
-    (mb: MockBackend, http: JwtInterceptorProvider, authService: AuthServiceProvider) => {
+  beforeEach(inject([MockBackend, JwtInterceptorProvider, AuthProvider],
+    (mb: MockBackend, http: JwtInterceptorProvider, authService: AuthProvider) => {
       mockBackend = mb;
       entryService = new EntryProvider(http, authService);
     }));

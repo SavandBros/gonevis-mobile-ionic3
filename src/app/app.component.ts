@@ -5,7 +5,7 @@ import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 
 import {EntrancePage} from '../pages/entrance/entrance';
-import {AuthServiceProvider} from '../providers/auth-service/auth-service';
+import {AuthProvider} from '../providers/auth/auth-service';
 import {LangChangeEvent, TranslateService} from '@ngx-translate/core'
 import {TutorialPage} from "../pages/tutorial/tutorial";
 import {EntriesPage} from "../pages/entries/entries";
@@ -29,7 +29,7 @@ export class MyApp {
   pages: any[];
 
   constructor(public translate: TranslateService, public platform: Platform,
-              public authService: AuthServiceProvider, private config: Config, private statusBar: StatusBar,
+              public authService: AuthProvider, private config: Config, private statusBar: StatusBar,
               private splashScreen: SplashScreen, public siteService: SiteProvider) {
     this.initTranslate();
 

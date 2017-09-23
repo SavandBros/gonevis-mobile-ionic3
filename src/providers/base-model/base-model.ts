@@ -2,7 +2,7 @@ import {Response, URLSearchParams} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {Observable} from "rxjs/Observable";
 import {JwtInterceptorProvider} from "../jwt-interceptor/jwt-interceptor";
-import {AuthServiceProvider} from "../auth-service/auth-service";
+import {AuthProvider} from "../auth/auth-service";
 import {Injectable} from "@angular/core";
 import {GoNevisAPIResponse} from "./gonevis-api-response";
 
@@ -14,7 +14,7 @@ export class BaseModelProvider<T> {
   public apiEndPointList: string;
   public modelClass;
 
-  constructor(public http: JwtInterceptorProvider, public authService: AuthServiceProvider) {}
+  constructor(public http: JwtInterceptorProvider, public authService: AuthProvider) {}
 
   /**
    * Make a query to return all the objects from the model API endpoint.

@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {IonicPage, ModalController, NavController, Refresher} from 'ionic-angular';
 import {EntryProvider} from "../../providers/entry/entry";
-import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
+import {AuthProvider} from "../../providers/auth/auth-service";
 import {Entry} from "../../models/entry";
 import {CommentModalPage} from "../comment-modal/comment-modal";
 import {EntryPage} from "../entry/entry";
@@ -16,7 +16,7 @@ export class EntriesPage {
   entries: Array<Entry>;
   loading: boolean;
 
-  constructor(public navCtrl: NavController, public authService: AuthServiceProvider,
+  constructor(public navCtrl: NavController, public authService: AuthProvider,
               public entryService: EntryProvider, public modalCtrl: ModalController) {
     this.get();
   }

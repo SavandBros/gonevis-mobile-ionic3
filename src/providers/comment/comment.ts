@@ -3,7 +3,7 @@ import {Response} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {Entry} from "../../models/entry";
 import {Api} from "../api";
-import {AuthServiceProvider} from "../auth-service/auth-service";
+import {AuthProvider} from "../auth/auth-service";
 import {Comment} from "../../models/comment";
 
 /*
@@ -15,7 +15,7 @@ import {Comment} from "../../models/comment";
 @Injectable()
 export class CommentProvider {
 
-  constructor(public api: Api, public authService: AuthServiceProvider) {
+  constructor(public api: Api, public authService: AuthProvider) {
     console.log('Hello CommentProvider Provider');
   }
 

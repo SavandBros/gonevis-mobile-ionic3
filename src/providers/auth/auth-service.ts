@@ -6,7 +6,7 @@ import { Account } from '../../models/account';
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class AuthServiceProvider {
+export class AuthProvider {
 
   public authenticated$: EventEmitter<null> = new EventEmitter();
   public signOut$: EventEmitter<null> = new EventEmitter();

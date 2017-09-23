@@ -4,9 +4,9 @@ import {BaseModelProvider} from "./base-model";
 import {BaseRequestOptions, Headers, RequestMethod, Response, ResponseOptions} from "@angular/http";
 import {MockBackend, MockConnection} from "@angular/http/testing";
 import {JwtInterceptorProvider} from "../jwt-interceptor/jwt-interceptor";
-import {AuthServiceProvider} from "../auth-service/auth-service";
-import {AuthServiceProviderMock} from "../../../test-config/mocks-ionic";
+import {AuthProvider} from "../auth/auth-service";
 import {GoNevisAPIResponse} from "./gonevis-api-response";
+import {AuthServiceProviderMock} from "../../../test-config/mocks/gonevis/auth-mock";
 
 class SmartPerson {
   title: string;
@@ -34,13 +34,13 @@ describe('Testing Base model', () => {
           useFactory: (backend: MockBackend, options: BaseRequestOptions) => new JwtInterceptorProvider(backend, options),
           deps: [MockBackend, BaseRequestOptions]
         },
-        {provide: AuthServiceProvider, useClass: AuthServiceProviderMock}
+        {provide: AuthProvider, useClass: AuthServiceProviderMock}
       ]
     });
   });
 
-  beforeEach(inject([MockBackend, JwtInterceptorProvider, AuthServiceProvider],
-    (mb: MockBackend, http: JwtInterceptorProvider, authService: AuthServiceProvider) => {
+  beforeEach(inject([MockBackend, JwtInterceptorProvider, AuthProvider],
+    (mb: MockBackend, http: JwtInterceptorProvider, authService: AuthProvider) => {
       mockBackend = mb;
       baseModelService = new BaseModelProvider<SmartPerson>(http, authService);
       baseModelService.modelClass = SmartPerson;

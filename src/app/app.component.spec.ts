@@ -8,22 +8,21 @@ import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 
 import {MyApp} from './app.component';
-import {
-  AuthServiceProviderMock,
-  PlatformMock,
-  SiteProviderMock,
-  SplashScreenMock,
-  StatusBarMock,
-  StorageMock,
-  TranslateServiceMock
-} from '../../test-config/mocks-ionic';
 import {TranslateLoader, TranslateModule, TranslateService} from "@ngx-translate/core";
-import {AuthServiceProvider} from "../providers/auth-service/auth-service";
+import {AuthProvider} from "../providers/auth/auth-service";
 import {SiteProvider} from "../providers/site/site";
 import {TutorialPage} from "../pages/tutorial/tutorial";
 import {EntriesPage} from "../pages/entries/entries";
 import {Http} from "@angular/http";
 import {HttpLoaderFactory} from "./app.module";
+import {StatusBarMock} from "../../test-config/mocks/ionic/status-bar-mock";
+import {PlatformMock} from "../../test-config/mocks/ionic/platform-mock";
+import {SplashScreenMock} from "../../test-config/mocks/ionic/splash-screen-mock";
+import {StorageMock} from "../../test-config/mocks/storage-mock";
+import {TranslateServiceMock} from "../../test-config/mocks/gonevis/translate-mock";
+import {AuthServiceProviderMock} from "../../test-config/mocks/gonevis/auth-mock";
+import {SiteProviderMock} from "../../test-config/mocks/gonevis/site-mock";
+
 
 describe('MyApp Component', () => {
   let fixture;
@@ -48,7 +47,7 @@ describe('MyApp Component', () => {
         {provide: Platform, useClass: PlatformMock},
         {provide: TranslateService, useClass: TranslateServiceMock},
         {provide: Storage, useClass: StorageMock},
-        {provide: AuthServiceProvider, useClass: AuthServiceProviderMock},
+        {provide: AuthProvider, useClass: AuthServiceProviderMock},
         {provide: SiteProvider, useClass: SiteProviderMock}
       ]
     })

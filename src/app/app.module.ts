@@ -29,7 +29,7 @@ import {StatusBar} from '@ionic-native/status-bar';
 
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {AuthServiceProvider} from '../providers/auth-service/auth-service';
+import {AuthProvider} from '../providers/auth/auth-service';
 import {DolphinProvider} from '../providers/dolphin/dolphin';
 import {EntryProvider} from '../providers/entry/entry';
 import {JwtInterceptorProvider} from '../providers/jwt-interceptor/jwt-interceptor';
@@ -127,7 +127,7 @@ export function provideSettings(storage: Storage) {
     {provide: Settings, useFactory: provideSettings, deps: [Storage]},
     // Keep this to enable Ionic's runtime error handling during development
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthServiceProvider,
+    AuthProvider,
     DolphinProvider,
     CommentProvider,
     TagProvider,

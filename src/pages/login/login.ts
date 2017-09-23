@@ -3,7 +3,7 @@ import {NavController, ToastController, LoadingController, MenuController} from 
 
 import {MainPage} from '../../pages/pages';
 
-import {AuthServiceProvider} from '../../providers/auth-service/auth-service';
+import {AuthProvider} from '../../providers/auth/auth-service';
 
 import {TranslateService} from '@ngx-translate/core';
 
@@ -24,7 +24,7 @@ export class LoginPage {
   private loginErrorString: string;
 
   constructor(public navCtrl: NavController,
-              public authService: AuthServiceProvider,
+              public authService: AuthProvider,
               public toastCtrl: ToastController,
               public menu: MenuController,
               public translateService: TranslateService,
