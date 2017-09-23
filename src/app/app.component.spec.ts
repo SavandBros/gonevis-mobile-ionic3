@@ -1,4 +1,5 @@
-import {} from 'jasmine';
+///<reference path="../../node_modules/@types/jasmine/index.d.ts"/>
+
 import {async, TestBed} from '@angular/core/testing';
 import {IonicModule, Platform} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
@@ -16,7 +17,7 @@ import {
   StorageMock,
   TranslateServiceMock
 } from '../../test-config/mocks-ionic';
-import {LangChangeEvent, TranslateService} from "@ngx-translate/core";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {AuthServiceProvider} from "../providers/auth-service/auth-service";
 import {SiteProvider} from "../providers/site/site";
 
@@ -28,7 +29,8 @@ describe('MyApp Component', () => {
     TestBed.configureTestingModule({
       declarations: [MyApp],
       imports: [
-        IonicModule.forRoot(MyApp)
+        TranslateModule.forRoot(),
+        IonicModule.forRoot(MyApp),
       ],
       providers: [
         {provide: StatusBar, useClass: StatusBarMock},
