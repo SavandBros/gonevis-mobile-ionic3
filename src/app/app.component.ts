@@ -20,7 +20,6 @@ import {SiteProvider} from "../providers/site/site";
 })
 export class MyApp {
   public rootPage: object;
-  authService: AuthServiceProvider;
   account: Account;
   currentSite: any;
   menuSide: string;
@@ -35,16 +34,18 @@ export class MyApp {
   ];
 
   constructor(public translate: TranslateService, public platform: Platform,
-              authService: AuthServiceProvider, private config: Config, private statusBar: StatusBar,
+              public authService: AuthServiceProvider, private config: Config, private statusBar: StatusBar,
               private splashScreen: SplashScreen, public siteService: SiteProvider) {
     this.initTranslate();
 
-    this.platform.ready().then(() => {
-      if (authService.isAuth()) {
-        this.rootPage = EntriesPage;
-      } else {
-        this.rootPage = TutorialPage;
-      }
+    if (this.authService.isAuth()) {
+      this.rootPage = EntriesPage;
+    } else {
+      this.rootPage = TutorialPage;
+    }
+
+    this.platform.ready().then((readySource: string) => {
+      console.debug(readySource);
     });
 
     this.authService = authService;

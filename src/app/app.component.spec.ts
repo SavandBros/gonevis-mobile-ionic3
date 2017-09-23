@@ -20,6 +20,8 @@ import {
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {AuthServiceProvider} from "../providers/auth-service/auth-service";
 import {SiteProvider} from "../providers/site/site";
+import {TutorialPage} from "../pages/tutorial/tutorial";
+import {EntriesPage} from "../pages/entries/entries";
 
 describe('MyApp Component', () => {
   let fixture;
@@ -59,6 +61,23 @@ describe('MyApp Component', () => {
 
   it('should set the default language to EN', () => {
     expect(component.translate.defaultLang).toBe('en');
+  });
+
+  it('should change rootPage to Tutorial when not authenticated', () => {
+    expect(component.authService.isAuth()).toBeFalsy();
+    expect(component.rootPage).toBe(TutorialPage);
+  });
+
+  it('should change rootPage to Entries when authenticated', () => {
+    spyOn(localStorage, "getItem").and.callFake((key: string) => {
+      return true;
+    });
+
+    fixture = TestBed.createComponent(MyApp);
+    component = fixture.componentInstance;
+
+    expect(component.authService.isAuth()).toBeTruthy();
+    expect(component.rootPage).toBe(EntriesPage);
   });
 
   it('should change the platform direction when setting to FA or AR language', () => {

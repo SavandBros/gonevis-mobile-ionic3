@@ -177,6 +177,10 @@ export class AuthServiceProviderMock {
   }
 
   isAuth(): boolean {
+    if (localStorage.getItem("user")) {
+      return true
+    }
+
     return false;
   }
 
