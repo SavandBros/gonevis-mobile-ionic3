@@ -40,6 +40,7 @@ import {AlertProvider} from '../providers/alert/alert';
 import {PaginationProvider} from '../providers/pagination/pagination';
 import {SettingsPage} from "../pages/settings/settings";
 import {SiteProvider} from '../providers/site/site';
+import {BaseModelProvider} from '../providers/base-model/base-model';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -128,12 +129,13 @@ export function provideSettings(storage: Storage) {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,
     DolphinProvider,
-    EntryProvider,
     CommentProvider,
     TagProvider,
     AlertProvider,
     PaginationProvider,
-    SiteProvider
+    SiteProvider,
+    BaseModelProvider,
+    EntryProvider,
   ]
 })
 export class AppModule {
