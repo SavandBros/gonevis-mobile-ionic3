@@ -161,7 +161,7 @@ export class TranslateServiceMock {
   }
 
   get(key: string | Array<string>, interpolateParams?: Object): Observable<string | any> {
-    return Observable.create((observer: Observer<string>) => {});
+    return Observable.of({});
   }
 }
 
