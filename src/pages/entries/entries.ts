@@ -1,17 +1,11 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, ModalController, Refresher} from 'ionic-angular';
+import {IonicPage, ModalController, NavController, Refresher} from 'ionic-angular';
 import {EntryProvider} from "../../providers/entry/entry";
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 import {Entry} from "../../models/entry";
 import {CommentModalPage} from "../comment-modal/comment-modal";
 import {EntryPage} from "../entry/entry";
 
-/**
- * Generated class for the EntriesPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -19,7 +13,6 @@ import {EntryPage} from "../entry/entry";
   templateUrl: 'entries.html',
 })
 export class EntriesPage {
-
   entries: Array<Entry>;
   loading: boolean;
 
@@ -32,7 +25,7 @@ export class EntriesPage {
     this.get(refresher);
   }
 
-  get(refresh?: Refresher) {
+  get(refresh?: Refresher): void {
     this.loading = true;
 
     this.entryService.all().subscribe((resp) => {
@@ -49,12 +42,12 @@ export class EntriesPage {
     });
   }
 
-  presentCommentModal(entry: Entry): void{
-    let commentModal = this.modalCtrl.create(CommentModalPage, { entry: entry });
+  presentCommentModal(entry: Entry): void {
+    let commentModal = this.modalCtrl.create(CommentModalPage, {entry: entry});
     commentModal.present();
   }
 
   editEntry(entry: Entry): void {
-    this.navCtrl.push(EntryPage, { entry: entry });
+    this.navCtrl.push(EntryPage, {entry: entry});
   }
 }
