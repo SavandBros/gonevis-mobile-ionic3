@@ -18,7 +18,7 @@ export class PlatformMock {
   }
 
   setLang(lang: string, updateDocument: boolean): void {
-
+    this._lang = lang;
   }
 
   lang(): string {
