@@ -17,11 +17,13 @@ import {
   StorageMock,
   TranslateServiceMock
 } from '../../test-config/mocks-ionic';
-import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {TranslateLoader, TranslateModule, TranslateService} from "@ngx-translate/core";
 import {AuthServiceProvider} from "../providers/auth-service/auth-service";
 import {SiteProvider} from "../providers/site/site";
 import {TutorialPage} from "../pages/tutorial/tutorial";
 import {EntriesPage} from "../pages/entries/entries";
+import {Http} from "@angular/http";
+import {HttpLoaderFactory} from "./app.module";
 
 describe('MyApp Component', () => {
   let fixture;
@@ -31,7 +33,13 @@ describe('MyApp Component', () => {
     TestBed.configureTestingModule({
       declarations: [MyApp],
       imports: [
-        TranslateModule.forRoot(),
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [Http]
+          }
+        }),
         IonicModule.forRoot(MyApp),
       ],
       providers: [
@@ -58,7 +66,7 @@ describe('MyApp Component', () => {
   it('should have 4 pages', () => {
     expect(component.pages.length).toBe(4);
   });
-
+  
   it('should set the default language to EN', () => {
     expect(component.translate.defaultLang).toBe('en');
   });
