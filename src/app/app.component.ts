@@ -26,17 +26,21 @@ export class MyApp {
 
   @ViewChild(Nav) nav: Nav;
 
-  pages: any[] = [
-    {title: 'Posts', component: EntriesPage, icon: 'paper'},
-    {title: 'Tags', component: TagsPage, icon: 'pricetags'},
-    {title: 'Files', component: DolphinsPage, icon: 'images'},
-    {title: 'Settings', component: SettingsPage, icon: 'settings'}
-  ];
+  pages: any[];
 
   constructor(public translate: TranslateService, public platform: Platform,
               public authService: AuthServiceProvider, private config: Config, private statusBar: StatusBar,
               private splashScreen: SplashScreen, public siteService: SiteProvider) {
     this.initTranslate();
+
+    this.translate.get(['POSTS', 'TAGS', 'FILES', 'SETTINGS']).subscribe(values => {
+      this.pages = [
+        {title: values.POSTS, component: EntriesPage, icon: 'paper'},
+        {title: values.TAGS, component: TagsPage, icon: 'pricetags'},
+        {title: values.FILES, component: DolphinsPage, icon: 'images'},
+        {title: values.SETTINGS, component: SettingsPage, icon: 'settings'}
+      ];
+    });
 
     if (this.authService.isAuth()) {
       this.rootPage = EntriesPage;
