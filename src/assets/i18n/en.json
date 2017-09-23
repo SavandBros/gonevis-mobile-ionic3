@@ -7,6 +7,7 @@
   "PASSWORD": "Password",
   "LOGIN": "Sign in",
   "SIGNUP": "Sign up",
+  "LOGOUT": "Log out",
 
   "TUTORIAL_SKIP_BUTTON" : "Skip",
   "TUTORIAL_CONTINUE_BUTTON" : "Continue",
@@ -52,5 +53,6 @@
   "SEARCH_TITLE": "Search",
   "SEARCH_PLACEHOLDER" : "Search the items list, e.g. \"Donald Duck\"",
 
-  "POSTS_TITLE": "Posts"
+  "POSTS_TITLE": "Posts",
+  "SITES": "Sites"
 }

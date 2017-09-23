@@ -7,6 +7,7 @@
   "PASSWORD": "رمز عبور",
   "LOGIN": "ورود",
   "SIGNUP": "ثبت نام",
+  "LOGOUT": "ثبت نام",
 
   "TUTORIAL_SKIP_BUTTON" : "رد کن",
   "TUTORIAL_CONTINUE_BUTTON" : "ادامه",
@@ -47,5 +48,6 @@
   "SEARCH_TITLE": "Search",
   "SEARCH_PLACEHOLDER" : "Search the items list, e.g. \"Donald Duck\"",
 
-  "POSTS_TITLE": "پست ها"
+  "POSTS_TITLE": "پست ها",
+  "SITES": "سایت ها"
 }
