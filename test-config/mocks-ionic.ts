@@ -9,11 +9,20 @@ import {DocumentDirection} from "ionic-angular/platform/platform";
 
 export class PlatformMock {
   private _dir: DocumentDirection;
+  private _lang: string;
 
   public ready(): Promise<string> {
     return new Promise((resolve) => {
       resolve('READY');
     });
+  }
+
+  setLang(lang: string, updateDocument: boolean): void {
+
+  }
+
+  lang(): string {
+    return this._lang;
   }
 
   setDir(dir: DocumentDirection, updateDocument: boolean): void {
