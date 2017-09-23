@@ -8,15 +8,26 @@
 
   <ion-navbar>
     <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>
-    <ion-title>Dolphins</ion-title>
+    <ion-title>Files</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <!-- Pull To Refresh -->
+  <ion-refresher (ionRefresh)="reloadPage($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Loading -->
+  <div text-center class="page-loader">
+    <ion-spinner *ngIf="loading"></ion-spinner>
+  </div>
+
+  <!-- Dolphins -->
   <span *ngFor="let dolphin of dolphins">
-    <ion-card [ngClass]="{'animated fadeIn': !dolphin.isDeleted}" *ngIf="!dolphin.isDeleted">
+    <ion-card [ngClass]="{'animated blur': !dolphin.isDeleted}" *ngIf="!dolphin.isDeleted">
       <img src="{{dolphin.file}}" *ngIf="dolphin.isImage">
       <div class="is-file" *ngIf="!dolphin.isImage">
         <ion-icon name="document"></ion-icon>
@@ -47,7 +58,11 @@
       </ion-row>
     </ion-card>
   </span>
+
+  <!-- Load More -->
   <div text-center>
-    <button ion-button clear (click)="loadMore()" *ngIf="next" [disabled]="paginating">More</button>
+    <button ion-button clear (click)="loadMore()" *ngIf="next" [disabled]="paginating">
+      <ion-spinner *ngIf="paginating"></ion-spinner><span *ngIf="!paginating">More</span>
+    </button>
   </div>
 </ion-content>

@@ -1,7 +1,7 @@
-<ion-menu [content]="content">
+<ion-menu [content]="content" side="{{menuSide}}">
   <ion-header>
     <ion-toolbar color="primary">
-      <ion-title>Dashboard</ion-title>
+      <ion-title>{{ authService.getCurrentSite().title }}</ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -24,15 +24,15 @@
     </ion-list>
     <!-- Sites -->
     <ion-list no-lines *ngIf="authService.isAuth()">
-      <ion-list-header>Sites</ion-list-header>
+      <ion-list-header>{{ 'SITES' | translate }}</ion-list-header>
       <button ion-item menuClose *ngFor="let site of account.user.sites" (click)="authService.setCurrentSite(site)">
         {{ site.title }}
       </button>
     </ion-list>
     <ion-list>
-      <ion-list-header>Logout</ion-list-header>
+      <ion-list-header>{{ 'LOGOUT' | translate }}</ion-list-header>
       <button menuClose ion-item (click)="authService.signOut()">
-        <ion-icon name="log-out" item-start></ion-icon> Logout
+        <ion-icon name="log-out" item-start></ion-icon> {{ LOGOUT | translate }}
       </button>
     </ion-list>
   </ion-content>

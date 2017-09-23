@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, LoadingController, NavController, ModalController} from 'ionic-angular';
+import {IonicPage, NavController, ModalController, Refresher} from 'ionic-angular';
 import {EntryProvider} from "../../providers/entry/entry";
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 import {Entry} from "../../models/entry";
@@ -21,30 +21,40 @@ import {EntryPage} from "../entry/entry";
 export class EntriesPage {
 
   entries: Array<Entry>;
+  loading: boolean;
 
   constructor(public navCtrl: NavController, public authService: AuthServiceProvider,
-              public entryService: EntryProvider, public loadingCtrl: LoadingController,
-              public modalCtrl: ModalController) {
-    let loader = this.loadingCtrl.create({content: "Please wait..."});
-    loader.present();
+              public entryService: EntryProvider, public modalCtrl: ModalController) {
+    this.get();
+  }
+
+  reloadPage(refresher): void {
+    this.get(refresher);
+  }
+
+  get(refresh?: Refresher) {
+    this.loading = true;
 
     this.entryService.all().subscribe((resp) => {
       console.log(resp);
       this.entries = resp.results;
-      loader.dismiss();
+      this.loading = false;
+
+      if (refresh) {
+        refresh.complete();
+      }
     }, (err) => {
-      loader.dismiss();
+      this.loading = false;
       console.log(err)
     });
   }
 
-  presentCommentModal(entry: Entry) {
+  presentCommentModal(entry: Entry): void{
     let commentModal = this.modalCtrl.create(CommentModalPage, { entry: entry });
     commentModal.present();
   }
 
-  editEntry(entry: Entry) {
+  editEntry(entry: Entry): void {
     this.navCtrl.push(EntryPage, { entry: entry });
   }
 }
-

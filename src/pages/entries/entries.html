@@ -2,14 +2,25 @@
 
   <ion-navbar hideBackButton="true">
     <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>
-    <ion-title>Posts</ion-title>
+    <ion-title>{{ 'POSTS' | translate }}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <ion-card *ngFor="let entry of entries">
+  <!-- Pull To Refresh -->
+  <ion-refresher (ionRefresh)="reloadPage($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Loading -->
+  <div text-center class="page-loader">
+    <ion-spinner *ngIf="loading"></ion-spinner>
+  </div>
+
+  <!-- Entries -->
+  <ion-card *ngFor="let entry of entries" class="animated blur">
     <img src="{{ entry.media.cover_image.file }}" *ngIf="entry.media.cover_image">
     <ion-card-content>
       <ion-card-title>{{ entry.title }}</ion-card-title>

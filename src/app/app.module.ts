@@ -16,9 +16,9 @@ import {TagsPage} from "../pages/tags/tags";
 import {TagPage} from "../pages/tag/tag";
 import {DolphinsPage} from "../pages/dolphins/dolphins";
 import {DolphinPage} from "../pages/dolphin/dolphin";
+import {DolphinSelectionPage} from '../pages/dolphin-selection/dolphin-selection';
 
 import {Api} from '../providers/api';
-import {Items} from '../mocks/providers/items';
 import {Settings} from '../providers/settings';
 import {User} from '../providers/user';
 
@@ -77,7 +77,8 @@ export function provideSettings(storage: Storage) {
     TagPage,
     DolphinsPage,
     DolphinPage,
-    SettingsPage
+    SettingsPage,
+    DolphinSelectionPage
   ],
   imports: [
     BrowserModule,
@@ -106,7 +107,8 @@ export function provideSettings(storage: Storage) {
     TagPage,
     DolphinsPage,
     DolphinPage,
-    SettingsPage
+    SettingsPage,
+    DolphinSelectionPage
   ],
   providers: [
     Api,
@@ -117,7 +119,6 @@ export function provideSettings(storage: Storage) {
       },
       deps: [XHRBackend, RequestOptions]
     },
-    Items,
     User,
     Camera,
     GoogleMaps,

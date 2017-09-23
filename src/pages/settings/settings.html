@@ -21,8 +21,14 @@
 
 
 <ion-content>
+  <!-- Loading -->
+  <div text-center class="page-loader">
+    <ion-spinner *ngIf="loading"></ion-spinner>
+  </div>
+
+  <!-- Site Settings -->
   <div class="cover" text-center [style.background-image]="coverImage" *ngIf="site.media.coverImage"></div>
-  <form (ngSubmit)="updateSite()" margin-top id="siteForm">
+  <form (ngSubmit)="updateSite()" margin-top id="siteForm" *ngIf="!loading">
     <!-- Inputs -->
     <ion-item>
       <ion-label floating>Title</ion-label>
@@ -30,7 +36,7 @@
     </ion-item>
     <ion-item>
       <ion-label floating>Description</ion-label>
-      <ion-input [(ngModel)]="site.description" name="description"></ion-input>
+      <ion-input [(ngModel)]="site.description" name="description"></ion-input>EventEmitter
     </ion-item>
     <ion-item>
       <ion-label floating>Meta Description</ion-label>
@@ -48,10 +54,10 @@
     <ion-grid>
       <ion-row margin-vertical>
         <ion-col>
-          <button ion-button block type="button" outline>Upload Cover Image</button>
+          <button ion-button block type="button" (click)="selectImage('coverImage')" outline>Upload Cover Image</button>
         </ion-col>
         <ion-col>
-          <button ion-button block type="button" outline>Upload logo</button>
+          <button ion-button block type="button" outline (click)="selectImage('logo')">Upload logo</button>
         </ion-col>
       </ion-row>
     </ion-grid>

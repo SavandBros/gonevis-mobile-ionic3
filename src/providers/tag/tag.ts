@@ -48,7 +48,6 @@ export class TagProvider {
   }
 
   create(tag) {
-    console.log(tag);
     return this.api.post("tagool/tag/", tag, {site: this.authService.getCurrentSite().id})
       .map((res: Response) => {
         let data = res.json();

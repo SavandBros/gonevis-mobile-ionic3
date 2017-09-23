@@ -47,9 +47,10 @@ export class LoginPage {
   login() {
     let loader = this.loadingCtrl.create({content: "Loging in, please wait..."});
     loader.present();
+
     this.authService.login(this.account).subscribe((resp) => {
-      this.navCtrl.push(MainPage);
       loader.dismiss();
+
       let toast = this.toastCtrl.create({
         message: 'Welcome back ' + this.account.username + '',
         duration: 3000,

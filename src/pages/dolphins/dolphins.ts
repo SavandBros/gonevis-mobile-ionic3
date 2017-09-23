@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {
-  ActionSheetController, Alert, AlertController, IonicPage, LoadingController, ModalController, NavController,
-  NavParams
+  ActionSheetController, IonicPage, ModalController, NavController, Refresher
 } from 'ionic-angular';
 import {DolphinProvider} from "../../providers/dolphin/dolphin";
 import {DolphinFile} from "../../models/dolphin-file";
@@ -25,25 +24,33 @@ export class DolphinsPage {
 
   dolphins: Array<DolphinFile> = [];
   paginating: boolean;
+  loading: boolean;
   next: string;
 
-  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController,
-              public dolphinService: DolphinProvider, public actionSheetCtrl: ActionSheetController,
-              public alertService: AlertProvider, public paginationService: PaginationProvider,
-              public modalCtrl: ModalController) {
-
-    this.paginating = false;
+  constructor(public navCtrl: NavController, public dolphinService: DolphinProvider,
+              public actionSheetCtrl: ActionSheetController, public alertService: AlertProvider,
+              public paginationService: PaginationProvider, public modalCtrl: ModalController) {
+    this.get();
     this.dolphinService.dolphinUpdate$.subscribe((data) => this.onDolphinUpdate(data));
+  }
 
-    let loader = this.loadingCtrl.create({content: "Please wait..."});
-    loader.present();
+  reloadPage(refresher): void {
+    this.get(refresher);
+  }
 
-    this.dolphinService.dolphins().subscribe((resp) => {
+  get(refresh?: Refresher): void {
+    this.loading = true;
+
+    this.dolphinService.dolphins(5).subscribe((resp) => {
+      this.loading = false;
       this.dolphins = resp.results;
       this.next = resp.next;
-      loader.dismiss();
+
+      if (refresh) {
+        refresh.complete();
+      }
     }, (err) => {
-      loader.dismiss();
+      this.loading = false;
       console.log(err)
     });
   }
@@ -83,7 +90,7 @@ export class DolphinsPage {
   }
 
   editDolphin(dolphin: DolphinFile) {
-    let dolphinModal = this.modalCtrl.create(DolphinPage, { dolphin: dolphin });
+    let dolphinModal = this.modalCtrl.create(DolphinPage, {dolphin: dolphin});
 
     // Present modal
     dolphinModal.present();

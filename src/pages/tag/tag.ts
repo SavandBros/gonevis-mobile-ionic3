@@ -24,24 +24,24 @@ class TagForm {
 export class TagPage {
 
   tag: any;
+  updating: boolean;
   editing: boolean;
   submitText: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
-              public authService: AuthServiceProvider, public tagService: TagProvider, public loadingCtrl: LoadingController,
-              public toastCtrl: ToastController) {
+              public authService: AuthServiceProvider, public tagService: TagProvider, public toastCtrl: ToastController) {
     this.tag = new TagForm(this.authService.getCurrentSite().id);
     this.editing = false;
     this.submitText = "create";
 
     if (this.navParams.get("tag")) {
+      this.tag = <Tag> JSON.parse(JSON.stringify(this.navParams.get("tag")));
       this.editing = true;
-      this.tag = this.navParams.get("tag");
       this.submitText = "update";
     }
   }
 
-  closeModal() {
+  dismiss() {
     this.viewCtrl.dismiss();
   }
 
@@ -54,32 +54,25 @@ export class TagPage {
   }
 
   update() {
-    let loader = this.loadingCtrl.create({content: "Updating..."});
-    loader.present();
+    this.updating = true;
 
     this.tagService.update(this.tag).subscribe((resp) => {
+      this.updating = false;
       this.tag = resp;
-      loader.dismiss();
+      this.dismiss();
 
-      let toast = this.toastCtrl.create({
-        message: 'Tag successfully updated',
-        duration: 3000,
-        position: 'bottom'
-      });
-      toast.present();
     }, (err) => {
-      loader.dismiss();
+      this.updating = false;
       console.log(err);
     });
   }
 
   create() {
-    let loader = this.loadingCtrl.create({content: "Creating..."});
-    loader.present();
+    this.updating = true;
 
     this.tagService.create(this.tag).subscribe((resp) => {
-      loader.dismiss();
-      this.navCtrl.push(TagsPage);
+      this.updating = false;
+      this.dismiss();
 
       let toast = this.toastCtrl.create({
         message: 'Tag ' + resp.name + ' created',
@@ -88,7 +81,7 @@ export class TagPage {
       });
       toast.present();
     }, (err) => {
-      loader.dismiss();
+      this.updating = false;
       console.log(err);
     });
   }

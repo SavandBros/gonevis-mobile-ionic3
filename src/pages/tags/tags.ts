@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {IonicPage, LoadingController, ModalController, NavController, NavParams} from 'ionic-angular';
+import {IonicPage, ModalController, NavController, Refresher} from 'ionic-angular';
 import {TagProvider} from "../../providers/tag/tag";
 import {Tag} from "../../models/tag";
 import {TagPage} from "../tag/tag";
@@ -18,44 +18,55 @@ import {TagPage} from "../tag/tag";
 })
 export class TagsPage {
 
-  tags: Array<Tag> = [];
+  tags: Array<Tag>;
+  loading: boolean;
 
-  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController,
-              public tagService: TagProvider, public modalCtrl: ModalController) {
-    let loader = this.loadingCtrl.create({content: "Please wait..."});
-    loader.present();
+  constructor(public navCtrl: NavController, public tagService: TagProvider, public modalCtrl: ModalController) {
+    this.get();
 
-    this.tagService.tags().subscribe((resp) => {
-      this.tags = resp.results;
-      loader.dismiss();
-    }, (err) => {
-      console.log(err);
-      loader.dismiss();
-    });
     this.tagService.updated$.subscribe((tag) => this.onUpdate(tag));
     this.tagService.created$.subscribe((tag) => this.onCreate(tag));
   }
 
-  editTag(tag: Tag) {
+  reloadPage(refresher): void {
+    this.get(refresher);
+  }
+
+  get(refresh?: Refresher): void {
+    this.loading = true;
+
+    this.tagService.tags().subscribe((resp) => {
+      this.loading = false;
+      this.tags = resp.results;
+
+      if (refresh) {
+        refresh.complete();
+      }
+    }, (err) => {
+      this.loading = false;
+      console.log(err);
+    });
+  }
+
+  editTag(tag: Tag): void {
     let tagModal = this.modalCtrl.create(TagPage, { tag: tag });
     tagModal.present();
   }
 
-  createTag() {
+  createTag(): void {
     let tagModal = this.modalCtrl.create(TagPage);
     tagModal.present();
   }
 
-  onUpdate(tag: Tag) {
-    for (let mainTag of this.tags) {
-      if (mainTag.id == tag.id) {
-        mainTag = tag;
-        console.log(mainTag);
+  onUpdate(data: Tag): void {
+    this.tags.forEach((tag, index) => {
+      if (tag.id == data.id) {
+        this.tags[index] = data;
       }
-    }
+    });
   }
 
-  onCreate(tag: Tag) {
+  onCreate(tag: Tag): void {
     this.tags.unshift(tag);
   }
 }
