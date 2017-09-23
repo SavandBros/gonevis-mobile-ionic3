@@ -1,4 +1,5 @@
 ///<reference path="../../node_modules/@types/jasmine/index.d.ts"/>
+
 import {async, TestBed} from '@angular/core/testing';
 import {IonicModule, Platform} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
@@ -16,9 +17,13 @@ import {
   StorageMock,
   TranslateServiceMock
 } from '../../test-config/mocks-ionic';
-import {TranslateService} from "@ngx-translate/core";
+import {TranslateLoader, TranslateModule, TranslateService} from "@ngx-translate/core";
 import {AuthServiceProvider} from "../providers/auth-service/auth-service";
 import {SiteProvider} from "../providers/site/site";
+import {TutorialPage} from "../pages/tutorial/tutorial";
+import {EntriesPage} from "../pages/entries/entries";
+import {Http} from "@angular/http";
+import {HttpLoaderFactory} from "./app.module";
 
 describe('MyApp Component', () => {
   let fixture;
@@ -28,7 +33,14 @@ describe('MyApp Component', () => {
     TestBed.configureTestingModule({
       declarations: [MyApp],
       imports: [
-        IonicModule.forRoot(MyApp)
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [Http]
+          }
+        }),
+        IonicModule.forRoot(MyApp),
       ],
       providers: [
         {provide: StatusBar, useClass: StatusBarMock},
@@ -58,5 +70,57 @@ describe('MyApp Component', () => {
   it('should set the default language to EN', () => {
     expect(component.translate.defaultLang).toBe('en');
   });
+
+  it("should set the language to BroLang when browser lang is undefined", () => {
+    let defaultLang: string = "BroLang";
+
+    spyOn(localStorage, "getItem").and.returnValue(defaultLang);
+
+    fixture = TestBed.createComponent(MyApp);
+    component = fixture.componentInstance;
+
+    expect(component.translate.getBrowserLang()).toEqual(defaultLang);
+    expect(component.translate.defaultLang).toEqual(defaultLang);
+  });
+
+  it('should change rootPage to Tutorial when not authenticated', () => {
+    expect(component.authService.isAuth()).toBeFalsy();
+    expect(component.rootPage).toBe(TutorialPage);
+  });
+
+  it('should change rootPage to Entries when authenticated', () => {
+    spyOn(localStorage, "getItem").and.callFake((key: string) => {
+      return true;
+    });
+
+    fixture = TestBed.createComponent(MyApp);
+    component = fixture.componentInstance;
+
+    expect(component.authService.isAuth()).toBeTruthy();
+    expect(component.rootPage).toBe(EntriesPage);
+  });
+
+  it('should change the platform direction when setting to FA or AR language', () => {
+    let lang: string = 'fa';
+
+    component.translate.onLangChange.emit({lang: lang, translations: lang});
+    expect(component.platform.dir()).toEqual('rtl');
+    expect(component.platform.lang()).toEqual(lang);
+    expect(component.menuSide).toEqual('right');
+
+    lang = 'en';
+
+    component.translate.onLangChange.emit({lang: lang, translations: lang});
+    expect(component.platform.dir()).toEqual('ltr');
+    expect(component.platform.lang()).toEqual(lang);
+    expect(component.menuSide).toEqual('left');
+
+    lang = 'ar';
+
+    component.translate.onLangChange.emit({lang: lang, translations: lang});
+    expect(component.platform.dir()).toEqual('rtl');
+    expect(component.platform.lang()).toEqual(lang);
+    expect(component.menuSide).toEqual('right');
+  })
 
 });
