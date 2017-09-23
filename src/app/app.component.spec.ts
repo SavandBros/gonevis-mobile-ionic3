@@ -62,14 +62,26 @@ describe('MyApp Component', () => {
   });
 
   it('should change the platform direction when setting to FA or AR language', () => {
-    component.translate.onLangChange.emit({lang: 'fa', translations: 'fa'});
-    expect(component.platform.dir()).toEqual('rtl');
+    let lang: string = 'fa';
 
-    component.translate.onLangChange.emit({lang: 'en', translations: 'en'});
+    component.translate.onLangChange.emit({lang: lang, translations: lang});
+    expect(component.platform.dir()).toEqual('rtl');
+    expect(component.platform.lang()).toEqual(lang);
+    expect(component.menuSide).toEqual('right');
+
+    lang = 'en';
+
+    component.translate.onLangChange.emit({lang: lang, translations: lang});
     expect(component.platform.dir()).toEqual('ltr');
+    expect(component.platform.lang()).toEqual(lang);
+    expect(component.menuSide).toEqual('left');
 
-    component.translate.onLangChange.emit({lang: 'ar', translations: 'ar'});
+    lang = 'ar';
+
+    component.translate.onLangChange.emit({lang: lang, translations: lang});
     expect(component.platform.dir()).toEqual('rtl');
+    expect(component.platform.lang()).toEqual(lang);
+    expect(component.menuSide).toEqual('right');
   })
 
 });
