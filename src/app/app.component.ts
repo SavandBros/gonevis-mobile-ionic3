@@ -116,7 +116,6 @@ export class MyApp {
     } else {
       this.translate.use('en');
     }
-    this.translate.use('fa');
 
     this.translate.get(['BACK_BUTTON_TEXT']).subscribe(values => {
       this.config.set('ios', 'backButtonText', values.BACK_BUTTON_TEXT);

@@ -66,9 +66,21 @@ describe('MyApp Component', () => {
   it('should have 4 pages', () => {
     expect(component.pages.length).toBe(4);
   });
-  
+
   it('should set the default language to EN', () => {
     expect(component.translate.defaultLang).toBe('en');
+  });
+
+  it("should set the language to BroLang when browser lang is undefined", () => {
+    let defaultLang: string = "BroLang";
+
+    spyOn(localStorage, "getItem").and.returnValue(defaultLang);
+
+    fixture = TestBed.createComponent(MyApp);
+    component = fixture.componentInstance;
+
+    expect(component.translate.getBrowserLang()).toEqual(defaultLang);
+    expect(component.translate.defaultLang).toEqual(defaultLang);
   });
 
   it('should change rootPage to Tutorial when not authenticated', () => {

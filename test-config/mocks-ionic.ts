@@ -153,10 +153,12 @@ export class TranslateServiceMock {
   }
 
   getBrowserLang(): string {
-    return 'EN'
+    return localStorage.getItem("BROWSER_LANG") || "en";
   }
 
   use(lang: string): Observable<any> {
+    this.onLangChange.emit({lang: lang, translations: lang});
+    this.defaultLang = lang;
     return Observable.create((observer: Observer<any>) => {});
   }
 
