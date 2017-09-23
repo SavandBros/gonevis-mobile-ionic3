@@ -53,6 +53,9 @@
   "SEARCH_TITLE": "Search",
   "SEARCH_PLACEHOLDER" : "Search the items list, e.g. \"Donald Duck\"",
 
-  "POSTS_TITLE": "Posts",
+  "POSTS": "Posts",
+  "TAGS": "Tags",
+  "FILES": "Files",
+  "SETTINGS": "Settings",
   "SITES": "Sites"
 }

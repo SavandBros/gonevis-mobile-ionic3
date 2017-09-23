@@ -48,6 +48,9 @@
   "SEARCH_TITLE": "Search",
   "SEARCH_PLACEHOLDER" : "Search the items list, e.g. \"Donald Duck\"",
 
-  "POSTS_TITLE": "پست ها",
+  "POSTS": "پست ها",
+  "TAGS": "برچسب ها",
+  "FILES": "فایل ها",
+  "SETTINGS": "تنظیمات",
   "SITES": "سایت ها"
 }
