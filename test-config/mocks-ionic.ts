@@ -3,13 +3,34 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {Observable} from "rxjs/Observable";
 import {Observer} from "rxjs/Observer";
 import {EventEmitter} from "@angular/core";
+import {LangChangeEvent} from "@ngx-translate/core";
+import {DocumentDirection} from "ionic-angular/platform/platform";
 
 
 export class PlatformMock {
+  private _dir: DocumentDirection;
+  private _lang: string;
+
   public ready(): Promise<string> {
     return new Promise((resolve) => {
       resolve('READY');
     });
+  }
+
+  setLang(lang: string, updateDocument: boolean): void {
+    this._lang = lang;
+  }
+
+  lang(): string {
+    return this._lang;
+  }
+
+  setDir(dir: DocumentDirection, updateDocument: boolean): void {
+    this._dir = dir;
+  }
+
+  dir(): DocumentDirection {
+    return this._dir;
   }
 
   public getQueryParam() {
@@ -120,21 +141,29 @@ export class DeepLinkerMock {
 
 export class TranslateServiceMock {
   defaultLang: string;
+  private _onLangChange: EventEmitter<LangChangeEvent> = new EventEmitter<LangChangeEvent>();
+
 
   setDefaultLang(lang: string): void {
     this.defaultLang = lang;
   }
 
+  get onLangChange(): EventEmitter<LangChangeEvent> {
+    return this._onLangChange
+  }
+
   getBrowserLang(): string {
-    return 'EN'
+    return localStorage.getItem("BROWSER_LANG") || "en";
   }
 
   use(lang: string): Observable<any> {
+    this.onLangChange.emit({lang: lang, translations: lang});
+    this.defaultLang = lang;
     return Observable.create((observer: Observer<any>) => {});
   }
 
   get(key: string | Array<string>, interpolateParams?: Object): Observable<string | any> {
-    return Observable.create((observer: Observer<string>) => {});
+    return Observable.of({});
   }
 }
 
@@ -150,6 +179,10 @@ export class AuthServiceProviderMock {
   }
 
   isAuth(): boolean {
+    if (localStorage.getItem("user")) {
+      return true
+    }
+
     return false;
   }
 
