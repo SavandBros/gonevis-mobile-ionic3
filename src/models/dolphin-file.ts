@@ -23,7 +23,7 @@ export class DolphinFile {
   created: Date;
   updated: Date;
 
-  isDeleted: false;
+  isDeleted: boolean;
 
   constructor(data: any) {
     this.id = data.id;
@@ -39,7 +39,6 @@ export class DolphinFile {
     this.created = new Date(data.created);
     this.updated = new Date(data.updated);
     this.user = data.user;
-    this.isDeleted = false;
   }
 
   getExt() {
