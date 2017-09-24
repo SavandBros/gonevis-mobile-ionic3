@@ -28,8 +28,8 @@ export class TagPage {
   editing: boolean;
   submitText: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
-              public authService: AuthProvider, public tagService: TagProvider, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public authService: AuthProvider,
+              public tagService: TagProvider, public toastCtrl: ToastController) {
     this.tag = new TagForm(this.authService.getCurrentSite().id);
     this.editing = false;
     this.submitText = "create";
@@ -39,10 +39,6 @@ export class TagPage {
       this.editing = true;
       this.submitText = "update";
     }
-  }
-
-  dismiss() {
-    this.viewCtrl.dismiss();
   }
 
   save() {
@@ -59,7 +55,7 @@ export class TagPage {
     this.tagService.update(this.tag).subscribe((resp) => {
       this.updating = false;
       this.tag = resp;
-      this.dismiss();
+      this.navCtrl.pop();
 
     }, (err) => {
       this.updating = false;
@@ -72,7 +68,7 @@ export class TagPage {
 
     this.tagService.create(this.tag).subscribe((resp) => {
       this.updating = false;
-      this.dismiss();
+      this.navCtrl.pop();
 
       let toast = this.toastCtrl.create({
         message: 'Tag ' + resp.name + ' created',
