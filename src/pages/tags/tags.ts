@@ -48,14 +48,8 @@ export class TagsPage {
     });
   }
 
-  editTag(tag: Tag): void {
-    let tagModal = this.modalCtrl.create(TagPage, { tag: tag });
-    tagModal.present();
-  }
-
-  createTag(): void {
-    let tagModal = this.modalCtrl.create(TagPage);
-    tagModal.present();
+  tagPage(tag?: Tag): void {
+    this.navCtrl.push(TagPage, { tag: tag });
   }
 
   onUpdate(data: Tag): void {
