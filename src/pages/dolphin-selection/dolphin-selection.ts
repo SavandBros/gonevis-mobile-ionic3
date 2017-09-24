@@ -33,7 +33,7 @@ export class DolphinSelectionPage {
     this.source = this.params.get("source");
   }
 
-  getDolphins() {
+  getDolphins(): void {
     this.loading = true;
 
     this.dolphinService.dolphins().subscribe((resp) => {
@@ -47,7 +47,7 @@ export class DolphinSelectionPage {
     });
   }
 
-  loadMore() {
+  loadMore(): void {
     this.paginating = true;
 
     this.paginationService.paginate(this.next, DolphinFile).subscribe((resp) => {
@@ -64,7 +64,7 @@ export class DolphinSelectionPage {
     this.dismiss();
   }
 
-  dismiss() {
+  dismiss(): void {
     this.viewCtrl.dismiss();
   }
 }
