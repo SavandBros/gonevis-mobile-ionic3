@@ -42,4 +42,11 @@
       </ion-row>
     </ion-grid>
   </ion-card>
+
+  <!-- Load More -->
+  <div text-center>
+    <button ion-button clear (click)="loadMore()" *ngIf="next" [disabled]="paginating">
+      <ion-spinner *ngIf="paginating"></ion-spinner><span *ngIf="!paginating">More</span>
+    </button>
+  </div>
 </ion-content>
