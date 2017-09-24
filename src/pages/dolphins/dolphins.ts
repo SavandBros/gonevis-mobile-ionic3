@@ -55,7 +55,7 @@ export class DolphinsPage {
     });
   }
 
-  options(dolphin) {
+  options(dolphin: DolphinFile): void {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Options',
       buttons: [
@@ -89,14 +89,14 @@ export class DolphinsPage {
     actionSheet.present();
   }
 
-  editDolphin(dolphin: DolphinFile) {
+  editDolphin(dolphin: DolphinFile): void {
     let dolphinModal = this.modalCtrl.create(DolphinPage, {dolphin: dolphin});
 
     // Present modal
     dolphinModal.present();
   }
 
-  onDolphinUpdate(data) {
+  onDolphinUpdate(data: DolphinFile): void {
     this.dolphins.forEach((dolphin, index) => {
       if (dolphin.id == data.id) {
         this.dolphins[index] = data;
@@ -104,7 +104,7 @@ export class DolphinsPage {
     });
   }
 
-  delete(dolphin) {
+  delete(dolphin: DolphinFile): void {
     this.dolphinService.delete(dolphin.id).subscribe(() => {
       dolphin.isDeleted = true;
     }, (err) => {
@@ -112,7 +112,7 @@ export class DolphinsPage {
     });
   }
 
-  loadMore() {
+  loadMore(): void {
     this.paginating = true;
 
     this.paginationService.paginate(this.next, DolphinFile).subscribe((resp) => {
