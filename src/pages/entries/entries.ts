@@ -5,6 +5,8 @@ import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 import {Entry} from "../../models/entry";
 import {CommentModalPage} from "../comment-modal/comment-modal";
 import {EntryPage} from "../entry/entry";
+import {PaginationProvider} from "../../providers/pagination/pagination";
+import {DolphinFile} from "../../models/dolphin-file";
 
 /**
  * Generated class for the EntriesPage page.
@@ -19,12 +21,13 @@ import {EntryPage} from "../entry/entry";
   templateUrl: 'entries.html',
 })
 export class EntriesPage {
-
   entries: Array<Entry>;
   loading: boolean;
+  paginating: boolean;
+  next: string;
 
   constructor(public navCtrl: NavController, public authService: AuthServiceProvider,
-              public entryService: EntryProvider, public modalCtrl: ModalController) {
+              public entryService: EntryProvider, public modalCtrl: ModalController, public paginationService: PaginationProvider) {
     this.get();
   }
 
@@ -55,5 +58,17 @@ export class EntriesPage {
 
   editEntry(entry: Entry): void {
     this.navCtrl.push(EntryPage, { entry: entry });
+  }
+
+  loadMore() {
+    this.paginating = true;
+
+    this.paginationService.paginate(this.next, DolphinFile).subscribe((resp) => {
+      this.entries = this.entries.concat(resp.results);
+      this.next = resp.next;
+      this.paginating = false;
+    }, (err) => {
+      console.log(err)
+    });
   }
 }
