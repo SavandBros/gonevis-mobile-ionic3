@@ -7,12 +7,9 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-buttons left padding-left>
-      <button ion-button icon-only color="white" (click)="dismiss()"><ion-icon name="close"></ion-icon></button>
-    </ion-buttons>
     <ion-title>{{ editing ? tag.name : 'Create' }}</ion-title>
     <ion-buttons end padding-right>
-      <button ion-button icon-only color="white" type="submit" form="tagForm" [disabled]="updating">
+      <button ion-button icon-only type="submit" form="tagForm" [disabled]="updating">
         <ion-icon name="checkmark" *ngIf="!updating"></ion-icon>
         <ion-spinner *ngIf="updating" color="light"></ion-spinner>
       </button>
