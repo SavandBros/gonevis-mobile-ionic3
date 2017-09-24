@@ -17,7 +17,7 @@ export class EntryProvider {
   constructor(public api: Api, public authService: AuthServiceProvider) {}
 
   entries() {
-    return this.api.get("website/entry/", {site: this.authService.getCurrentSite().id})
+    return this.api.get("website/entry/", {site: this.authService.getCurrentSite().id, limit: 5})
       .map((res: Response) => {
         let data = res.json();
         let entries: Array<Entry> = [];
