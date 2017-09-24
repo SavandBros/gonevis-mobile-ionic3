@@ -1,7 +1,6 @@
 **I'm submitting a ...**  (check one with "x")
 [ ] bug report
 [ ] feature request
-[ ] support request => Please do not submit support requests here, use one of these channels: https://forum.ionicframework.com/ or http://ionicworldwide.herokuapp.com/
 
 **Current behavior:**
 <!-- Describe how the bug manifests. -->
