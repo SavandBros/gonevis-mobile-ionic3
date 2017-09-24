@@ -1,32 +1,17 @@
-import {Injectable} from '@angular/core';
-import {Response} from '@angular/http';
 import 'rxjs/add/operator/map';
-import {Api} from "../api";
-import {AuthServiceProvider} from "../auth-service/auth-service";
 import {Entry} from "../../models/entry";
+import {BaseModelProvider} from "../base-model/base-model";
+import {JwtInterceptorProvider} from "../jwt-interceptor/jwt-interceptor";
+import {AuthProvider} from "../auth/auth-service";
+import {Injectable} from "@angular/core";
 
-/*
- Generated class for the EntryProvider provider.
 
- See https://angular.io/docs/ts/latest/guide/dependency-injection.html
- for more info on providers and Angular DI.
- */
 @Injectable()
-export class EntryProvider {
-
-  constructor(public api: Api, public authService: AuthServiceProvider) {}
-
-  entries() {
-    return this.api.get("website/entry/", {site: this.authService.getCurrentSite().id, limit: 5})
-      .map((res: Response) => {
-        let data = res.json();
-        let entries: Array<Entry> = [];
-        for (let entryData of data.results) {
-          entries.push(new Entry(entryData));
-        }
-
-        data.results = entries;
-        return data;
-      });
+export class EntryProvider extends BaseModelProvider<Entry> {
+  constructor(public http: JwtInterceptorProvider, public authService: AuthProvider){
+    super(http, authService);
+    this.apiEndPoint = "website/entry/{{site}}/";
+    this.apiEndPointList = "website/entry/";
+    this.modelClass = Entry
   }
 }

@@ -1,19 +1,13 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, ModalController, Refresher} from 'ionic-angular';
+import {IonicPage, ModalController, NavController, Refresher} from 'ionic-angular';
 import {EntryProvider} from "../../providers/entry/entry";
-import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
+import {AuthProvider} from "../../providers/auth/auth-service";
 import {Entry} from "../../models/entry";
 import {CommentModalPage} from "../comment-modal/comment-modal";
 import {EntryPage} from "../entry/entry";
 import {PaginationProvider} from "../../providers/pagination/pagination";
 import {DolphinFile} from "../../models/dolphin-file";
 
-/**
- * Generated class for the EntriesPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -26,7 +20,7 @@ export class EntriesPage {
   paginating: boolean;
   next: string;
 
-  constructor(public navCtrl: NavController, public authService: AuthServiceProvider,
+  constructor(public navCtrl: NavController, public authService: AuthProvider,
               public entryService: EntryProvider, public modalCtrl: ModalController, public paginationService: PaginationProvider) {
     this.get();
   }
@@ -35,10 +29,11 @@ export class EntriesPage {
     this.get(refresher);
   }
 
-  get(refresh?: Refresher) {
+  get(refresh?: Refresher): void {
     this.loading = true;
 
-    this.entryService.entries().subscribe((resp) => {
+    this.entryService.all().subscribe((resp) => {
+      console.log(resp);
       this.entries = resp.results;
       this.loading = false;
 
@@ -51,13 +46,13 @@ export class EntriesPage {
     });
   }
 
-  presentCommentModal(entry: Entry): void{
-    let commentModal = this.modalCtrl.create(CommentModalPage, { entry: entry });
+  presentCommentModal(entry: Entry): void {
+    let commentModal = this.modalCtrl.create(CommentModalPage, {entry: entry});
     commentModal.present();
   }
 
   editEntry(entry: Entry): void {
-    this.navCtrl.push(EntryPage, { entry: entry });
+    this.navCtrl.push(EntryPage, {entry: entry});
   }
 
   loadMore() {

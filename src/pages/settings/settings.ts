@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {Events, IonicPage, ModalController, NavController} from 'ionic-angular';
 import {Site} from "../../models/site";
-import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
+import {AuthProvider} from "../../providers/auth/auth-service";
 import {SiteProvider} from "../../providers/site/site";
 import {DomSanitizer, SafeStyle} from "@angular/platform-browser";
 import {DolphinSelectionPage} from "../dolphin-selection/dolphin-selection";
@@ -20,7 +20,7 @@ export class SettingsPage {
   loading: boolean;
 
   constructor(public navCtrl: NavController, public siteService: SiteProvider,
-              public sanitizer: DomSanitizer, public authService: AuthServiceProvider,
+              public sanitizer: DomSanitizer, public authService: AuthProvider,
               public modalCtrl: ModalController, public events: Events) {
     this.get();
     events.subscribe('image:selected', (dolphin, source) => this.onImageSelect(dolphin, source));

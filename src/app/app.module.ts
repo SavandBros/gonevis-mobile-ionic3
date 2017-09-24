@@ -19,7 +19,6 @@ import {DolphinPage} from "../pages/dolphin/dolphin";
 import {DolphinSelectionPage} from '../pages/dolphin-selection/dolphin-selection';
 
 import {Api} from '../providers/api';
-import {Items} from '../mocks/providers/items';
 import {Settings} from '../providers/settings';
 import {User} from '../providers/user';
 
@@ -30,7 +29,7 @@ import {StatusBar} from '@ionic-native/status-bar';
 
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {AuthServiceProvider} from '../providers/auth-service/auth-service';
+import {AuthProvider} from '../providers/auth/auth-service';
 import {DolphinProvider} from '../providers/dolphin/dolphin';
 import {EntryProvider} from '../providers/entry/entry';
 import {JwtInterceptorProvider} from '../providers/jwt-interceptor/jwt-interceptor';
@@ -41,6 +40,7 @@ import {AlertProvider} from '../providers/alert/alert';
 import {PaginationProvider} from '../providers/pagination/pagination';
 import {SettingsPage} from "../pages/settings/settings";
 import {SiteProvider} from '../providers/site/site';
+import {BaseModelProvider} from '../providers/base-model/base-model';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -119,7 +119,6 @@ export function provideSettings(storage: Storage) {
       },
       deps: [XHRBackend, RequestOptions]
     },
-    Items,
     User,
     Camera,
     GoogleMaps,
@@ -128,14 +127,15 @@ export function provideSettings(storage: Storage) {
     {provide: Settings, useFactory: provideSettings, deps: [Storage]},
     // Keep this to enable Ionic's runtime error handling during development
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthServiceProvider,
+    AuthProvider,
     DolphinProvider,
-    EntryProvider,
     CommentProvider,
     TagProvider,
     AlertProvider,
     PaginationProvider,
-    SiteProvider
+    SiteProvider,
+    BaseModelProvider,
+    EntryProvider,
   ]
 })
 export class AppModule {

@@ -1,12 +1,12 @@
 import {Component, ViewChild} from '@angular/core';
-import {Platform, Nav, Config} from 'ionic-angular';
+import {Config, Nav, Platform} from 'ionic-angular';
 
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 
 import {EntrancePage} from '../pages/entrance/entrance';
-import {AuthServiceProvider} from '../providers/auth-service/auth-service';
-import {TranslateService} from '@ngx-translate/core'
+import {AuthProvider} from '../providers/auth/auth-service';
+import {LangChangeEvent, TranslateService} from '@ngx-translate/core'
 import {TutorialPage} from "../pages/tutorial/tutorial";
 import {EntriesPage} from "../pages/entries/entries";
 import {Account} from "../models/account";
@@ -20,38 +20,61 @@ import {SiteProvider} from "../providers/site/site";
 })
 export class MyApp {
   public rootPage: object;
-  authService: AuthServiceProvider;
   account: Account;
   currentSite: any;
+  menuSide: string;
 
   @ViewChild(Nav) nav: Nav;
 
-  pages: any[] = [
-    {title: 'Posts', component: EntriesPage, icon: 'paper'},
-    {title: 'Tags', component: TagsPage, icon: 'pricetags'},
-    {title: 'Files', component: DolphinsPage, icon: 'images'},
-    {title: 'Settings', component: SettingsPage, icon: 'settings'}
-  ];
+  pages: any[];
 
-  constructor(public translate: TranslateService, private platform: Platform,
-              authService: AuthServiceProvider, private config: Config, private statusBar: StatusBar,
+  constructor(public translate: TranslateService, public platform: Platform,
+              public authService: AuthProvider, private config: Config, private statusBar: StatusBar,
               private splashScreen: SplashScreen, public siteService: SiteProvider) {
     this.initTranslate();
-    this.platform.ready().then(() => {
-      if (authService.isAuth()) {
-        this.rootPage = EntriesPage;
-      } else {
-        this.rootPage = TutorialPage;
-      }
+
+    this.translate.get(['POSTS', 'TAGS', 'FILES', 'SETTINGS']).subscribe(values => {
+      this.pages = [
+        {title: values.POSTS, component: EntriesPage, icon: 'paper'},
+        {title: values.TAGS, component: TagsPage, icon: 'pricetags'},
+        {title: values.FILES, component: DolphinsPage, icon: 'images'},
+        {title: values.SETTINGS, component: SettingsPage, icon: 'settings'}
+      ];
     });
+
+    if (this.authService.isAuth()) {
+      this.rootPage = EntriesPage;
+    } else {
+      this.rootPage = TutorialPage;
+    }
+
+    this.platform.ready().then((readySource: string) => {
+      console.debug(readySource);
+    });
+
     this.authService = authService;
     this.account = this.authService.getAuthUser(true);
     this.currentSite = this.authService.getCurrentSite();
+
     // Events
     this.authService.authenticated$.subscribe(() => this.onAuthenticate());
     this.authService.signOut$.subscribe(() => this.onSignOut());
     this.authService.currentSite$.subscribe(() => this.onCurrentSite());
-    this.siteService.siteUpdated$.subscribe((data) => this.siteUpdated(data))
+    this.siteService.siteUpdated$.subscribe((data) => this.siteUpdated(data));
+
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      console.info(`Language change to ${event.lang}`);
+
+      if (event.lang == 'ar' || event.lang == 'fa') {
+        this.platform.setDir('rtl', true);
+        this.menuSide = 'right';
+      } else {
+        this.platform.setDir('ltr', true);
+        this.menuSide = 'left';
+      }
+
+      this.platform.setLang(event.lang, true);
+    });
   }
 
   onAuthenticate(): void {
@@ -75,6 +98,7 @@ export class MyApp {
     }
   }
 
+  // TODO: We're not using this. should we remove ?
   ionViewDidLoad(): void {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -85,13 +109,12 @@ export class MyApp {
   }
 
   initTranslate(): void {
-    // Set the default language for translation strings, and the current language.
     this.translate.setDefaultLang('en');
 
     if (this.translate.getBrowserLang() !== undefined) {
       this.translate.use(this.translate.getBrowserLang());
     } else {
-      this.translate.use('en'); // Set your language here
+      this.translate.use('en');
     }
 
     this.translate.get(['BACK_BUTTON_TEXT']).subscribe(values => {

@@ -3,16 +3,9 @@ import {Response} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {Site} from "../../models/site";
 import {Api} from "../api";
-import {AuthServiceProvider} from "../auth-service/auth-service";
-import 'rxjs/add/operator/map';
+import {AuthProvider} from "../auth/auth-service";
 import {Account} from "../../models/account";
 
-/*
-  Generated class for the SiteProvider provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular DI.
-*/
 @Injectable()
 export class SiteProvider {
 
@@ -20,7 +13,7 @@ export class SiteProvider {
   currentSite: any;
   public siteUpdated$: EventEmitter<Account> = new EventEmitter();
 
-  constructor(public authService: AuthServiceProvider, public api: Api) {
+  constructor(public authService: AuthProvider, public api: Api) {
     this.siteId = this.authService.getCurrentSite().id;
     this.currentSite = this.authService.getCurrentSite();
   }

@@ -1,0 +1,56 @@
+{
+  "BACK_BUTTON_TEXT" : "عقب",
+
+  "NAME": "نام",
+  "EMAIL": "ایمیل",
+  "USERNAME": "نام کاربری",
+  "PASSWORD": "رمز عبور",
+  "LOGIN": "ورود",
+  "SIGNUP": "ثبت نام",
+  "LOGOUT": "خروج",
+
+  "TUTORIAL_SKIP_BUTTON" : "رد کن",
+  "TUTORIAL_CONTINUE_BUTTON" : "ادامه",
+
+  "TUTORIAL_SLIDE1_TITLE": "به گونویس خوش آمدید",
+  "TUTORIAL_SLIDE1_DESCRIPTION": "گونویس یه مکان حرفه ای برای مدیریت وبلاگ و سایت می باشید. از یک وبلاگ ساده ی روزانه گرفته تا ویسایت های انشارات حرفه ای.",
+
+  "TUTORIAL_SLIDE2_TITLE": "How to use the Super Starter",
+  "TUTORIAL_SLIDE2_DESCRIPTION": "Assemble the various page types you want and remove the ones you don't. We've provided many common mobile app page layouts, like login and signup pages, tabs, and this tutorial page.",
+
+  "TUTORIAL_SLIDE3_TITLE": "دامنه مجانی",
+  "TUTORIAL_SLIDE3_DESCRIPTION": "Get a free subdomain registered under gonevis.com",
+
+  "TUTORIAL_SLIDE4_TITLE": "آماده ای شروع کنیم؟",
+
+  "WELCOME_INTRO" : "The starting point for your next great Ionic app",
+
+  "SETTINGS_TITLE": "Settings",
+  "SETTINGS_PROFILE_BUTTON" : "Edit Profile",
+  "SETTINGS_PAGE_PROFILE": "Edit Profile",
+
+  "WELCOME_TITLE": "خوش آمدید",
+
+  "LOGIN_TITLE": "ورود",
+  "LOGIN_ERROR": "امکان ورود با مشخصات داده شده نیست.",
+  "LOGIN_BUTTON": "ورود",
+  "SIGNUP_TITLE": "ثبت نام",
+  "SIGNUP_ERROR": "حساب کاربری ایجاد نشد. لظفا مخصات داده شده رو بررسی و دوباره امتحان کنید.",
+  "SIGNUP_BUTTON": "ثبت نام",
+
+
+  "DONE_BUTTON" : "Done",
+  "CANCEL_BUTTON" : "Cancel",
+  "DELETE_BUTTON" : "Delete",
+
+  "CARDS_TITLE": "Social",
+
+  "SEARCH_TITLE": "Search",
+  "SEARCH_PLACEHOLDER" : "Search the items list, e.g. \"Donald Duck\"",
+
+  "POSTS": "پست ها",
+  "TAGS": "برچسب ها",
+  "FILES": "فایل ها",
+  "SETTINGS": "تنظیمات",
+  "SITES": "سایت ها"
+}

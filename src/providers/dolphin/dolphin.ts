@@ -3,7 +3,7 @@ import {Response} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {DolphinFile} from "../../models/dolphin-file";
 import {Api} from "../api";
-import {AuthServiceProvider} from "../auth-service/auth-service";
+import {AuthProvider} from "../auth/auth-service";
 import 'rxjs/add/operator/map';
 /*
  Generated class for the DolphinProvider provider.
@@ -16,7 +16,7 @@ export class DolphinProvider {
 
   public dolphinUpdate$: EventEmitter<DolphinFile> = new EventEmitter();
 
-  constructor(public api: Api, public authService: AuthServiceProvider) {
+  constructor(public api: Api, public authService: AuthProvider) {
   }
 
   dolphins(limit?: number) {
