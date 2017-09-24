@@ -55,7 +55,7 @@ export class EntriesPage {
     this.navCtrl.push(EntryPage, {entry: entry});
   }
 
-  loadMore() {
+  loadMore(): void {
     this.paginating = true;
 
     this.paginationService.paginate(this.next, DolphinFile).subscribe((resp) => {
