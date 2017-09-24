@@ -9,6 +9,11 @@
   <ion-navbar hideBackButton="true">
     <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>
     <ion-title>Tags</ion-title>
+    <ion-buttons end padding-right>
+      <button ion-button icon-only (click)="tagPage()" color="primary">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -26,9 +31,6 @@
   </div>
 
   <!-- Dolphins -->
-  <ion-fab top right edge>
-    <button ion-fab mini (click)="createTag()"><ion-icon name="add"></ion-icon></button>
-  </ion-fab>
   <ion-list class="animated blur">
     <ion-item *ngFor="let tag of tags">
       <ion-thumbnail item-start>
@@ -36,7 +38,7 @@
       </ion-thumbnail>
       <h2>{{ tag.name }}</h2>
       <p>{{ tag.description }}</p>
-      <button ion-button clear item-end (click)="editTag(tag)">Edit</button>
+      <button ion-button clear item-end (click)="tagPage(tag)">Edit</button>
     </ion-item>
   </ion-list>
 </ion-content>
