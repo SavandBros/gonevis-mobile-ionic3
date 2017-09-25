@@ -5,6 +5,7 @@ import {AuthProvider} from "../../providers/auth/auth-service";
 import {SiteProvider} from "../../providers/site/site";
 import {DomSanitizer, SafeStyle} from "@angular/platform-browser";
 import {DolphinSelectionPage} from "../dolphin-selection/dolphin-selection";
+import {DolphinFile} from "../../models/dolphin-file";
 
 @IonicPage()
 @Component({
@@ -18,6 +19,7 @@ export class SettingsPage {
   coverImage: SafeStyle;
   updating: boolean;
   loading: boolean;
+  imageSelected: boolean = false;
 
   constructor(public navCtrl: NavController, public siteService: SiteProvider,
               public sanitizer: DomSanitizer, public authService: AuthProvider,
@@ -45,32 +47,41 @@ export class SettingsPage {
   updateSite(): void {
     this.updating = true;
 
-    let payload = {
+    let payload: any = {
       title: this.site.title,
       description: this.site.description,
       meta_description: this.site.metaDescription,
       commenting: this.site.commenting,
-      voting: this.site.voting,
-      cover_image: this.site.media.coverImage.id,
-      logo: this.site.media.logo.id
+      voting: this.site.voting
     };
+
+    if (this.imageSelected) {
+      payload.cover_image = this.site.media.coverImage ? this.site.media.coverImage.id : null;
+      payload.logo = this.site.media.logo ? this.site.media.logo.id: null;
+
+      this.imageSelected = false;
+    }
 
     this.siteService.updateSite(payload).subscribe((resp) => {
       this.updating = false;
       this.site = resp;
-      this.coverImage = this.sanitizer.bypassSecurityTrustStyle(`url(${this.site.media.coverImage.file})`);
+
+      if (this.site.media.coverImage) {
+        this.coverImage = this.sanitizer.bypassSecurityTrustStyle(`url(${this.site.media.coverImage.file})`);
+      }
     }, (err) => {
       this.updating = false;
       console.log(err);
     })
   }
 
-  selectImage(image): void{
+  selectImage(image: string): void{
     let selectionModal = this.modalCtrl.create(DolphinSelectionPage, {source: image});
     selectionModal.present();
   }
 
-  onImageSelect(dolphin, source) {
-    this.site.media[source] = dolphin;
+  onImageSelect(dolphin: DolphinFile, source: string): void {
+    this.site.media[source] = dolphin ? dolphin : null;
+    this.imageSelected = true;
   }
 }
