@@ -7,9 +7,12 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>Select an image</ion-title>
     <ion-buttons left padding-left>
-      <button ion-button icon-only color="white" (click)="dismiss()"><ion-icon name="close"></ion-icon></button>
+      <button ion-button icon-only (click)="dismiss()"><ion-icon name="close"></ion-icon></button>
+    </ion-buttons>
+    <ion-title>Select an image</ion-title>
+    <ion-buttons end padding-right>
+      <button ion-button (click)="select(null)">Remove</button>
     </ion-buttons>
   </ion-navbar>
 
