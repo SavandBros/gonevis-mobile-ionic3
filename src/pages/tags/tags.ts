@@ -1,15 +1,9 @@
-import { Component } from '@angular/core';
-import {IonicPage, ModalController, NavController, Refresher} from 'ionic-angular';
+import {Component} from '@angular/core';
+import {ActionSheetController, IonicPage, NavController, Platform, Refresher} from 'ionic-angular';
 import {TagProvider} from "../../providers/tag/tag";
 import {Tag} from "../../models/tag";
 import {TagPage} from "../tag/tag";
-
-/**
- * Generated class for the TagsPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import {AlertProvider} from "../../providers/alert/alert";
 
 @IonicPage()
 @Component({
@@ -21,7 +15,9 @@ export class TagsPage {
   tags: Array<Tag>;
   loading: boolean;
 
-  constructor(public navCtrl: NavController, public tagService: TagProvider, public modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController, public tagService: TagProvider,
+              public platform: Platform, public actionSheetCtrl: ActionSheetController,
+              public alertService: AlertProvider) {
     this.get();
 
     this.tagService.updated$.subscribe((tag) => this.onUpdate(tag));
@@ -48,8 +44,56 @@ export class TagsPage {
     });
   }
 
+  options(tag: Tag): void {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Options',
+      buttons: [
+        {
+          text: 'Edit',
+          icon: !this.platform.is('ios') ? 'create' : null,
+          cssClass: 'action-icon-primary',
+          handler: () => this.tagPage(tag)
+        },
+        {
+          text: 'Delete',
+          icon: !this.platform.is('ios') ? 'trash' : null,
+          role: 'Destructive',
+          cssClass: 'action-icon-danger',
+          handler: () => {
+            actionSheet.dismiss();
+
+            this.alertService.createAlert(
+              'Are you sure?',
+              'Remove this tag permanently',
+              [
+                {text: 'Cancel', role: 'cancel'},
+                {text: 'Delete', handler: () => this.delete(tag)}
+              ]);
+
+            return false;
+          }
+        },
+        {
+          text: 'Cancel',
+          icon: !this.platform.is('ios') ? 'close' : null,
+          role: 'cancel'
+        },
+      ]
+    });
+
+    actionSheet.present();
+  }
+
   tagPage(tag?: Tag): void {
-    this.navCtrl.push(TagPage, { tag: tag });
+    this.navCtrl.push(TagPage, {tag: tag});
+  }
+
+  delete(tag: Tag): void {
+    this.tagService.delete(tag).subscribe(() => {
+      tag.isDeleted = true;
+    }, (err) => {
+      console.log(err)
+    });
   }
 
   onUpdate(data: Tag): void {
