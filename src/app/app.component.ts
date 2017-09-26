@@ -86,6 +86,7 @@ export class MyApp {
     this.nav.setRoot(EntrancePage);
   }
 
+
   onCurrentSite(): void {
     this.nav.setRoot(EntriesPage);
   }
