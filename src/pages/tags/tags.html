@@ -34,7 +34,7 @@
   <ion-list class="animated blur">
     <ion-item *ngFor="let tag of tags">
       <ion-thumbnail item-start>
-        <img src="{{ tag.media.cover_image ? tag.media.cover_image.thumbnail_128x128 : '../../assets/img/avatar.png' }}">
+        <img src="{{ tag.media.coverImage ? tag.media.coverImage.thumbnail_128x128 : '../../assets/img/avatar.png' }}">
       </ion-thumbnail>
       <h2>{{ tag.name }}</h2>
       <p>{{ tag.description }}</p>

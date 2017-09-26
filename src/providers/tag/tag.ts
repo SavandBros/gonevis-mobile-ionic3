@@ -35,7 +35,7 @@ export class TagProvider {
   }
 
   update(tag) {
-    return this.api.put(`tagool/tag/${tag.slug}/`, tag, { slug: tag.slug, site: tag.site })
+    return this.api.put(`tagool/tag/${tag.slug}/`, tag, { site: tag.site })
       .map((res: Response) => {
         let data = res.json();
         let tag: Tag = new Tag(data);

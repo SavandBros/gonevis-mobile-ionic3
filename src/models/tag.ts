@@ -1,10 +1,10 @@
 import {DolphinFile} from "./dolphin-file";
 
 class TagMedia {
-  cover_image: DolphinFile;
+  coverImage: DolphinFile;
 
   constructor(cover_image: DolphinFile) {
-    this.cover_image = cover_image;
+    this.coverImage = cover_image;
   }
 }
 
