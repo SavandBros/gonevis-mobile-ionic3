@@ -1,0 +1,13 @@
+<div id="geditor">
+  <div class="{{ classes.actionbar }}">
+
+    <span *ngFor="let action of actions">
+      <button ion-button clear [innerHTML]="action.icon" (click)="action.result()"></button>
+    </span>
+
+    <div class="{{classes.content}}">
+      <div contenteditable="true" id="content" [innerHTML]="content"></div>
+    </div>
+
+  </div>
+</div>
