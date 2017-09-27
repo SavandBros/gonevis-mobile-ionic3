@@ -26,6 +26,7 @@ export class TagsPage {
 
   reloadPage(refresher): void {
     this.get(refresher);
+    this.loading = false;
   }
 
   get(refresh?: Refresher): void {
