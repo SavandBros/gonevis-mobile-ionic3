@@ -1,0 +1,67 @@
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>
+    <ion-title>Reader</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <!-- Pull To Refresh -->
+  <ion-refresher (ionRefresh)="reloadPage($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Loading -->
+  <div text-center class="page-loader">
+    <ion-spinner *ngIf="loading"></ion-spinner>
+  </div>
+
+  <!-- Readers -->
+  <ion-card *ngFor="let reader of readers" class="">
+
+    <!-- User -->
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="{{ reader.user.getAvatar('tiny') }}">
+      </ion-avatar>
+      <h2>{{ reader.user.getDisplayName() }}</h2>
+      <p>{{ reader.published | date }}</p>
+    </ion-item>
+
+    <!-- Cover Image -->
+    <img src="{{ reader.media.coverImage.file }}" *ngIf="reader.media.coverImage">
+
+    <!-- Content -->
+    <ion-card-content>
+      <ion-card-title>{{ reader.title }}</ion-card-title>
+      <p [innerHTML]="reader.content"></p>
+    </ion-card-content>
+
+    <!-- Buttons -->
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-left clear small>
+          <ion-icon name="thumbs-up"></ion-icon>
+          <div>{{ reader.voteCount }}</div>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button icon-left clear small float-right>
+          <ion-icon name="eye"></ion-icon>
+          <div>{{ reader.viewCount }}</div>
+        </button>
+      </ion-col>
+    </ion-row>
+
+  </ion-card>
+
+  <!-- Load More -->
+  <div text-center>
+    <button ion-button clear (click)="loadMore()" *ngIf="next" [disabled]="paginating">
+      <ion-spinner *ngIf="paginating"></ion-spinner><span *ngIf="!paginating">More</span>
+    </button>
+  </div>
+</ion-content>
