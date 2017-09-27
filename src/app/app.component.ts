@@ -14,6 +14,7 @@ import {TagsPage} from "../pages/tags/tags";
 import {DolphinsPage} from "../pages/dolphins/dolphins";
 import {SettingsPage} from "../pages/settings/settings";
 import {SiteProvider} from "../providers/site/site";
+import {ReaderPage} from "../pages/reader/reader";
 
 @Component({
   templateUrl: 'app.html'
@@ -33,11 +34,12 @@ export class MyApp {
               private splashScreen: SplashScreen, public siteService: SiteProvider) {
     this.initTranslate();
 
-    this.translate.get(['POSTS', 'TAGS', 'FILES', 'SETTINGS']).subscribe(values => {
+    this.translate.get(['POSTS', 'TAGS', 'FILES', "READER", 'SETTINGS']).subscribe(values => {
       this.pages = [
         {title: values.POSTS, component: EntriesPage, icon: 'paper'},
         {title: values.TAGS, component: TagsPage, icon: 'pricetags'},
         {title: values.FILES, component: DolphinsPage, icon: 'images'},
+        {title: values.READER, component: ReaderPage, icon: 'book'},
         {title: values.SETTINGS, component: SettingsPage, icon: 'settings'}
       ];
     });
