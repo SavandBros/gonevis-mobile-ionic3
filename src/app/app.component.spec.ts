@@ -66,8 +66,8 @@ describe('MyApp Component', () => {
     expect(component instanceof MyApp).toBe(true);
   });
 
-  it('should have 4 pages', () => {
-    expect(component.pages.length).toBe(4);
+  it('should have 5 pages', () => {
+    expect(component.pages.length).toBe(5);
   });
 
   it('should set the default language to EN', () => {

@@ -1,6 +1,6 @@
 import {DolphinFile} from "./dolphin-file";
 
-class SiteMedia {
+export class SiteMedia {
   coverImage: DolphinFile;
   logo: DolphinFile;
 

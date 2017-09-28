@@ -27,6 +27,7 @@ export class EntriesPage {
 
   reloadPage(refresher): void {
     this.get(refresher);
+    this.loading = false;
   }
 
   get(refresh?: Refresher): void {
@@ -36,6 +37,7 @@ export class EntriesPage {
       console.log(resp);
       this.entries = resp.results;
       this.loading = false;
+      this.next = resp.next;
 
       if (refresh) {
         refresh.complete();

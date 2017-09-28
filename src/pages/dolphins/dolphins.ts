@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {
-  ActionSheetController, IonicPage, ModalController, NavController, Refresher
+  ActionSheetController, IonicPage, ModalController, NavController, Platform, Refresher
 } from 'ionic-angular';
 import {DolphinProvider} from "../../providers/dolphin/dolphin";
 import {DolphinFile} from "../../models/dolphin-file";
@@ -29,13 +29,14 @@ export class DolphinsPage {
 
   constructor(public navCtrl: NavController, public dolphinService: DolphinProvider,
               public actionSheetCtrl: ActionSheetController, public alertService: AlertProvider,
-              public paginationService: PaginationProvider, public modalCtrl: ModalController) {
+              public paginationService: PaginationProvider, public modalCtrl: ModalController, public platform: Platform) {
     this.get();
     this.dolphinService.dolphinUpdate$.subscribe((data) => this.onDolphinUpdate(data));
   }
 
   reloadPage(refresher): void {
     this.get(refresher);
+    this.loading = false;
   }
 
   get(refresh?: Refresher): void {
@@ -61,13 +62,14 @@ export class DolphinsPage {
       buttons: [
         {
           text: 'Edit',
-          icon: 'create',
+          icon: !this.platform.is('ios') ? 'create' : null,
           cssClass: 'action-icon-primary',
           handler: () => this.editDolphin(dolphin)
         },
         {
           text: 'Delete',
-          icon: 'trash',
+          icon: !this.platform.is('ios') ? 'trash' : null,
+          role: 'Destructive',
           cssClass: 'action-icon-danger',
           handler: () => {
             actionSheet.dismiss();
@@ -82,7 +84,12 @@ export class DolphinsPage {
 
             return false;
           }
-        }
+        },
+        {
+          text: 'Cancel',
+          icon: !this.platform.is('ios') ? 'close' : null,
+          role: 'cancel'
+        },
       ]
     });
 

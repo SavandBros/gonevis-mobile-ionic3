@@ -59,4 +59,8 @@ export class TagProvider {
         return data;
       });
   }
+
+  delete(tag) {
+    return this.api.delete(`tagool/tag/${tag.slug}/`, {site: tag.site}).map(() => {});
+  }
 }

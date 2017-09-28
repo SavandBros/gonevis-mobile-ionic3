@@ -32,13 +32,17 @@
 
   <!-- Dolphins -->
   <ion-list class="animated blur">
-    <ion-item *ngFor="let tag of tags">
-      <ion-thumbnail item-start>
-        <img src="{{ tag.media.coverImage ? tag.media.coverImage.thumbnail_128x128 : '../../assets/img/avatar.png' }}">
-      </ion-thumbnail>
-      <h2>{{ tag.name }}</h2>
-      <p>{{ tag.description }}</p>
-      <button ion-button clear item-end (click)="tagPage(tag)">Edit</button>
-    </ion-item>
+    <span *ngFor="let tag of tags">
+      <ion-item *ngIf="!tag.isDeleted">
+        <ion-thumbnail item-start>
+          <img src="{{ tag.media.coverImage ? tag.media.coverImage.thumbnail_128x128 : '../../assets/img/avatar.png' }}">
+        </ion-thumbnail>
+        <h2>{{ tag.name }}</h2>
+        <p>{{ tag.description }}</p>
+        <button ion-button clear item-end icon-only (click)="options(tag)">
+          <ion-icon name="more"></ion-icon>
+        </button>
+      </ion-item>
+    </span>
   </ion-list>
 </ion-content>

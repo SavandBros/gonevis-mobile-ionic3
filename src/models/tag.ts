@@ -19,6 +19,8 @@ export class Tag {
   absolute_uri: string;
   media: TagMedia;
 
+  isDeleted: boolean;
+
   constructor(data: any) {
     this.id = data.id;
     this.name = data.name;

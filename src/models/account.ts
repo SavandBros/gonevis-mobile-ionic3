@@ -2,7 +2,7 @@ import {UserSite} from "./user-site";
 import {Media} from "./media";
 
 
-class User {
+export class User {
   name: string;
   username: string;
   email: string;

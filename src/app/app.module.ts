@@ -42,6 +42,8 @@ import {SettingsPage} from "../pages/settings/settings";
 import {SiteProvider} from '../providers/site/site';
 import {BaseModelProvider} from '../providers/base-model/base-model';
 import {EditorComponent} from "../components/editor/editor";
+import {ReaderProvider} from '../providers/reader/reader';
+import {ReaderPage} from "../pages/reader/reader";
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -81,6 +83,7 @@ export function provideSettings(storage: Storage) {
     SettingsPage,
     DolphinSelectionPage,
     EditorComponent,
+    ReaderPage
   ],
   imports: [
     BrowserModule,
@@ -112,6 +115,7 @@ export function provideSettings(storage: Storage) {
     SettingsPage,
     DolphinSelectionPage,
     EditorComponent,
+    ReaderPage
   ],
   providers: [
     Api,
@@ -139,6 +143,7 @@ export function provideSettings(storage: Storage) {
     SiteProvider,
     BaseModelProvider,
     EntryProvider,
+    ReaderProvider,
   ]
 })
 export class AppModule {
