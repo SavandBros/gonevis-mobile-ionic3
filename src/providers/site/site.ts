@@ -9,17 +9,13 @@ import {Account} from "../../models/account";
 @Injectable()
 export class SiteProvider {
 
-  siteId: string;
-  currentSite: any;
   public siteUpdated$: EventEmitter<Account> = new EventEmitter();
 
   constructor(public authService: AuthProvider, public api: Api) {
-    this.siteId = this.authService.getCurrentSite().id;
-    this.currentSite = this.authService.getCurrentSite();
   }
 
   site() {
-    return this.api.get("website/site/" + this.siteId + "/settings/")
+    return this.api.get("website/site/" + this.authService.getCurrentSite().id + "/settings/")
       .map((res: Response) => {
         let data = res.json();
         data = new Site(data);
@@ -28,7 +24,7 @@ export class SiteProvider {
   }
 
   updateSite(payload) {
-    return this.api.put("website/site/" + this.siteId + "/update-settings/", payload)
+    return this.api.put("website/site/" + this.authService.getCurrentSite().id + "/update-settings/", payload)
       .map((res: Response) => {
         let data = res.json();
         data = new Site(data);
