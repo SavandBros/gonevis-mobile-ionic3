@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, RequestOptions, URLSearchParams } from '@angular/http';
+import {Http, RequestOptions, RequestOptionsArgs, URLSearchParams} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {JwtInterceptorProvider} from "./jwt-interceptor/jwt-interceptor";
 
