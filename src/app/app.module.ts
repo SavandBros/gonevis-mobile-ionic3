@@ -41,7 +41,7 @@ import {PaginationProvider} from '../providers/pagination/pagination';
 import {SettingsPage} from "../pages/settings/settings";
 import {SiteProvider} from '../providers/site/site';
 import {BaseModelProvider} from '../providers/base-model/base-model';
-import { ReaderProvider } from '../providers/reader/reader';
+import {ReaderProvider} from '../providers/reader/reader';
 import {ReaderPage} from "../pages/reader/reader";
 
 // The translate loader needs to know where to load i18n files
