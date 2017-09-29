@@ -5,6 +5,7 @@ import {DolphinFile} from "../../models/dolphin-file";
 import {Api} from "../api";
 import {AuthProvider} from "../auth/auth-service";
 import 'rxjs/add/operator/map';
+
 /*
  Generated class for the DolphinProvider provider.
 
@@ -34,8 +35,8 @@ export class DolphinProvider {
       });
   }
 
-  update(id, dolphin) {
-    return this.api.put(`dolphin/file/${id}/`, dolphin, { siteId: this.authService.getCurrentSite().id })
+  update(id: string, dolphin: any) {
+    return this.api.put(`dolphin/file/${id}/`, dolphin, {siteId: this.authService.getCurrentSite().id})
       .map((res: Response) => {
         let data = res.json();
 
@@ -45,7 +46,27 @@ export class DolphinProvider {
       });
   }
 
-  delete(id) {
-    return this.api.delete(`dolphin/file/${id}/`, {siteId: this.authService.getCurrentSite().id}).map(() => {});
+  delete(id: string) {
+    return this.api.delete(`dolphin/file/${id}/`, {siteId: this.authService.getCurrentSite().id}).map(() => {
+    });
+  }
+
+  uploadUrl(payload: any) {
+    return this.api.post("website/site/" + this.authService.getCurrentSite().id + "/upload-url/", payload)
+      .map((res: Response) => {
+        let data = res.json();
+        console.log(data);
+        return data;
+      });
+  }
+
+  uploadDolphin(payload: any) {
+    return this.api.post("dolphin/file/", payload)
+      .map((res: Response) => {
+        let data = res.json();
+        data = new DolphinFile(data);
+
+        return data;
+      });
   }
 }
