@@ -7,14 +7,21 @@
 <ion-header>
 
   <ion-navbar>
-    <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Files</ion-title>
+    <ion-buttons end padding-right>
+      <button ion-button icon-only (click)="uploadType()" color="primary">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
   <!-- Pull To Refresh -->
   <ion-refresher (ionRefresh)="reloadPage($event)">
     <ion-refresher-content></ion-refresher-content>
@@ -26,43 +33,24 @@
   </div>
 
   <!-- Dolphins -->
-  <span *ngFor="let dolphin of dolphins">
-    <ion-card [ngClass]="{'animated blur': !dolphin.isDeleted}" *ngIf="!dolphin.isDeleted">
-      <img src="{{dolphin.file}}" *ngIf="dolphin.isImage">
-      <div class="is-file" *ngIf="!dolphin.isImage">
-        <ion-icon name="document"></ion-icon>
-      </div>
-      <ion-card-content>
-        <ion-card-title>{{ dolphin.metaData.name }}</ion-card-title>
-        <p>{{ dolphin.metaData.description }}</p>
-      </ion-card-content>
-      <ion-row>
-        <ion-col>
-          <button ion-button small clear icon-left>
-            <ion-icon name="disc"></ion-icon>
-            {{ dolphin.sizeHuman }}
-          </button>
-        </ion-col>
-        <ion-col text-center>
-          <button ion-button small clear icon-left>
-            <ion-icon name="image" *ngIf="dolphin.isImage"></ion-icon>
-            <ion-icon name="document" *ngIf="!dolphin.isImage"></ion-icon>
-            <div>{{ dolphin.getExt() }}</div>
-          </button>
-        </ion-col>
-        <ion-col text-right>
-          <button ion-button clear small icon-only (click)="options(dolphin)">
-            <ion-icon name="settings"></ion-icon>
-          </button>
-        </ion-col>
-      </ion-row>
-    </ion-card>
-  </span>
+  <ion-grid no-padding>
+    <ion-row>
+      <ion-col *ngFor="let dolphin of dolphins" col-6 col-lg-3 col-sm-3 [ngClass]="{'dis-none': dolphin.isDeleted}">
+        <ion-card (tap)="options(dolphin)">
+          <img src="{{dolphin.thumbnail_128x128}}" *ngIf="dolphin.isImage">
+          <div class="is-file" *ngIf="!dolphin.isImage">
+            <ion-icon name="document"></ion-icon>
+          </div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
   <!-- Load More -->
   <div text-center>
     <button ion-button clear (click)="loadMore()" *ngIf="next" [disabled]="paginating">
-      <ion-spinner *ngIf="paginating"></ion-spinner><span *ngIf="!paginating">More</span>
+      <ion-spinner *ngIf="paginating"></ion-spinner>
+      <span *ngIf="!paginating">More</span>
     </button>
   </div>
 </ion-content>
