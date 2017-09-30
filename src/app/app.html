@@ -1,4 +1,4 @@
-<ion-menu [content]="content" [side]="menuSide">
+<ion-menu [content]="content" [side]="menuSide" id="lovelyMenu">
   <ion-header>
     <ion-toolbar color="primary" *ngIf="authService.isAuth()">
       <ion-title>{{ authService.getCurrentSite().title }}</ion-title>

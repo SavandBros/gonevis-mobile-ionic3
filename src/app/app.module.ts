@@ -41,6 +41,7 @@ import {PaginationProvider} from '../providers/pagination/pagination';
 import {SettingsPage} from "../pages/settings/settings";
 import {SiteProvider} from '../providers/site/site';
 import {BaseModelProvider} from '../providers/base-model/base-model';
+import {EditorComponent} from "../components/editor/editor";
 import {ReaderProvider} from '../providers/reader/reader';
 import {ReaderPage} from "../pages/reader/reader";
 
@@ -81,6 +82,7 @@ export function provideSettings(storage: Storage) {
     DolphinPage,
     SettingsPage,
     DolphinSelectionPage,
+    EditorComponent,
     ReaderPage
   ],
   imports: [
@@ -112,6 +114,7 @@ export function provideSettings(storage: Storage) {
     DolphinPage,
     SettingsPage,
     DolphinSelectionPage,
+    EditorComponent,
     ReaderPage
   ],
   providers: [

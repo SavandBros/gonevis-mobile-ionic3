@@ -23,7 +23,7 @@ export class MyApp {
   public rootPage: object;
   account: Account;
   currentSite: any;
-  menuSide: string;
+  menuSide: string = "left";
 
   @ViewChild(Nav) nav: Nav;
 
@@ -66,6 +66,7 @@ export class MyApp {
 
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
       console.info(`Language change to ${event.lang}`);
+      let element: HTMLElement = document.getElementById("lovelyMenu");
 
       if (event.lang == 'ar' || event.lang == 'fa') {
         this.platform.setDir('rtl', true);
@@ -75,6 +76,7 @@ export class MyApp {
         this.menuSide = 'left';
       }
 
+      element.setAttribute("side", this.menuSide);
       this.platform.setLang(event.lang, true);
     });
   }

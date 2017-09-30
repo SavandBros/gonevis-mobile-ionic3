@@ -27,6 +27,7 @@ import {SiteProviderMock} from "../../test-config/mocks/gonevis/site-mock";
 describe('MyApp Component', () => {
   let fixture;
   let component: MyApp;
+  let lovelyMenuElement: HTMLElement;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -56,18 +57,25 @@ describe('MyApp Component', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MyApp);
     component = fixture.componentInstance;
+
+    lovelyMenuElement = fixture.nativeElement.querySelector('#lovelyMenu');
+    spyOn(document, "getElementById").and.returnValue(lovelyMenuElement);
   });
 
   it('should be created', () => {
     expect(component instanceof MyApp).toBe(true);
   });
 
-  it('should have 4 pages', () => {
-    expect(component.pages.length).toBe(4);
+  it('should have 5 pages', () => {
+    expect(component.pages.length).toBe(5);
   });
 
   it('should set the default language to EN', () => {
+    fixture = TestBed.createComponent(MyApp);
+    component = fixture.componentInstance;
+
     expect(component.translate.defaultLang).toBe('en');
+    expect(lovelyMenuElement.attributes.getNamedItem('side').value).toEqual("left");
   });
 
   it("should set the language to BroLang when browser lang is undefined", () => {
@@ -80,6 +88,7 @@ describe('MyApp Component', () => {
 
     expect(component.translate.getBrowserLang()).toEqual(defaultLang);
     expect(component.translate.defaultLang).toEqual(defaultLang);
+    expect(lovelyMenuElement.attributes.getNamedItem('side').value).toEqual("left");
   });
 
   it('should change rootPage to Tutorial when not authenticated', () => {
