@@ -1,8 +1,12 @@
 import {Component} from '@angular/core';
-import {Events, IonicPage, NavController, NavParams, ViewController} from 'ionic-angular';
+import {
+  ActionSheetController, Events, IonicPage, NavController, NavParams, Platform,
+  ViewController
+} from 'ionic-angular';
 import {DolphinFile} from "../../models/dolphin-file";
 import {DolphinProvider} from "../../providers/dolphin/dolphin";
 import {PaginationProvider} from "../../providers/pagination/pagination";
+import {Camera, CameraOptions} from "@ionic-native/camera";
 
 /**
  * Generated class for the DolphinSelectionPage page.
@@ -24,13 +28,17 @@ export class DolphinSelectionPage {
   paginating: boolean;
   loading: boolean;
   next: string;
+  cameraOptions: CameraOptions;
 
   constructor(public navCtrl: NavController, public dolphinService: DolphinProvider,
               public paginationService: PaginationProvider, public params: NavParams,
-              public viewCtrl: ViewController, public events: Events) {
+              public viewCtrl: ViewController, public events: Events,
+              public actionSheetCtrl: ActionSheetController, public camera: Camera,
+              public platform: Platform) {
     this.files = 'files';
     this.getDolphins();
     this.source = this.params.get("source");
+    this.dolphinService.dolphinUploaded$.subscribe((data) => this.dolphins.unshift(data));
   }
 
   getDolphins(): void {
@@ -66,5 +74,59 @@ export class DolphinSelectionPage {
 
   dismiss(): void {
     this.viewCtrl.dismiss();
+  }
+
+  uploadType(): void {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Select',
+      buttons: [
+        {
+          text: 'Camera',
+          icon: !this.platform.is('ios') ? 'camera' : null,
+          handler: () => {
+            actionSheet.dismiss();
+
+            // From Camera
+            this.cameraOptions = {
+              quality: 80,
+              destinationType: this.camera.DestinationType.DATA_URL,
+              sourceType: this.camera.PictureSourceType.CAMERA,
+              allowEdit: true,
+              encodingType: this.camera.EncodingType.JPEG,
+              mediaType: this.camera.MediaType.PICTURE
+            };
+
+            this.dolphinService.uploadFile(this.cameraOptions);
+            return false;
+          }
+        },
+        {
+          text: 'Photo Library',
+          icon: !this.platform.is('ios') ? 'images' : null,
+          handler: () => {
+            actionSheet.dismiss();
+
+            // From Library
+            this.cameraOptions = {
+              quality: 80,
+              destinationType: this.camera.DestinationType.DATA_URL,
+              sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+              encodingType: this.camera.EncodingType.JPEG,
+              saveToPhotoAlbum: false
+            };
+
+            this.dolphinService.uploadFile(this.cameraOptions);
+            return false;
+          }
+        },
+        {
+          text: 'Cancel',
+          icon: !this.platform.is('ios') ? 'close' : null,
+          role: 'cancel'
+        },
+      ]
+    });
+
+    actionSheet.present();
   }
 }
