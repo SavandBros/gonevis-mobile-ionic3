@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {
-  ActionSheetController, IonicPage, Loading, LoadingController, ModalController, NavController, Platform, Refresher
+  ActionSheetController, IonicPage, ModalController, NavController, Platform, Refresher
 } from 'ionic-angular';
 import {DolphinProvider} from "../../providers/dolphin/dolphin";
 import {DolphinFile} from "../../models/dolphin-file";
@@ -24,15 +24,15 @@ export class DolphinsPage {
   loading: boolean;
   next: string;
   cameraOptions: CameraOptions;
-  base64Image: string;
 
   constructor(public navCtrl: NavController, public dolphinService: DolphinProvider,
               public actionSheetCtrl: ActionSheetController, public alertService: AlertProvider,
               public paginationService: PaginationProvider, public modalCtrl: ModalController,
               public platform: Platform, public camera: Camera, public http: Http,
-              public authService: AuthProvider, public loadingCtrl: LoadingController) {
+              public authService: AuthProvider) {
     this.get();
     this.dolphinService.dolphinUpdate$.subscribe((data) => this.onDolphinUpdate(data));
+    this.dolphinService.dolphinUploaded$.subscribe((data) => this.dolphins.unshift(data));
   }
 
   reloadPage(refresher): void {
@@ -104,14 +104,6 @@ export class DolphinsPage {
     dolphinModal.present();
   }
 
-  onDolphinUpdate(data: DolphinFile): void {
-    this.dolphins.forEach((dolphin, index) => {
-      if (dolphin.id == data.id) {
-        this.dolphins[index] = data;
-      }
-    });
-  }
-
   delete(dolphin: DolphinFile): void {
     this.dolphinService.delete(dolphin.id).subscribe(() => {
       dolphin.isDeleted = true;
@@ -152,7 +144,7 @@ export class DolphinsPage {
               mediaType: this.camera.MediaType.PICTURE
             };
 
-            this.uploadFile(this.cameraOptions);
+            this.dolphinService.uploadFile(this.cameraOptions);
             return false;
           }
         },
@@ -171,8 +163,8 @@ export class DolphinsPage {
               saveToPhotoAlbum: false
             };
 
-            this.uploadFile(this.cameraOptions);
-            return false
+            this.dolphinService.uploadFile(this.cameraOptions);
+            return false;
           }
         },
         {
@@ -186,88 +178,11 @@ export class DolphinsPage {
     actionSheet.present();
   }
 
-  public uploadFile(options: CameraOptions) {
-    this.camera.getPicture(options).then(imageData => {
-      // Loading
-      let loader = this.loadingCtrl.create({content: "Uploading file..."});
-      loader.present();
-
-      // Base64 image
-      this.base64Image = "data:image/jpeg;base64," + imageData;
-
-      // File data
-      fetch(this.base64Image).then((res) => {
-        res.blob().then(file => {
-
-          // File info required by backEnd
-          let fileInfo = {
-            file_name: new Date().getTime().toString() + ".jpeg",
-            file_size: file.size,
-            mime_type: file.type
-          };
-
-          // Upload to upload-url endpoint
-          this.upload(fileInfo, file, loader);
-
-        });
-      });
-
-    }, error => {
-      console.log("ERROR -> " + JSON.stringify(error));
+  onDolphinUpdate(data: DolphinFile): void {
+    this.dolphins.forEach((dolphin, index) => {
+      if (dolphin.id == data.id) {
+        this.dolphins[index] = data;
+      }
     });
-  }
-
-  private upload(fileInfo: { file_name: string; file_size; mime_type }, file, loader: Loading) {
-    this.dolphinService.uploadUrl(fileInfo).subscribe((resp) => {
-      // Set file to fields
-      resp.post_data.fields.file = file;
-
-      let fields = resp.post_data.fields;
-      // Create new FormData
-      let formData = new FormData();
-
-      // Append fields with values
-      formData.append("acl", fields.acl);
-      formData.append("Content-Type", fields["Content-Type"]);
-      formData.append("key", fields.key);
-      formData.append("AWSAccessKeyId", fields.AWSAccessKeyId);
-      formData.append("policy", fields.policy);
-      formData.append("signature", fields.signature);
-      formData.append("file", fields.file, fileInfo.file_name);
-
-      // Post to url given by backEnd
-      this.uploadToStorage(resp, formData, fileInfo, fields, loader);
-
-    }, (err) => {
-      console.log(err)
-    });
-  }
-
-  private uploadToStorage(resp, formData: FormData, fileInfo: { file_name: string; file_size; mime_type }, fields: any, loader: Loading) {
-    this.http.post(resp.post_data.url, formData).subscribe(() => {
-      console.log(`File uploaded ${fileInfo.file_name}`);
-
-      // Payload required by backEnd
-      let payload = {
-        file_key: fields.key,
-        site: this.authService.getCurrentSite().id
-      };
-      // Post to file endpoint
-      this.uploadDolphin(payload, loader);
-
-    }, (err) => {
-      console.log(err);
-      console.error(`Upload failed ${fileInfo.file_name}`);
-    })
-  }
-
-  private uploadDolphin(payload: { file_key; site }, loader: Loading) {
-    this.dolphinService.uploadDolphin(payload).subscribe((resp) => {
-      this.dolphins.unshift(resp);
-      loader.dismiss()
-    }, (err) => {
-      console.log(err);
-      loader.dismiss()
-    })
   }
 }
