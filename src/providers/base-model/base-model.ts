@@ -1,4 +1,4 @@
-import {Response, URLSearchParams} from '@angular/http';
+import {RequestOptions, Response, URLSearchParams} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {Observable} from "rxjs/Observable";
 import {JwtInterceptorProvider} from "../jwt-interceptor/jwt-interceptor";
@@ -19,10 +19,18 @@ export class BaseModelProvider<T> {
   /**
    * Make a query to return all the objects from the model API endpoint.
    */
-  all(): Observable<GoNevisAPIResponse<T>> {
-    let params = new URLSearchParams();
-    params.set('site', this.authService.getCurrentSite().id);
-    return this.http.get(BaseModelProvider.getAbsoluteURL(this.apiEndPointList), params)
+  all(params?: Map<string, string>): Observable<GoNevisAPIResponse<T>> {
+    let requestOptions = new RequestOptions();
+    requestOptions.params = new URLSearchParams();
+    requestOptions.params.set('site', this.authService.getCurrentSite().id);
+
+    if (params) {
+      params.forEach((value: string, key: string) => {
+        requestOptions.params.set(key, value);
+      });
+    }
+
+    return this.http.get(BaseModelProvider.getAbsoluteURL(this.apiEndPointList), requestOptions)
       .map((res: Response) => {
         let data: any = res.json();
         let results: Array<T> = [];
