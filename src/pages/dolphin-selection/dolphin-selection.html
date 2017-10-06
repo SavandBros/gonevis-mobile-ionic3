@@ -59,6 +59,6 @@
 
   <!-- Upload -->
   <div *ngSwitchCase="'upload'" text-center>
-    <button ion-button>Upload from library</button>
+    <button ion-button (click)="uploadType()">Upload image</button>
   </div>
 </ion-content>
