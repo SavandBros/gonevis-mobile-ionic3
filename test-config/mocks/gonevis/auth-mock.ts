@@ -18,7 +18,7 @@ export class AuthServiceProviderMock {
   }
 
   getCurrentSite(): any {
-    return {'site': 'currentSite', 'id': 'site-id'}
+    return localStorage.getItem('site');
   }
 
 }

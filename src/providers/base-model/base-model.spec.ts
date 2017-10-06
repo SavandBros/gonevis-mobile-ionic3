@@ -20,7 +20,11 @@ describe('Testing Base model', () => {
   let mockBackend: MockBackend;
   let baseModelService: BaseModelProvider<SmartPerson>;
   let localStorageMock: any = {
-    'JWT': 'WeirdToken'
+    'JWT': 'WeirdToken',
+    'site': {
+      'name': 'Sample site',
+      'id': 'site-id'
+    }
   };
 
   beforeEach(() => {
@@ -82,13 +86,34 @@ describe('Testing Base model', () => {
 
     mockBackend.connections.subscribe((connection: MockConnection) => {
       expect(connection.request.method).toEqual(RequestMethod.Get);
-      expect(connection.request.url).toEqual(BaseModelProvider.getAbsoluteURL('smart'));
+      expect(connection.request.url).toEqual(BaseModelProvider.getAbsoluteURL('smart') + "?site=" + localStorageMock.site.id);
       expect(connection.request.headers).toEqual(expectedHeaders);
       connection.mockRespond(new Response(new ResponseOptions({body: mockBody})));
     });
 
-    baseModelService.all().subscribe(result => {
+    baseModelService.all().subscribe((result: GoNevisAPIResponse<SmartPerson>) => {
       expect(result).toEqual(expectedResponse);
+    });
+
+  });
+
+  it('#all can accept http parameters', () => {
+    spyOn(localStorage, 'getItem').and.callFake((key: string) => {
+      return localStorageMock[key];
+    });
+
+    let params: Map<string, string> = new Map();
+    params.set("search", "Hello");
+
+    mockBackend.connections.subscribe((connection: MockConnection) => {
+      expect(connection.request.method).toEqual(RequestMethod.Get);
+      expect(connection.request.url).toEqual(
+        BaseModelProvider.getAbsoluteURL('smart') + "?site=" + localStorageMock.site.id + "&search=" + params.get("search")
+      );
+    });
+
+    baseModelService.all(params).subscribe((result: GoNevisAPIResponse<SmartPerson>) => {
+      expect(result).toBeTruthy();
     });
   });
 
