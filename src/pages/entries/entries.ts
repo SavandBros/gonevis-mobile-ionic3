@@ -15,10 +15,12 @@ import {DolphinFile} from "../../models/dolphin-file";
   templateUrl: 'entries.html',
 })
 export class EntriesPage {
-  entries: Array<Entry>;
+  entries: Array<Entry> = [];
   loading: boolean;
   paginating: boolean;
   next: string;
+  searchQuery: string = '';
+  searchResult: boolean = true;
 
   constructor(public navCtrl: NavController, public authService: AuthProvider,
               public entryService: EntryProvider, public modalCtrl: ModalController, public paginationService: PaginationProvider) {
@@ -28,6 +30,8 @@ export class EntriesPage {
   reloadPage(refresher): void {
     this.get(refresher);
     this.loading = false;
+    this.searchResult = true;
+    this.searchQuery = '';
   }
 
   get(refresh?: Refresher): void {
@@ -65,6 +69,20 @@ export class EntriesPage {
       this.next = resp.next;
       this.paginating = false;
     }, (err) => {
+      console.log(err)
+    });
+  }
+
+  search(event) {
+    let params: Map<string, string> = new Map();
+    params.set("search", event.target.value);
+
+    this.entryService.all(params).subscribe((resp) => {
+      this.entries = resp.results;
+      this.searchResult = !!resp.count;
+
+    }, (err) => {
+      this.loading = false;
       console.log(err)
     });
   }
