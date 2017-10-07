@@ -50,7 +50,6 @@ export class SettingsPage {
     let payload: any = {
       title: this.site.title,
       description: this.site.description,
-      meta_description: this.site.metaDescription,
       commenting: this.site.commenting,
       voting: this.site.voting
     };
