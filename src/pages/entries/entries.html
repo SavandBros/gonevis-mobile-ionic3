@@ -1,9 +1,14 @@
 <ion-header>
 
-  <ion-navbar hideBackButton="true">
+  <ion-navbar>
     <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>
     <ion-title>{{ 'POSTS' | translate }}</ion-title>
   </ion-navbar>
+
+  <ion-toolbar>
+    <ion-searchbar (ionInput)="search($event)" [animated]="true" [(ngModel)]="searchQuery">
+    </ion-searchbar>
+  </ion-toolbar>
 
 </ion-header>
 
@@ -42,6 +47,10 @@
       </ion-row>
     </ion-grid>
   </ion-card>
+
+  <ion-list>
+    <ion-item color="light" *ngIf="!searchResult" text-center>Couldn't find anything</ion-item>
+  </ion-list>
 
   <!-- Load More -->
   <div text-center>
