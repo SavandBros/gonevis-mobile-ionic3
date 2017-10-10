@@ -47,7 +47,11 @@ export class ReaderPage {
 
   vote(reader: Reader): void {
     this.entryService.vote(reader.id).subscribe((resp) => {
-      resp.created ? reader.voteCount++ : reader.voteCount--;
+      if (resp.created) {
+        reader.voteCount++;
+      } else {
+        reader.voteCount--;
+      }
 
     }, (err) => {
       console.log(err);
