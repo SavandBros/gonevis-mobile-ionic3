@@ -1,16 +1,10 @@
-import { Component } from '@angular/core';
-import {IonicPage, NavController, NavParams, Refresher} from 'ionic-angular';
+import {Component} from '@angular/core';
+import {IonicPage, NavController, Refresher} from 'ionic-angular';
 import {ReaderProvider} from "../../providers/reader/reader";
 import {Reader} from "../../models/reader";
 import {PaginationProvider} from "../../providers/pagination/pagination";
 import {DolphinFile} from "../../models/dolphin-file";
-
-/**
- * Generated class for the ReaderPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import {EntryProvider} from "../../providers/entry/entry";
 
 @IonicPage()
 @Component({
@@ -25,7 +19,7 @@ export class ReaderPage {
   next: string;
 
   constructor(public navCtrl: NavController, public readerService: ReaderProvider,
-              public paginationService: PaginationProvider) {
+              public paginationService: PaginationProvider, public entryService: EntryProvider) {
     this.get();
   }
 
@@ -48,6 +42,15 @@ export class ReaderPage {
     }, (err) => {
       this.loading = false;
       console.log(err)
+    });
+  }
+
+  vote(reader: Reader): void {
+    this.entryService.vote(reader.id).subscribe((resp) => {
+      resp.created ? reader.voteCount++ : reader.voteCount--;
+
+    }, (err) => {
+      console.log(err);
     });
   }
 
