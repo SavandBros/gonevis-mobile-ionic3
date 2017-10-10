@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, Inject, ViewChild} from '@angular/core';
 import {Config, Nav, Platform} from 'ionic-angular';
 
 import {StatusBar} from '@ionic-native/status-bar';
@@ -15,6 +15,7 @@ import {DolphinsPage} from "../pages/dolphins/dolphins";
 import {SettingsPage} from "../pages/settings/settings";
 import {SiteProvider} from "../providers/site/site";
 import {ReaderPage} from "../pages/reader/reader";
+import {EnvVariables} from "./environment-variables/environment-variables.token";
 
 @Component({
   templateUrl: 'app.html'
@@ -31,9 +32,11 @@ export class MyApp {
 
   constructor(public translate: TranslateService, public platform: Platform,
               public authService: AuthProvider, private config: Config, private statusBar: StatusBar,
-              private splashScreen: SplashScreen, public siteService: SiteProvider) {
+              private splashScreen: SplashScreen, public siteService: SiteProvider,
+              @Inject(EnvVariables) public envVariables) {
     this.initTranslate();
 
+    console.log(this.envVariables.ionicEnvName, envVariables.apiEndpoint);
     this.translate.get(['POSTS', 'TAGS', 'FILES', "READER", 'SETTINGS']).subscribe(values => {
       this.pages = [
         {title: values.POSTS, component: EntriesPage, icon: 'paper'},
