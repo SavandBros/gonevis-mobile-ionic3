@@ -74,6 +74,7 @@ export class Reader {
   viewCount: number;
   activeCommentCount: number;
   commentEnabled: boolean;
+  isVoted: boolean;
   format: number;
   published: Date;
 
@@ -92,6 +93,7 @@ export class Reader {
     this.viewCount = data.view_count;
     this.activeCommentCount = data.active_comment_count;
     this.commentEnabled = data.comment_enabled;
+    this.isVoted = data.is_voted;
     this.published = new Date(data.published);
 
     let readerMedia = null;
