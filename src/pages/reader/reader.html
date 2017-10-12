@@ -43,8 +43,8 @@
     <!-- Buttons -->
     <ion-row>
       <ion-col>
-        <button ion-button icon-left clear small (click)="vote(reader)" [ngClass]="{'voted': reader.isVoted}">
-          <ion-icon name="thumbs-up"></ion-icon>
+        <button ion-button icon-left clear small (click)="vote(reader)">
+          <ion-icon name="{{ reader.voteIcon }}"></ion-icon>
           <div>{{ reader.voteCount }}</div>
         </button>
       </ion-col>
