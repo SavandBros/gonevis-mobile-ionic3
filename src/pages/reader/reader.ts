@@ -53,6 +53,8 @@ export class ReaderPage {
         reader.voteCount--;
       }
 
+      reader.isVoted = resp.created;
+
     }, (err) => {
       console.log(err);
     });
