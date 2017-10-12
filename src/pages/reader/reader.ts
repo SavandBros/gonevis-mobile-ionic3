@@ -49,8 +49,10 @@ export class ReaderPage {
     this.entryService.vote(reader.id).subscribe((resp) => {
       if (resp.created) {
         reader.voteCount++;
+        reader.voteIcon = "heart";
       } else {
         reader.voteCount--;
+        reader.voteIcon = "heart-outline";
       }
 
       reader.isVoted = resp.created;
