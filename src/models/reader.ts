@@ -81,8 +81,6 @@ export class Reader {
   media: ReaderMedia;
   tags: Array<Tag> = [];
 
-  voteIcon: string;
-
   constructor(data: any) {
     this.id = data.id;
     this.title = data.title;
@@ -107,12 +105,6 @@ export class Reader {
 
     for (let tag of data.tags) {
       this.tags.push(new ReaderTags(new Tag(tag)));
-    }
-
-    if (this.isVoted) {
-      this.voteIcon = "heart";
-    } else {
-      this.voteIcon = "heart-outline";
     }
   }
 }
