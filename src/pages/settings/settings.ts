@@ -25,7 +25,8 @@ export class SettingsPage {
   constructor(public navCtrl: NavController, public siteService: SiteProvider,
               public sanitizer: DomSanitizer, public authService: AuthProvider,
               public modalCtrl: ModalController, public events: Events,
-              public platform: Platform, public alertService: AlertProvider, public actionSheetCtrl: ActionSheetController) {
+              public platform: Platform, public alertService: AlertProvider,
+              public actionSheetCtrl: ActionSheetController) {
     this.get();
     events.subscribe('image:selected', (dolphin, source) => this.onImageSelect(dolphin, source));
   }
@@ -44,6 +45,37 @@ export class SettingsPage {
       this.loading = false;
       console.log(err);
     });
+  }
+
+  updateSite(): void {
+    this.updating = true;
+
+    let payload: any = {
+      title: this.site.title,
+      description: this.site.description,
+      commenting: this.site.commenting,
+      voting: this.site.voting
+    };
+
+
+    if (this.updateImage) {
+      payload.cover_image = this.site.media.coverImage ? this.site.media.coverImage.id : null;
+      payload.logo = this.site.media.logo ? this.site.media.logo.id: null;
+
+      this.updateImage = false;
+    }
+
+    this.siteService.updateSite(payload).subscribe((resp) => {
+      this.updating = false;
+      this.site = resp;
+
+      if (this.site.media.coverImage) {
+        this.coverImage = this.sanitizer.bypassSecurityTrustStyle(`url(${this.site.media.coverImage.file})`);
+      }
+    }, (err) => {
+      this.updating = false;
+      console.log(err);
+    })
   }
 
   options(image): void {
@@ -90,38 +122,7 @@ export class SettingsPage {
     actionSheet.present();
   }
 
-  updateSite(): void {
-    this.updating = true;
-
-    let payload: any = {
-      title: this.site.title,
-      description: this.site.description,
-      commenting: this.site.commenting,
-      voting: this.site.voting
-    };
-
-
-    if (this.updateImage) {
-      payload.cover_image = this.site.media.coverImage ? this.site.media.coverImage.id : null;
-      payload.logo = this.site.media.logo ? this.site.media.logo.id: null;
-
-      this.updateImage = false;
-    }
-
-    this.siteService.updateSite(payload).subscribe((resp) => {
-      this.updating = false;
-      this.site = resp;
-
-      if (this.site.media.coverImage) {
-        this.coverImage = this.sanitizer.bypassSecurityTrustStyle(`url(${this.site.media.coverImage.file})`);
-      }
-    }, (err) => {
-      this.updating = false;
-      console.log(err);
-    })
-  }
-
-  selectImage(image: string): void{
+  selectImage(image: string): void | false {
     let selectionModal = this.modalCtrl.create(DolphinSelectionPage, {source: image});
     selectionModal.present();
   }
