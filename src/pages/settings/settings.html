@@ -50,10 +50,14 @@
     <ion-grid>
       <ion-row margin-vertical>
         <ion-col>
-          <button ion-button block type="button" (click)="selectImage('coverImage')" outline>Upload Cover Image</button>
+          <button ion-button block type="button" (click)="options('coverImage')" outline>
+            {{ site.media.coverImage ? "change cover image" : "set cover image" }}
+          </button>
         </ion-col>
         <ion-col>
-          <button ion-button block type="button" outline (click)="selectImage('logo')">Upload logo</button>
+          <button ion-button block type="button" outline (click)="options('logo')">
+            {{ site.media.coverImage ? "change logo" : "set logo" }}
+          </button>
         </ion-col>
       </ion-row>
     </ion-grid>
