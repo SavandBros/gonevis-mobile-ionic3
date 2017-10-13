@@ -1,7 +1,9 @@
 <ion-header>
 
   <ion-navbar>
-    <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Reader</ion-title>
   </ion-navbar>
 
@@ -43,9 +45,10 @@
     <!-- Buttons -->
     <ion-row>
       <ion-col>
-        <button ion-button icon-left clear small (click)="vote(reader)">
-          <ion-icon name="{{ reader.voteIcon }}"></ion-icon>
-          <div>{{ reader.voteCount }}</div>
+        <button ion-button icon-left clear small color="{{ reader.isVoted ? 'danger' : 'primary' }}"
+                (click)="vote(reader)">
+          <ion-icon name="{{ reader.isVoted ? 'heart' : 'heart-outline' }}"></ion-icon>
+          <div>{{ reader.isVoted  ? reader.voteCount ++ 1 : reader.voteCount -- 1 }}</div>
         </button>
       </ion-col>
       <ion-col>
@@ -61,7 +64,8 @@
   <!-- Load More -->
   <div text-center>
     <button ion-button clear (click)="loadMore()" *ngIf="next" [disabled]="paginating">
-      <ion-spinner *ngIf="paginating"></ion-spinner><span *ngIf="!paginating">More</span>
+      <ion-spinner *ngIf="paginating"></ion-spinner>
+      <span *ngIf="!paginating">More</span>
     </button>
   </div>
 </ion-content>
