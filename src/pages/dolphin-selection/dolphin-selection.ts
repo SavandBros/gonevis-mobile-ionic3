@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {
-  ActionSheetController, Events, IonicPage, NavController, NavParams, Platform,
+  ActionSheetController, Events, IonicPage, NavController, NavParams, Platform, Refresher,
   ViewController
 } from 'ionic-angular';
 import {DolphinFile} from "../../models/dolphin-file";
@@ -41,7 +41,12 @@ export class DolphinSelectionPage {
     this.dolphinService.dolphinUploaded$.subscribe((data) => this.dolphins.unshift(data));
   }
 
-  getDolphins(): void {
+  reloadPage(refresher): void {
+    this.getDolphins(refresher);
+    this.loading = false;
+  }
+
+  getDolphins(refresh?: Refresher): void {
     this.loading = true;
 
     this.dolphinService.dolphins().subscribe((resp) => {
@@ -49,6 +54,9 @@ export class DolphinSelectionPage {
       this.dolphins = resp.results;
       this.next = resp.next;
 
+      if (refresh) {
+        refresh.complete();
+      }
     }, (err) => {
       this.loading = false;
       console.log(err)
@@ -76,7 +84,7 @@ export class DolphinSelectionPage {
     this.viewCtrl.dismiss();
   }
 
-  uploadType(): void {
+  uploadType(): void | false {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Select',
       buttons: [
