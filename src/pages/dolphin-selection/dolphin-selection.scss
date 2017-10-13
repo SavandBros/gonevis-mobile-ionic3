@@ -1,6 +1,12 @@
 page-dolphin-selection {
   ion-card {
     position: relative;
+    margin: 0 !important;
+    border: 1px solid #fff;
+  }
+
+  .card-md, .card-ios {
+    width: 100%;
   }
 
   .card-img-container {
