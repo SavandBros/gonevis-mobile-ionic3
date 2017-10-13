@@ -53,8 +53,8 @@
     <ion-grid>
       <ion-row margin-vertical>
         <ion-col>
-          <button ion-button block type="button"
-                  (click)="site.media.coverImage ? options('coverImage') : selectImage('coverImage')" outline>
+          <button ion-button block type="button" outline
+                  (click)="site.media.coverImage ? options('coverImage') : selectImage('coverImage')">
             {{ site.media.coverImage ? "change cover image" : "set cover image" }}
           </button>
         </ion-col>

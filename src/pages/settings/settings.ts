@@ -83,14 +83,14 @@ export class SettingsPage {
       title: 'Options',
       buttons: [
         {
-          text: 'Edit',
-          icon: !this.platform.is('ios') ? 'create' : null,
+          text: 'Change',
+          icon: !this.platform.is('ios') ? 'refresh' : null,
           cssClass: 'action-icon-primary',
           handler: () => this.selectImage(image)
         },
         {
-          text: 'Delete',
-          icon: !this.platform.is('ios') ? 'trash' : null,
+          text: 'Remove',
+          icon: !this.platform.is('ios') ? 'remove' : null,
           role: 'Destructive',
           cssClass: 'action-icon-danger',
           handler: () => {
