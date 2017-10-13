@@ -44,6 +44,7 @@ import {BaseModelProvider} from '../providers/base-model/base-model';
 import {EditorComponent} from "../components/editor/editor";
 import {ReaderProvider} from '../providers/reader/reader';
 import {ReaderPage} from "../pages/reader/reader";
+import {EnvironmentsModule} from "./environment-variables/environment-variables.module";
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -96,6 +97,7 @@ export function provideSettings(storage: Storage) {
       }
     }),
     IonicModule.forRoot(MyApp),
+    EnvironmentsModule,
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
