@@ -1,11 +1,12 @@
 import {Component} from '@angular/core';
-import {Events, IonicPage, ModalController, NavController} from 'ionic-angular';
+import {ActionSheetController, Events, IonicPage, ModalController, NavController, Platform} from 'ionic-angular';
 import {Site} from "../../models/site";
 import {AuthProvider} from "../../providers/auth/auth-service";
 import {SiteProvider} from "../../providers/site/site";
 import {DomSanitizer, SafeStyle} from "@angular/platform-browser";
 import {DolphinSelectionPage} from "../dolphin-selection/dolphin-selection";
 import {DolphinFile} from "../../models/dolphin-file";
+import {AlertProvider} from "../../providers/alert/alert";
 
 @IonicPage()
 @Component({
@@ -19,11 +20,12 @@ export class SettingsPage {
   coverImage: SafeStyle;
   updating: boolean;
   loading: boolean;
-  imageSelected: boolean = false;
+  updateImage: boolean = false;
 
   constructor(public navCtrl: NavController, public siteService: SiteProvider,
               public sanitizer: DomSanitizer, public authService: AuthProvider,
-              public modalCtrl: ModalController, public events: Events) {
+              public modalCtrl: ModalController, public events: Events,
+              public platform: Platform, public alertService: AlertProvider, public actionSheetCtrl: ActionSheetController) {
     this.get();
     events.subscribe('image:selected', (dolphin, source) => this.onImageSelect(dolphin, source));
   }
@@ -44,6 +46,50 @@ export class SettingsPage {
     });
   }
 
+  options(image): void {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Options',
+      buttons: [
+        {
+          text: 'Edit',
+          icon: !this.platform.is('ios') ? 'create' : null,
+          cssClass: 'action-icon-primary',
+          handler: () => this.selectImage(image)
+        },
+        {
+          text: 'Delete',
+          icon: !this.platform.is('ios') ? 'trash' : null,
+          role: 'Destructive',
+          cssClass: 'action-icon-danger',
+          handler: () => {
+            actionSheet.dismiss();
+
+            this.alertService.createAlert(
+              'Are you sure?',
+              null,
+              [
+                {text: 'Cancel', role: 'cancel'},
+                {text: 'Delete', handler: () => {
+                  this.site.media[image] = null;
+                  this.updateImage = true;
+                  this.updateSite();
+                }}
+              ]);
+
+            return false;
+          }
+        },
+        {
+          text: 'Cancel',
+          icon: !this.platform.is('ios') ? 'close' : null,
+          role: 'cancel'
+        },
+      ]
+    });
+
+    actionSheet.present();
+  }
+
   updateSite(): void {
     this.updating = true;
 
@@ -54,11 +100,12 @@ export class SettingsPage {
       voting: this.site.voting
     };
 
-    if (this.imageSelected) {
+
+    if (this.updateImage) {
       payload.cover_image = this.site.media.coverImage ? this.site.media.coverImage.id : null;
       payload.logo = this.site.media.logo ? this.site.media.logo.id: null;
 
-      this.imageSelected = false;
+      this.updateImage = false;
     }
 
     this.siteService.updateSite(payload).subscribe((resp) => {
@@ -81,6 +128,7 @@ export class SettingsPage {
 
   onImageSelect(dolphin: DolphinFile, source: string): void {
     this.site.media[source] = dolphin ? dolphin : null;
-    this.imageSelected = true;
+    this.updateImage = true;
+    this.updateSite();
   }
 }
