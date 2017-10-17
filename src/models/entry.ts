@@ -66,13 +66,15 @@ export class Entry {
     this.created = new Date(data.created);
 
     let entryMedia = null;
-    if (data.media.cover_image) {
+    if (data.hasOwnProperty("media") && data.media.cover_image) {
       entryMedia = new DolphinFile(data.media.cover_image);
     }
     this.media = new EntryMedia(entryMedia);
 
-    for (let tag of data.tags) {
-      this.tags.push(new Tag(tag));
+    if (data.hasOwnProperty("tags")) {
+      for (let tag of data.tags) {
+        this.tags.push(new Tag(tag));
+      }
     }
   }
 }
