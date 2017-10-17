@@ -1,13 +1,14 @@
 <div id="geditor">
   <div class="{{ classes.actionbar }}">
 
-    <span *ngFor="let action of actions">
-      <button ion-button clear [innerHTML]="action.icon" (click)="action.result()"></button>
-    </span>
+    <div class="editor-buttons">
+      <button *ngFor="let action of actions" ion-button clear [innerHTML]="action.icon" (click)="action.result()">
+      </button>
+    </div>
 
     <div class="{{classes.content}}">
       <!--TODO: PreventTab-->
-      <div contenteditable="true" id="content" [innerHTML]="content"></div>
+      <div contenteditable="true" data-text="Content" id="content" padding [innerHTML]="content"></div>
     </div>
 
   </div>
