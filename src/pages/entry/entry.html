@@ -1,11 +1,20 @@
 <ion-header>
-  <ion-navbar>
-    <!--TODO: Translate-->
-    <ion-title>Entry</ion-title>
-  </ion-navbar>
+  <ion-toolbar color="dark">
+    <ion-buttons padding-left>
+      <button ion-button icon-only>
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end padding-right>
+      <button ion-button color="secondary" (click)="save()">{{ submitText }}</button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
-<!--TODO: Pass Entry content into the editor -->
-<ion-content padding>
+<ion-content>
+  <ion-item no-lines>
+    <ion-label floating>Title</ion-label>
+    <ion-input type="text" [(ngModel)]="entry.title" name="title"></ion-input>
+  </ion-item>
   <editor [content]="entry.content"></editor>
 </ion-content>
