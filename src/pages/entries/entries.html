@@ -33,15 +33,15 @@
     </ion-card-content>
     <ion-grid>
       <ion-row>
-        <ion-col col-4>
+        <ion-col col-2 text-left>
+          <button ion-button icon-only clear small (click)="entryPage(entry)">
+            <ion-icon name="create"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col col-10>
           <button ion-button clear small icon-left *ngIf="entry.comment_count" (click)="presentCommentModal(entry)">
             <ion-icon name="chatbubbles"></ion-icon>
             <div>{{ entry.comment_count }}</div>
-          </button>
-        </ion-col>
-        <ion-col col-8 text-right>
-          <button ion-button icon-only clear small (click)="editEntry(entry)">
-            <ion-icon name="create"></ion-icon>
           </button>
         </ion-col>
       </ion-row>
@@ -58,4 +58,11 @@
       <ion-spinner *ngIf="paginating"></ion-spinner><span *ngIf="!paginating">More</span>
     </button>
   </div>
+
+  <!-- Add Button -->
+  <ion-fab bottom right>
+    <button ion-fab (click)="entryPage()">
+      <ion-icon name="paper"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>
