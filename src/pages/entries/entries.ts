@@ -57,7 +57,7 @@ export class EntriesPage {
     commentModal.present();
   }
 
-  editEntry(entry: Entry): void {
+  entryPage(entry?: Entry): void {
     this.navCtrl.push(EntryPage, {entry: entry});
   }
 
