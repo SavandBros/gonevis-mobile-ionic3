@@ -23,8 +23,18 @@ export class EntriesPage {
   searchResult: boolean = true;
 
   constructor(public navCtrl: NavController, public authService: AuthProvider,
-              public entryService: EntryProvider, public modalCtrl: ModalController, public paginationService: PaginationProvider) {
+              public entryService: EntryProvider, public modalCtrl: ModalController,
+              public paginationService: PaginationProvider) {
     this.get();
+
+    this.entryService.entryCreated$.subscribe((entry: Entry) => this.entries.unshift(entry));
+    this.entryService.entryUpdated$.subscribe((updatedEntry: Entry) => {
+      this.entries.forEach((entry: Entry, index: number) => {
+        if (entry.id == updatedEntry.id) {
+          this.entries[index] = updatedEntry;
+        }
+      });
+    });
   }
 
   reloadPage(refresher): void {
