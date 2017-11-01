@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {EditorAction} from "./editor-action";
+import {AlertController, Events} from "ionic-angular";
 
 
 @Component({
@@ -9,11 +10,34 @@ import {EditorAction} from "./editor-action";
 })
 export class EditorComponent {
   public content: string;
+  static event: Events;
+  public editable: any;
   public classes: any = {
     'actionbar': 'gonevis-editor-actionbar',
     'button': 'gonevis-editor-button',
     'content': 'gonevis-editor-content',
   };
+
+  constructor(public events: Events, public alertCtrl: AlertController) {
+    EditorComponent.event = this.events;
+    setTimeout(() => {
+      this.editable = document.getElementsByClassName("entry-content");
+      EditorComponent.event.publish('entry:typing', this.editable.content.innerHTML);
+
+      this.listener();
+    }, 1000)
+  }
+
+  listener() {
+    this.editable.content.addEventListener('input', function(container) {
+      EditorComponent.emitContent(container.target.innerHTML);
+    });
+  }
+
+  static emitContent(content: string) {
+    EditorComponent.event.publish('entry:typing', content);
+  }
+
   actions = [
     new EditorAction("Bold", "<b>B</b>", () => EditorComponent.exec("bold")),
     new EditorAction("Italic", "<i>I</i>", () => EditorComponent.exec("italic")),
