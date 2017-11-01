@@ -3,12 +3,14 @@ import {Entry} from "../../models/entry";
 import {BaseModelProvider} from "../base-model/base-model";
 import {JwtInterceptorProvider} from "../jwt-interceptor/jwt-interceptor";
 import {AuthProvider} from "../auth/auth-service";
-import {Injectable} from "@angular/core";
+import {EventEmitter, Injectable} from "@angular/core";
 import {Response} from '@angular/http';
 
 
 @Injectable()
 export class EntryProvider extends BaseModelProvider<Entry> {
+  public entryCreated$: EventEmitter<Entry> = new EventEmitter();
+  public entryUpdated$: EventEmitter<Entry> = new EventEmitter();
 
   constructor(public http: JwtInterceptorProvider, public authService: AuthProvider) {
     super(http, authService);
@@ -27,8 +29,9 @@ export class EntryProvider extends BaseModelProvider<Entry> {
   update(entry: Entry) {
     return this.http.put(`http://draft.gonevis.com/api/v1/website/entry/${entry.id}/`, entry)
       .map((res: Response) => {
+        let data = new Entry(res.json());
+        this.entryUpdated$.emit(data);
 
-        console.log(res.json());
         return res.json();
       })
   }
@@ -36,9 +39,10 @@ export class EntryProvider extends BaseModelProvider<Entry> {
   create(entry: Entry) {
     return this.http.post("http://draft.gonevis.com/api/v1/website/entry/", entry)
       .map((res: Response) => {
+        let data = new Entry(res.json());
+        this.entryCreated$.emit(data);
 
-        console.log(res.json());
-        return res.json();
+        return data;
       })
   }
 }
