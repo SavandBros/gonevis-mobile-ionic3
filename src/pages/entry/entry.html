@@ -1,12 +1,12 @@
 <ion-header>
   <ion-toolbar color="dark">
     <ion-buttons padding-left>
-      <button ion-button icon-only>
+      <button ion-button icon-only (click)="navCtrl.pop()">
         <ion-icon name="close"></ion-icon>
       </button>
     </ion-buttons>
     <ion-buttons end padding-right>
-      <button ion-button color="secondary" (click)="save()">{{ submitText }}</button>
+      <button ion-button color="secondary" (click)="save()" [disabled]="!entry.title">{{ submitText }}</button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
