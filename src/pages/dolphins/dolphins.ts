@@ -11,6 +11,7 @@ import {Camera, CameraOptions} from '@ionic-native/camera';
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {AuthProvider} from "../../providers/auth/auth-service";
+import {PhotoViewer} from "@ionic-native/photo-viewer";
 
 @IonicPage()
 @Component({
@@ -29,10 +30,15 @@ export class DolphinsPage {
               public actionSheetCtrl: ActionSheetController, public alertService: AlertProvider,
               public paginationService: PaginationProvider, public modalCtrl: ModalController,
               public platform: Platform, public camera: Camera, public http: Http,
-              public authService: AuthProvider) {
+              public authService: AuthProvider, private photoViewer: PhotoViewer) {
     this.get();
     this.dolphinService.dolphinUpdate$.subscribe((data) => this.onDolphinUpdate(data));
     this.dolphinService.dolphinUploaded$.subscribe((data) => this.dolphins.unshift(data));
+  }
+
+  viewDolphin(url) {
+    this.photoViewer.show(url);
+    console.log(url)
   }
 
   reloadPage(refresher): void {
