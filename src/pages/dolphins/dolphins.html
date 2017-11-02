@@ -36,7 +36,7 @@
   <ion-grid no-padding>
     <ion-row>
       <ion-col *ngFor="let dolphin of dolphins" col-6 col-lg-3 col-sm-3 [ngClass]="{'dis-none': dolphin.isDeleted}">
-        <ion-card (tap)="options(dolphin)">
+        <ion-card (tap)="options(dolphin)" (press)="viewDolphin(dolphin.file)">
           <img src="{{dolphin.thumbnail_128x128}}" *ngIf="dolphin.isImage">
           <div class="is-file" *ngIf="!dolphin.isImage">
             <ion-icon name="document"></ion-icon>
