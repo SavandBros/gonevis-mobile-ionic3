@@ -1,13 +1,13 @@
 <ion-header>
   <ion-toolbar color="dark">
     <ion-buttons padding-left>
-      <button ion-button icon-only (click)="navCtrl.pop()" [disabled]="updating">
+      <button ion-button icon-only (click)="dismiss()" [disabled]="updating">
         <ion-icon name="close"></ion-icon>
       </button>
     </ion-buttons>
     <ion-buttons end padding-right>
       <button ion-button color="secondary" icon-left (click)="save()" [disabled]="!entry.title || updating">
-        <span *ngIf="!updating">{{ submitText }}</span>
+        <span *ngIf="!updating">Publish</span>
         <ion-spinner color="primary" *ngIf="updating"></ion-spinner>
       </button>
     </ion-buttons>
