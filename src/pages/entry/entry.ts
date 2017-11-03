@@ -26,6 +26,7 @@ export class EntryPage {
       this.entry = <Entry> JSON.parse(JSON.stringify(this.navParams.get("entry")));
       this.editing = true;
       this.submitText = "Update";
+      this.content = this.entry.content;
     } else {
       this.editing = false;
       this.submitText = "Publish";
