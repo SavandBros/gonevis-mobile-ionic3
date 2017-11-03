@@ -18,7 +18,9 @@
     </ion-list>
     <!-- Views -->
     <ion-list no-lines>
-      <button menuClose ion-item *ngFor="let page of pages" (click)="openPage(page)">
+      <button menuClose ion-item *ngFor="let page of pages"
+              (click)="openPage(page)"
+              [ngClass]="{'active': getCurrentView() == page.component.name}">
         <ion-icon name="{{ page.icon }}" item-start></ion-icon> {{ page.title }}
       </button>
     </ion-list>
@@ -27,6 +29,7 @@
       <ion-list-header>{{ 'SITES' | translate }}</ion-list-header>
       <button ion-item menuClose *ngFor="let site of account.user.sites" (click)="authService.setCurrentSite(site)">
         {{ site.title }}
+        <ion-icon name="checkmark" item-end small color="primary" *ngIf="authService.getCurrentSite().id === site.id"></ion-icon>
       </button>
     </ion-list>
     <ion-list>
@@ -38,4 +41,4 @@
   </ion-content>
 
 </ion-menu>
-  <ion-nav #content [root]="rootPage"></ion-nav>
+<ion-nav #content [root]="rootPage"></ion-nav>
