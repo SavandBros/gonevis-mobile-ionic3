@@ -23,6 +23,7 @@ import {Settings} from '../providers/settings';
 import {User} from '../providers/user';
 
 import {Camera} from '@ionic-native/camera';
+import {PhotoViewer} from '@ionic-native/photo-viewer';
 import {GoogleMaps} from '@ionic-native/google-maps';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
@@ -128,6 +129,7 @@ export function provideSettings(storage: Storage) {
     },
     User,
     Camera,
+    PhotoViewer,
     GoogleMaps,
     SplashScreen,
     StatusBar,

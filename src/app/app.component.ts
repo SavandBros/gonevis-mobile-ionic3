@@ -20,7 +20,7 @@ import {ReaderPage} from "../pages/reader/reader";
   templateUrl: 'app.html'
 })
 export class MyApp {
-  public rootPage: object;
+  public rootPage: any;
   account: Account;
   currentSite: any;
   menuSide: string = "left";
@@ -34,21 +34,25 @@ export class MyApp {
               private splashScreen: SplashScreen, public siteService: SiteProvider) {
     this.initTranslate();
 
-    this.translate.get(['POSTS', 'TAGS', 'FILES', "READER", 'SETTINGS']).subscribe(values => {
-      this.pages = [
-        {title: values.POSTS, component: EntriesPage, icon: 'paper'},
-        {title: values.TAGS, component: TagsPage, icon: 'pricetags'},
-        {title: values.FILES, component: DolphinsPage, icon: 'images'},
-        {title: values.READER, component: ReaderPage, icon: 'book'},
-        {title: values.SETTINGS, component: SettingsPage, icon: 'settings'}
-      ];
-    });
+    localStorage.setItem('currentView', "EntriesPage");
 
     if (this.authService.isAuth()) {
       this.rootPage = EntriesPage;
     } else {
       this.rootPage = TutorialPage;
     }
+
+    this.translate.get(['POSTS', 'TAGS', 'FILES', "READER", 'SETTINGS']).subscribe(values => {
+      this.pages = [
+        {title: values.POSTS, component: EntriesPage, icon: 'paper', current: null},
+        {title: values.TAGS, component: TagsPage, icon: 'pricetags', current: null},
+        {title: values.FILES, component: DolphinsPage, icon: 'images', current: null},
+        {title: values.READER, component: ReaderPage, icon: 'book', current: null},
+        {title: values.SETTINGS, component: SettingsPage, icon: 'settings', current: null}
+      ];
+
+      this.getCurrentView();
+    });
 
     this.platform.ready().then((readySource: string) => {
       console.debug(readySource);
@@ -81,6 +85,14 @@ export class MyApp {
     });
   }
 
+  setCurrentView(page): void {
+    localStorage.setItem("currentView", page.component.name);
+  }
+
+  getCurrentView(): string {
+    return localStorage.getItem("currentView");
+  }
+
   onAuthenticate(): void {
     this.account = this.authService.getAuthUser(true);
   }
@@ -90,9 +102,12 @@ export class MyApp {
     this.nav.setRoot(EntrancePage);
   }
 
-
   onCurrentSite(): void {
-    this.nav.setRoot(EntriesPage);
+    for (let page of this.pages) {
+      if (page.component.name === this.getCurrentView()) {
+        this.nav.setRoot(page.component);
+      }
+    }
   }
 
   siteUpdated(data) {
@@ -128,8 +143,9 @@ export class MyApp {
   }
 
   openPage(page): void {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+    this.rootPage = page.component;
+
+    this.setCurrentView(page);
   }
 }
