@@ -1,12 +1,15 @@
 <ion-header>
   <ion-toolbar color="dark">
     <ion-buttons padding-left>
-      <button ion-button icon-only (click)="navCtrl.pop()">
+      <button ion-button icon-only (click)="navCtrl.pop()" [disabled]="updating">
         <ion-icon name="close"></ion-icon>
       </button>
     </ion-buttons>
     <ion-buttons end padding-right>
-      <button ion-button color="secondary" (click)="save()" [disabled]="!entry.title">{{ submitText }}</button>
+      <button ion-button color="secondary" icon-left (click)="save()" [disabled]="!entry.title || updating">
+        <span *ngIf="!updating">{{ submitText }}</span>
+        <ion-spinner color="primary" *ngIf="updating"></ion-spinner>
+      </button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
