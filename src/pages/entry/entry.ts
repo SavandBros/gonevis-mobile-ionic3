@@ -16,6 +16,7 @@ export class EntryPage {
   editing: boolean;
   submitText: string;
   content: string;
+  updating: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public entryService: EntryProvider, public authService: AuthProvider,
@@ -65,18 +66,20 @@ export class EntryPage {
     }
   }
 
-  update() {
+  update(): void {
     this.entry.content = this.content;
+    this.updating = true;
 
-    this.entryService.update(this.entry).subscribe((resp) => {
-      console.log(resp);
+    this.entryService.update(this.entry).subscribe(() => {
+      this.updating = false;
     }, (err) => {
+      this.updating = false;
       console.log(err);
     });
   }
 
 
-  create() {
+  create(): void {
     this.entry.content = this.content;
 
     this.entryService.create(this.entry).subscribe((resp) => {
