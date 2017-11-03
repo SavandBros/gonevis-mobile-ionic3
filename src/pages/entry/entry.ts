@@ -3,8 +3,6 @@ import {AlertController, Events, IonicPage, NavController, NavParams, ToastContr
 import {Entry} from "../../models/entry";
 import {EntryProvider} from "../../providers/entry/entry";
 import {AuthProvider} from "../../providers/auth/auth-service";
-import {noUndefined} from "@angular/compiler/src/util";
-import {AlertProvider} from "../../providers/alert/alert";
 
 @IonicPage()
 @Component({
@@ -14,7 +12,6 @@ import {AlertProvider} from "../../providers/alert/alert";
 export class EntryPage {
   entry: Entry;
   editing: boolean;
-  submitText: string;
   content: string;
   updating: boolean;
 
@@ -25,11 +22,9 @@ export class EntryPage {
     if (this.navParams.get("entry")) {
       this.entry = <Entry> JSON.parse(JSON.stringify(this.navParams.get("entry")));
       this.editing = true;
-      this.submitText = "Update";
       this.content = this.entry.content;
     } else {
       this.editing = false;
-      this.submitText = "Publish";
       this.entry = new Entry({});
       this.entry.site = this.authService.getCurrentSite().id;
     }
@@ -39,7 +34,7 @@ export class EntryPage {
     });
   }
 
-  save() {
+  save(): void {
     if (this.editing) {
       this.update();
     } else {
@@ -80,12 +75,16 @@ export class EntryPage {
   }
 
 
-  create(): void {
+  create(isDraft?: boolean): void {
     this.entry.content = this.content;
+
+    if (isDraft) {
+      this.entry.status = 0;
+    }
 
     this.entryService.create(this.entry).subscribe((resp) => {
       let toast = this.toastCtrl.create({
-        message: `Post ${resp.title} created`,
+        message: isDraft ? `Post ${resp.title} saved as Draft`: `Post ${resp.title} created`,
         duration: 4000,
         position: 'bottom'
       });
@@ -95,5 +94,17 @@ export class EntryPage {
     }, (err) => {
       console.log(err);
     });
+  }
+
+  dismiss(): void {
+    if (!this.editing) {
+      if (this.entry.title) {
+        this.create(true);
+      } else {
+        this.navCtrl.pop();
+      }
+    } else {
+      this.navCtrl.pop();
+    }
   }
 }
