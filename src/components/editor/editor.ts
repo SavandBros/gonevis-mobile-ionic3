@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {EditorAction} from "./editor-action";
-import {AlertController, Events} from "ionic-angular";
+import {Events} from "ionic-angular";
 
 
 @Component({
@@ -18,7 +18,7 @@ export class EditorComponent {
     'content': 'gonevis-editor-content',
   };
 
-  constructor(public events: Events, public alertCtrl: AlertController) {
+  constructor(public events: Events) {
     EditorComponent.event = this.events;
     setTimeout(() => {
       this.editable = document.getElementsByClassName("entry-content");
