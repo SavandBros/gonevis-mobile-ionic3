@@ -143,6 +143,10 @@ export class MyApp {
   }
 
   openPage(page): void {
+    if (page.component === this.rootPage) {
+      return;
+    }
+
     this.nav.setRoot(page.component);
     this.rootPage = page.component;
 
