@@ -25,7 +25,7 @@ export class EditorComponent {
       EditorComponent.event.publish('entry:typing', this.editable.content.innerHTML);
 
       this.listener();
-    }, 1000)
+    }, 0)
   }
 
   listener() {
