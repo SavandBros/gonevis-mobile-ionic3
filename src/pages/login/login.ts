@@ -1,10 +1,6 @@
 import {Component} from '@angular/core';
 import {NavController, ToastController, LoadingController, MenuController} from 'ionic-angular';
-
-import {MainPage} from '../../pages/pages';
-
 import {AuthProvider} from '../../providers/auth/auth-service';
-
 import {TranslateService} from '@ngx-translate/core';
 
 class LoginCredential {
@@ -43,7 +39,6 @@ export class LoginPage {
     this.menu.enable(true);
   }
 
-  // Attempt to login in through our User service
   login() {
     let loader = this.loadingCtrl.create({content: "Loging in, please wait..."});
     loader.present();
