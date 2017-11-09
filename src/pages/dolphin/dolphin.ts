@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController, NavParams, ToastController, ViewController} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ViewController} from 'ionic-angular';
 import {DolphinFile} from "../../models/dolphin-file";
 import {DolphinProvider} from "../../providers/dolphin/dolphin";
 
