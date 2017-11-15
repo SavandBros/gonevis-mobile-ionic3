@@ -29,7 +29,6 @@ export class TagPage {
   updating: boolean;
   editing: boolean;
   updateImage: boolean;
-  submitText: string;
   siteId: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public authService: AuthProvider,
@@ -42,12 +41,10 @@ export class TagPage {
 
     this.tag = new Tag({});
     this.editing = false;
-    this.submitText = "create";
 
     if (this.navParams.get("tag")) {
       this.tag = <Tag> JSON.parse(JSON.stringify(this.navParams.get("tag")));
       this.editing = true;
-      this.submitText = "update";
     }
   }
 
