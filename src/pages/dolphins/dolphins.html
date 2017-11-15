@@ -11,11 +11,6 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Files</ion-title>
-    <ion-buttons end padding-right>
-      <button ion-button icon-only (click)="uploadType()" color="primary">
-        <ion-icon name="cloud-upload"></ion-icon>
-      </button>
-    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -53,4 +48,11 @@
       <span *ngIf="!paginating">More</span>
     </button>
   </div>
+
+  <!-- Add Button -->
+  <ion-fab bottom right>
+    <button ion-fab (click)="uploadType()">
+      <ion-icon name="cloud-upload"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>
