@@ -32,8 +32,10 @@ export class Tag {
     this.tagged_items_count = data.tagged_items_count;
 
     let tagMedia = null;
-    if (data.media.cover_image) {
-      tagMedia = new DolphinFile(data.media.cover_image);
+    if (data.media) {
+      if (data.media.cover_image) {
+        tagMedia = new DolphinFile(data.media.cover_image);
+      }
     }
     this.media = new TagMedia(tagMedia);
   }
