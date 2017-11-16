@@ -19,7 +19,7 @@ export class TagProvider {
 
   constructor(public api: Api, public authService: AuthProvider) {}
 
-  tags() {
+  tags(): any {
     return this.api.get("tagool/tag/", {site: this.authService.getCurrentSite().id})
       .map((res: Response) => {
         let data = res.json();
@@ -34,33 +34,27 @@ export class TagProvider {
       });
   }
 
-  update(tag) {
+  update(tag: any): any {
     return this.api.put(`tagool/tag/${tag.slug}/`, tag, { site: tag.site })
       .map((res: Response) => {
-        let data = res.json();
-        let tag: Tag = new Tag(data);
-
-        data = tag;
+        let data: Tag = new Tag(res.json());
         this.updated$.emit(data);
 
         return data;
       });
   }
 
-  create(tag) {
+  create(tag: any): any {
     return this.api.post("tagool/tag/", tag, {site: this.authService.getCurrentSite().id})
       .map((res: Response) => {
-        let data = res.json();
-        let tag: Tag = new Tag(data);
-
-        data = tag;
+        let data: Tag = new Tag(res.json());
         this.created$.emit(data);
 
         return data;
       });
   }
 
-  delete(tag) {
+  delete(tag: any): any {
     return this.api.delete(`tagool/tag/${tag.slug}/`, {site: tag.site}).map(() => {});
   }
 }
