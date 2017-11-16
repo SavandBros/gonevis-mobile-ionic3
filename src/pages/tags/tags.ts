@@ -98,6 +98,7 @@ export class TagsPage {
   }
 
   onUpdate(data: Tag): void {
+    this.get();
     this.tags.forEach((tag, index) => {
       if (tag.id == data.id) {
         this.tags[index] = data;
