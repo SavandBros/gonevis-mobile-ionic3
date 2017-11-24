@@ -38,7 +38,6 @@ export class DolphinsPage {
 
   viewDolphin(url) {
     this.photoViewer.show(url);
-    console.log(url)
   }
 
   reloadPage(refresher): void {
