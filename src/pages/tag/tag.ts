@@ -8,17 +8,6 @@ import {AuthProvider} from "../../providers/auth/auth-service";
 import {TagProvider} from "../../providers/tag/tag";
 import {DolphinSelectionPage} from "../dolphin-selection/dolphin-selection";
 
-class TagForm {
-  name = '';
-  description = '';
-  site: string;
-  slug: string = '';
-
-  constructor(site) {
-    this.site = site;
-  }
-}
-
 @IonicPage()
 @Component({
   selector: 'page-tag',
@@ -48,7 +37,7 @@ export class TagPage {
     }
   }
 
-  save() {
+  save(): void {
     if (this.editing) {
       this.update();
     } else {
@@ -81,7 +70,7 @@ export class TagPage {
     });
   }
 
-  create() {
+  create(): void {
     this.updating = true;
 
     let payload: any = {
