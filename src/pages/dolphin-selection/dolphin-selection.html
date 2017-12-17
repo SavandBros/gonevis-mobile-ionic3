@@ -29,7 +29,7 @@
   <ion-grid no-padding style="padding: 1px">
     <ion-row>
       <ion-col col-6 *ngFor="let dolphin of dolphins" [ngClass]="{'dis-none': !dolphin.isImage }">
-        <ion-card class="animated blur" (click)="select(dolphin)">
+        <ion-card class="animated fadeIn" (click)="select(dolphin)">
           <img src="{{ dolphin.thumbnail_256x256 }}">
           <div class="card-img-container">
             <button ion-button small clear color="light">{{ dolphin.getExt() }}</button>
