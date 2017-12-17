@@ -21,7 +21,7 @@
       <button menuClose ion-item *ngFor="let page of pages"
               (click)="openPage(page)"
               [ngClass]="{'active': getCurrentView() == page.component.name}">
-        <ion-icon name="{{ page.icon }}" item-start></ion-icon> {{ page.title }}
+        <ion-icon name="{{ page.icon }}" small item-start></ion-icon> {{ page.title }}
       </button>
     </ion-list>
     <!-- Sites -->
@@ -35,7 +35,7 @@
     <ion-list>
       <ion-list-header>{{ 'LOGOUT' | translate }}</ion-list-header>
       <button menuClose ion-item (click)="authService.signOut()">
-        <ion-icon name="log-out" item-start></ion-icon> {{ 'LOGOUT' | translate }}
+        <ion-icon name="log-out" item-start small></ion-icon> {{ 'LOGOUT' | translate }}
       </button>
     </ion-list>
   </ion-content>
