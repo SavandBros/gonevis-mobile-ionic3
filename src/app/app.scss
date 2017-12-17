@@ -53,16 +53,16 @@ button.active {
   animation-fill-mode: both;
 }
 
-@keyframes blur {
+@keyframes fadeIn {
   from {
-    filter: blur(2px);
+    opacity: 0;
   }
 
   to {
-    filter: blur(0);
+    opacity: 1;
   }
 }
 
-.blur {
-  animation-name: blur;
+.fadeIn {
+  animation-name: fadeIn;
 }
