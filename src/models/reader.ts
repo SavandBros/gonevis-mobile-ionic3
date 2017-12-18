@@ -1,13 +1,13 @@
 import {DolphinFile} from "./dolphin-file";
 import {Tag} from "./tag";
 import {SiteMedia} from "./site";
-import {User} from "./account";
+import {User} from "./user";
 
-class ReaderUser extends User{
+class ReaderUser extends User {
   absoluteUri: string
 
   constructor(data: any) {
-    super(data.name, data.username, null, data.id, data.media, null);
+    super(data);
 
     this.absoluteUri = data.get_absolute_uri;
   }
