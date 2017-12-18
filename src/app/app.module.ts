@@ -17,10 +17,10 @@ import {TagPage} from "../pages/tag/tag";
 import {DolphinsPage} from "../pages/dolphins/dolphins";
 import {DolphinPage} from "../pages/dolphin/dolphin";
 import {DolphinSelectionPage} from '../pages/dolphin-selection/dolphin-selection';
+import {ProfilePage} from '../pages/profile/profile';
 
 import {Api} from '../providers/api';
 import {Settings} from '../providers/settings';
-import {User} from '../providers/user';
 
 import {Camera} from '@ionic-native/camera';
 import {GoogleMaps} from '@ionic-native/google-maps';
@@ -84,7 +84,8 @@ export function provideSettings(storage: Storage) {
     SettingsPage,
     DolphinSelectionPage,
     EditorComponent,
-    ReaderPage
+    ReaderPage,
+    ProfilePage
   ],
   imports: [
     BrowserModule,
@@ -116,7 +117,8 @@ export function provideSettings(storage: Storage) {
     SettingsPage,
     DolphinSelectionPage,
     EditorComponent,
-    ReaderPage
+    ReaderPage,
+    ProfilePage
   ],
   providers: [
     Api,
@@ -127,7 +129,6 @@ export function provideSettings(storage: Storage) {
       },
       deps: [XHRBackend, RequestOptions]
     },
-    User,
     Camera,
     GoogleMaps,
     SplashScreen,
