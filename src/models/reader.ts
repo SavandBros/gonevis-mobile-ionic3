@@ -4,7 +4,7 @@ import {SiteMedia} from "./site";
 import {User} from "./user";
 
 class ReaderUser extends User {
-  absoluteUri: string
+  absoluteUri: string;
 
   constructor(data: any) {
     super(data);
