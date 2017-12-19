@@ -3,18 +3,38 @@ import {Media} from "./media";
 
 
 export class User {
+  id: string;
   name: string;
   username: string;
+  about: string;
   email: string;
-  id: string;
+  location: string;
+  FullName: string;
+  ShortName: string;
+  getAbsoluteURI: string;
+  dateJoined: Date;
+  updated: Date;
+  isActive: boolean;
+  receiveEmailNotification: boolean;
+  hasVerifiedEmail: boolean;
   media: Media;
   sites: Array<UserSite> = [];
 
-  constructor(data) {
+  constructor(data: any) {
+    this.id = data.id;
     this.name = data.name;
     this.username = data.username;
+    this.about = data.about;
     this.email = data.email;
-    this.id = data.id;
+    this.location = data.location;
+    this.FullName = data.get_full_name;
+    this.ShortName = data.get_short_name;
+    this.getAbsoluteURI = data.get_absolute_uri;
+    this.dateJoined = new Date(data.date_joined);
+    this.updated = new Date(data.updated);
+    this.isActive = data.is_active;
+    this.receiveEmailNotification = data.receive_email_notification;
+    this.hasVerifiedEmail = data.has_verified_email;
 
     let userMedia = null;
 
@@ -46,6 +66,7 @@ export class User {
   hasMedia(): string {
     return this.media.medium;
   }
+
   getFirstName(): string {
     if (this.name) {
       let firstName = this.name.split(" ")[0];
@@ -72,5 +93,5 @@ export class User {
 
     return this.getFullName();
   }
-}
 
+}
