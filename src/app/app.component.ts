@@ -9,19 +9,20 @@ import {AuthProvider} from '../providers/auth/auth-service';
 import {LangChangeEvent, TranslateService} from '@ngx-translate/core'
 import {TutorialPage} from "../pages/tutorial/tutorial";
 import {EntriesPage} from "../pages/entries/entries";
-import {Account} from "../models/account";
+import {User} from "../models/user";
 import {TagsPage} from "../pages/tags/tags";
 import {DolphinsPage} from "../pages/dolphins/dolphins";
 import {SettingsPage} from "../pages/settings/settings";
 import {SiteProvider} from "../providers/site/site";
 import {ReaderPage} from "../pages/reader/reader";
+import {ProfilePage} from "../pages/profile/profile";
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   public rootPage: any;
-  account: Account;
+  user: User;
   currentSite: any;
   menuSide: string = "left";
 
@@ -34,7 +35,7 @@ export class MyApp {
               private splashScreen: SplashScreen, public siteService: SiteProvider) {
     this.initTranslate();
 
-    localStorage.setItem('currentView', "EntriesPage");
+    this.setCurrentView("EntriesPage");
 
     if (this.authService.isAuth()) {
       this.rootPage = EntriesPage;
@@ -59,7 +60,7 @@ export class MyApp {
     });
 
     this.authService = authService;
-    this.account = this.authService.getAuthUser(true);
+    this.user = this.authService.getAuthUser(true);
     this.currentSite = this.authService.getCurrentSite();
 
     // Events
@@ -85,8 +86,8 @@ export class MyApp {
     });
   }
 
-  setCurrentView(page): void {
-    localStorage.setItem("currentView", page.component.name);
+  setCurrentView(view: string): void {
+    localStorage.setItem("currentView", view);
   }
 
   getCurrentView(): string {
@@ -94,7 +95,7 @@ export class MyApp {
   }
 
   onAuthenticate(): void {
-    this.account = this.authService.getAuthUser(true);
+    this.user = this.authService.getAuthUser(true);
   }
 
   onSignOut(): void {
@@ -111,7 +112,7 @@ export class MyApp {
   }
 
   siteUpdated(data) {
-    for (let site of this.account.user.sites) {
+    for (let site of this.user.sites) {
       if (site.id == this.currentSite.id) {
         site.title = data.title;
       }
@@ -142,10 +143,12 @@ export class MyApp {
     });
   }
 
-  openPage(page): void {
-    this.nav.setRoot(page.component);
-    this.rootPage = page.component;
+  openPage(component?: any): void {
+    let navigation = component ? component : ProfilePage;
 
-    this.setCurrentView(page);
+    this.nav.setRoot(navigation);
+    this.rootPage = navigation;
+
+    this.setCurrentView(navigation.name);
   }
 }
