@@ -14,9 +14,9 @@ export class AuthProvider {
 
   constructor(public http: Http, public api: Api) {}
 
-  // If useInstance is true, user data should be an Account model
+  // If useInstance is true, user data should be an User model
   // Else return a normal user object
-  getAuthUser(useInstance: boolean): Account | any {
+  getAuthUser(useInstance: boolean): User | any {
     if(!this.isAuth()) {
       return false;
     }
@@ -56,7 +56,7 @@ export class AuthProvider {
     }
   }
 
-  setAuthUser(userData: any, separateSites?: boolean): Account {
+  setAuthUser(userData: any, separateSites?: boolean): User {
     // Separated sites
     if (separateSites) {
       userData.sites = this.getAuthUser(true).sites;
@@ -103,11 +103,7 @@ export class AuthProvider {
   user() {
     return this.api.get(`account/users/${this.getAuthUser(true).id}/`)
       .map((res: Response) => {
-        let data = res.json();
-
-        this.setAuthUser(data ,true);
-
-        return data;
+        return res.json();
       });
   }
 }
