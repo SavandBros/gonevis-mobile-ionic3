@@ -1,0 +1,51 @@
+<ion-content>
+  <!-- Loading -->
+  <div text-center class="page-loader">
+    <ion-spinner *ngIf="loading"></ion-spinner>
+  </div>
+
+  <div *ngIf="user.hasMedia()" style="overflow: hidden;">
+    <div class="cover" text-center [style.background-image]="coverImage"></div>
+    <div class="p-container">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-4>
+            <button float-left ion-button clear icon-only color="white" menuToggle>
+              <ion-icon name="menu"></ion-icon>
+            </button>
+          </ion-col>
+          <ion-col col-4><p class="col-white">PROFILE</p></ion-col>
+          <ion-col col-4>
+            <button float-right ion-button clear icon-only color="white" type="submit"
+                    form="profileForm" [disabled]="updating">
+              <ion-icon name="checkmark" *ngIf="!updating"></ion-icon>
+              <ion-spinner *ngIf="updating" color="dark"></ion-spinner>
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <img [src]="user.media.small">
+    </div>
+  </div>
+
+  <form padding (ngSubmit)="update()" id="profileForm">
+    <ion-item>
+      <ion-label color="primary" floating>Name</ion-label>
+      <ion-input [(ngModel)]="user.name" name="name"></ion-input>
+    </ion-item>
+    <ion-item margin-vertical>
+      <ion-label color="primary" floating>About</ion-label>
+      <ion-input [(ngModel)]="user.about" name="about"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" floating>Location</ion-label>
+      <ion-input [(ngModel)]="user.location" name="location"></ion-input>
+    </ion-item>
+    <!-- Checkboxes -->
+    <ion-item margin-top no-lines>
+      <ion-label>Receive Email Notification</ion-label>
+      <ion-toggle [(ngModel)]="user.receiveEmailNotification" name="receive"></ion-toggle>
+    </ion-item>
+  </form>
+
+</ion-content>
