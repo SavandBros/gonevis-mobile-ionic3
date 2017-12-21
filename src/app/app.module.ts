@@ -45,6 +45,7 @@ import {BaseModelProvider} from '../providers/base-model/base-model';
 import {EditorComponent} from "../components/editor/editor";
 import {ReaderProvider} from '../providers/reader/reader';
 import {ReaderPage} from "../pages/reader/reader";
+import { UserProvider } from '../providers/user/user';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -147,6 +148,7 @@ export function provideSettings(storage: Storage) {
     BaseModelProvider,
     EntryProvider,
     ReaderProvider,
+    UserProvider,
   ]
 })
 export class AppModule {
