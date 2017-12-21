@@ -99,11 +99,4 @@ export class AuthProvider {
     this.unAuth();
     this.signOut$.emit();
   }
-
-  user() {
-    return this.api.get(`account/users/${this.getAuthUser(true).id}/`)
-      .map((res: Response) => {
-        return res.json();
-      });
-  }
 }
