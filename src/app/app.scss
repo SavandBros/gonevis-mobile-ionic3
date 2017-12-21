@@ -37,9 +37,18 @@
   display: none;
 }
 
+.col-white {
+  color: white;
+}
+
 button.active {
   background: #f1f1f1;
 }
+
+.s-pad-bottom-hard {
+  padding-bottom: 60px !important;
+}
+
 
 // Animations
 
@@ -48,16 +57,16 @@ button.active {
   animation-fill-mode: both;
 }
 
-@keyframes blur {
+@keyframes fadeIn {
   from {
-    filter: blur(2px);
+    opacity: 0;
   }
 
   to {
-    filter: blur(0);
+    opacity: 1;
   }
 }
 
-.blur {
-  animation-name: blur;
+.fadeIn {
+  animation-name: fadeIn;
 }

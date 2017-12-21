@@ -1,8 +1,8 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import { Http } from '@angular/http';
+import {Http, Response} from '@angular/http';
 
 import { Api } from '../api';
-import { Account } from '../../models/account';
+import {User} from '../../models/user';
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -14,9 +14,9 @@ export class AuthProvider {
 
   constructor(public http: Http, public api: Api) {}
 
-  // If useInstance is true, user data should be an Account model
+  // If useInstance is true, user data should be an User model
   // Else return a normal user object
-  getAuthUser(useInstance: boolean): Account | any {
+  getAuthUser(useInstance: boolean): User | any {
     if(!this.isAuth()) {
       return false;
     }
@@ -25,7 +25,7 @@ export class AuthProvider {
     let userData = JSON.parse(localStorage.getItem("user"));
 
     if(useInstance) {
-      return new Account(userData);
+      return new User(userData);
     }
 
     return userData;
@@ -56,8 +56,14 @@ export class AuthProvider {
     }
   }
 
-  setAuthUser(userData): Account {
+  setAuthUser(userData: any, separateSites?: boolean): User {
+    // Separated sites
+    if (separateSites) {
+      userData.sites = this.getAuthUser(true).sites;
+    }
+
     localStorage.setItem("user", JSON.stringify(userData));
+
     return this.getAuthUser(true);
   }
 

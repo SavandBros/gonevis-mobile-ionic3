@@ -4,12 +4,11 @@ import 'rxjs/add/operator/map';
 import {Site} from "../../models/site";
 import {Api} from "../api";
 import {AuthProvider} from "../auth/auth-service";
-import {Account} from "../../models/account";
 
 @Injectable()
 export class SiteProvider {
 
-  public siteUpdated$: EventEmitter<Account> = new EventEmitter();
+  public siteUpdated$: EventEmitter<Site> = new EventEmitter();
 
   constructor(public authService: AuthProvider, public api: Api) {
   }

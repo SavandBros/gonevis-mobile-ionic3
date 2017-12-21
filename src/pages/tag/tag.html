@@ -32,7 +32,10 @@
     <ion-grid>
       <ion-row margin-vertical>
         <ion-col col-12 text-center>
-          <button ion-button outline type="button" (click)="selectImage()">Upload image</button>
+          <button ion-button outline type="button"
+                  (click)="tag.media.coverImage ? options('coverImage') : selectImage('coverImage')">
+            {{ tag.media.coverImage ? "change cover image" : "set cover image" }}
+          </button>
         </ion-col>
       </ion-row>
     </ion-grid>

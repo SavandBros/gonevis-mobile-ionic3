@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import {MenuController, NavController, ToastController} from 'ionic-angular';
 
-import { User } from '../../providers/user';
-
 import { TranslateService } from '@ngx-translate/core';
 
 
@@ -24,7 +22,6 @@ export class SignupPage {
   private signupErrorString: string;
 
   constructor(public navCtrl: NavController,
-              public user: User,
               public toastCtrl: ToastController,
               public translateService: TranslateService,
               public menu: MenuController) {

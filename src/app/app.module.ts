@@ -17,16 +17,16 @@ import {TagPage} from "../pages/tag/tag";
 import {DolphinsPage} from "../pages/dolphins/dolphins";
 import {DolphinPage} from "../pages/dolphin/dolphin";
 import {DolphinSelectionPage} from '../pages/dolphin-selection/dolphin-selection';
+import {ProfilePage} from '../pages/profile/profile';
 
 import {Api} from '../providers/api';
 import {Settings} from '../providers/settings';
-import {User} from '../providers/user';
 
 import {Camera} from '@ionic-native/camera';
-import {PhotoViewer} from '@ionic-native/photo-viewer';
 import {GoogleMaps} from '@ionic-native/google-maps';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
+import {PhotoViewer} from '@ionic-native/photo-viewer';
 
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
@@ -45,6 +45,7 @@ import {BaseModelProvider} from '../providers/base-model/base-model';
 import {EditorComponent} from "../components/editor/editor";
 import {ReaderProvider} from '../providers/reader/reader';
 import {ReaderPage} from "../pages/reader/reader";
+import { UserProvider } from '../providers/user/user';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -84,7 +85,8 @@ export function provideSettings(storage: Storage) {
     SettingsPage,
     DolphinSelectionPage,
     EditorComponent,
-    ReaderPage
+    ReaderPage,
+    ProfilePage
   ],
   imports: [
     BrowserModule,
@@ -116,7 +118,8 @@ export function provideSettings(storage: Storage) {
     SettingsPage,
     DolphinSelectionPage,
     EditorComponent,
-    ReaderPage
+    ReaderPage,
+    ProfilePage
   ],
   providers: [
     Api,
@@ -127,12 +130,11 @@ export function provideSettings(storage: Storage) {
       },
       deps: [XHRBackend, RequestOptions]
     },
-    User,
     Camera,
-    PhotoViewer,
     GoogleMaps,
     SplashScreen,
     StatusBar,
+    PhotoViewer,
     {provide: Settings, useFactory: provideSettings, deps: [Storage]},
     // Keep this to enable Ionic's runtime error handling during development
     {provide: ErrorHandler, useClass: IonicErrorHandler},
@@ -146,6 +148,7 @@ export function provideSettings(storage: Storage) {
     BaseModelProvider,
     EntryProvider,
     ReaderProvider,
+    UserProvider,
   ]
 })
 export class AppModule {

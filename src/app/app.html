@@ -8,26 +8,26 @@
   <ion-content>
     <!-- Avatar -->
     <ion-list>
-      <button ion-item *ngIf="authService.isAuth()">
+      <button menuClose ion-item *ngIf="authService.isAuth()" (click)="openPage()"
+              [ngClass]="{'active': getCurrentView() == 'ProfilePage'}">
         <ion-avatar item-start>
-          <img src="{{ account.user.getAvatar('tiny') }}">
+          <img src="{{ user.getAvatar('tiny') }}">
         </ion-avatar>
-        <h2>{{ this.account.user.getFullName() }}</h2>
-        <ion-note><small>{{ account.user.email }}</small></ion-note>
+        <h2>{{ user.getFullName() }}</h2>
+        <ion-note><small>{{ user.email }}</small></ion-note>
       </button>
     </ion-list>
     <!-- Views -->
     <ion-list no-lines>
-      <button menuClose ion-item *ngFor="let page of pages"
-              (click)="openPage(page)"
+      <button menuClose ion-item *ngFor="let page of pages" (click)="openPage(page.component)"
               [ngClass]="{'active': getCurrentView() == page.component.name}">
-        <ion-icon name="{{ page.icon }}" item-start></ion-icon> {{ page.title }}
+        <ion-icon name="{{ page.icon }}" small item-start></ion-icon> {{ page.title }}
       </button>
     </ion-list>
     <!-- Sites -->
     <ion-list no-lines *ngIf="authService.isAuth()">
       <ion-list-header>{{ 'SITES' | translate }}</ion-list-header>
-      <button ion-item menuClose *ngFor="let site of account.user.sites" (click)="authService.setCurrentSite(site)">
+      <button ion-item menuClose *ngFor="let site of user.sites" (click)="authService.setCurrentSite(site)">
         {{ site.title }}
         <ion-icon name="checkmark" item-end small color="primary" *ngIf="authService.getCurrentSite().id === site.id"></ion-icon>
       </button>
@@ -35,7 +35,7 @@
     <ion-list>
       <ion-list-header>{{ 'LOGOUT' | translate }}</ion-list-header>
       <button menuClose ion-item (click)="authService.signOut()">
-        <ion-icon name="log-out" item-start></ion-icon> {{ 'LOGOUT' | translate }}
+        <ion-icon name="log-out" item-start small></ion-icon> {{ 'LOGOUT' | translate }}
       </button>
     </ion-list>
   </ion-content>

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 import {Api} from "../api";
-import {DolphinFile} from "../../models/dolphin-file";
 
 /*
   Generated class for the PaginationProvider provider.
