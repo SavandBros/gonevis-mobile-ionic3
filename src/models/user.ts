@@ -1,7 +1,6 @@
 import {UserSite} from "./user-site";
 import {Media} from "./media";
 
-
 export class User {
   id: string;
   name: string;
@@ -93,5 +92,4 @@ export class User {
 
     return this.getFullName();
   }
-
 }
