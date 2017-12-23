@@ -45,7 +45,7 @@ import {BaseModelProvider} from '../providers/base-model/base-model';
 import {EditorComponent} from "../components/editor/editor";
 import {ReaderProvider} from '../providers/reader/reader';
 import {ReaderPage} from "../pages/reader/reader";
-import { UserProvider } from '../providers/user/user';
+import {UserProvider} from '../providers/user/user';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -66,6 +66,10 @@ export function provideSettings(storage: Storage) {
     option3: '3',
     option4: 'Hello'
   });
+}
+
+export function provideJwtInterceptor(backend: XHRBackend, options: RequestOptions) {
+  return new JwtInterceptorProvider(backend, options);
 }
 
 @NgModule({
@@ -125,9 +129,7 @@ export function provideSettings(storage: Storage) {
     Api,
     {
       provide: JwtInterceptorProvider,
-      useFactory: (backend: XHRBackend, options: RequestOptions) => {
-        return new JwtInterceptorProvider(backend, options);
-      },
+      useFactory: provideJwtInterceptor,
       deps: [XHRBackend, RequestOptions]
     },
     Camera,
