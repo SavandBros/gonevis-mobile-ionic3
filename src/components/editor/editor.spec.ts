@@ -37,7 +37,7 @@ describe('Testing Editor Component', () => {
   });
 
   it('#actions should have 14 registered EditorActions', () => {
-    expect(editorComponent.actions.length).toEqual(14);
+    expect(editorComponent.actions.length).toEqual(7);
 
     for (let editorAction of editorComponent.actions) {
       expect(editorAction instanceof EditorAction).toBe(true);
