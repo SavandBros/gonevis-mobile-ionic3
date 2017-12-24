@@ -6,6 +6,8 @@ import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {HttpLoaderFactory} from "../../app/app.module";
 import {Http} from "@angular/http";
 import {EditorAction} from "./editor-action";
+import {Events} from "ionic-angular";
+import {EventsMock} from "../../../test-config/mocks/ionic/events-mock";
 
 
 describe('Testing Editor Component', () => {
@@ -24,6 +26,9 @@ describe('Testing Editor Component', () => {
           }
         }),
       ],
+      providers: [
+        {provide: Events, useClass: EventsMock},
+      ]
     });
   });
 
