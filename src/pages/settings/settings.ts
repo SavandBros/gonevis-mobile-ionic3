@@ -7,6 +7,7 @@ import {DomSanitizer, SafeStyle} from "@angular/platform-browser";
 import {DolphinSelectionPage} from "../dolphin-selection/dolphin-selection";
 import {DolphinFile} from "../../models/dolphin-file";
 import {AlertProvider} from "../../providers/alert/alert";
+import {CodekitProvider} from "../../providers/codekit/codekit";
 
 @IonicPage()
 @Component({
@@ -20,15 +21,23 @@ export class SettingsPage {
   coverImage: SafeStyle;
   updating: boolean;
   loading: boolean;
-  updateImage: boolean = false;
 
   constructor(public navCtrl: NavController, public siteService: SiteProvider,
               public sanitizer: DomSanitizer, public authService: AuthProvider,
               public modalCtrl: ModalController, public events: Events,
               public platform: Platform, public alertService: AlertProvider,
-              public actionSheetCtrl: ActionSheetController) {
+              public actionSheetCtrl: ActionSheetController, public codekit: CodekitProvider) {
     this.get();
-    events.subscribe('image:selected', (dolphin, source) => this.onImageSelect(dolphin, source));
+
+    events.subscribe('image:selected', (dolphin, source) =>  {
+      this.site.media[source] = dolphin ? dolphin : null;
+      this.updateSite(true);
+    });
+
+    this.codekit.onImageRemoved$.subscribe((image: string) => {
+      this.site.media[image] = null;
+      this.updateSite(true);
+    });
   }
 
   get(): void {
@@ -47,7 +56,7 @@ export class SettingsPage {
     });
   }
 
-  updateSite(): void {
+  updateSite(updateImage?: boolean): void {
     this.updating = true;
 
     let payload: any = {
@@ -58,11 +67,9 @@ export class SettingsPage {
     };
 
 
-    if (this.updateImage) {
+    if (updateImage) {
       payload.cover_image = this.site.media.coverImage ? this.site.media.coverImage.id : null;
       payload.logo = this.site.media.logo ? this.site.media.logo.id: null;
-
-      this.updateImage = false;
     }
 
     this.siteService.updateSite(payload).subscribe((resp) => {
@@ -76,60 +83,5 @@ export class SettingsPage {
       this.updating = false;
       console.log(err);
     })
-  }
-
-  options(image): void {
-    let actionSheet = this.actionSheetCtrl.create({
-      title: 'Options',
-      buttons: [
-        {
-          text: 'Change',
-          icon: !this.platform.is('ios') ? 'refresh' : null,
-          cssClass: 'action-icon-primary',
-          handler: () => this.selectImage(image)
-        },
-        {
-          text: 'Remove',
-          icon: !this.platform.is('ios') ? 'remove' : null,
-          role: 'Destructive',
-          cssClass: 'action-icon-danger',
-          handler: () => {
-            actionSheet.dismiss();
-
-            this.alertService.createAlert(
-              'Are you sure?',
-              null,
-              [
-                {text: 'Cancel', role: 'cancel'},
-                {text: 'Delete', handler: () => {
-                  this.site.media[image] = null;
-                  this.updateImage = true;
-                  this.updateSite();
-                }}
-              ]);
-
-            return false;
-          }
-        },
-        {
-          text: 'Cancel',
-          icon: !this.platform.is('ios') ? 'close' : null,
-          role: 'cancel'
-        },
-      ]
-    });
-
-    actionSheet.present();
-  }
-
-  selectImage(image: string): void | false {
-    let selectionModal = this.modalCtrl.create(DolphinSelectionPage, {source: image});
-    selectionModal.present();
-  }
-
-  onImageSelect(dolphin: DolphinFile, source: string): void {
-    this.site.media[source] = dolphin ? dolphin : null;
-    this.updateImage = true;
-    this.updateSite();
   }
 }
