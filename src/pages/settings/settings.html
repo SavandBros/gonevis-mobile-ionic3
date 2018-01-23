@@ -39,7 +39,6 @@
     <ion-item>
       <ion-label floating>Description</ion-label>
       <ion-input [(ngModel)]="site.description" name="description"></ion-input>
-      EventEmitter
     </ion-item>
     <!-- Checkboxes -->
     <ion-item margin-top no-lines>
@@ -54,14 +53,14 @@
       <ion-row margin-vertical>
         <ion-col>
           <button ion-button block type="button" outline
-                  (click)="site.media.coverImage ? options('coverImage') : selectImage('coverImage')">
-            {{ site.media.coverImage ? "change cover image" : "set cover image" }}
+                  (click)="site.media.coverImage ? codekit.options('coverImage') : codekit.selectImage('coverImage')">
+            {{ site.media.coverImage ? "change" : "set" }} cover image
           </button>
         </ion-col>
         <ion-col>
           <button ion-button block type="button" outline
-                  (click)="site.media.logo ? options('logo') : selectImage('logo')">
-            {{ site.media.logo ? "change logo" : "set logo" }}
+                  (click)="site.media.logo ? codekit.options('logo') : codekit.selectImage('logo')">
+            {{ site.media.logo ? "change" : "set" }} logo
           </button>
         </ion-col>
       </ion-row>
