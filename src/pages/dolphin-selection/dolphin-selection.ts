@@ -21,7 +21,6 @@ import {Camera, CameraOptions} from "@ionic-native/camera";
   templateUrl: 'dolphin-selection.html',
 })
 export class DolphinSelectionPage {
-
   files: string;
   source: string;
   dolphins: Array<DolphinFile> = [];
@@ -38,7 +37,11 @@ export class DolphinSelectionPage {
     this.files = 'files';
     this.getDolphins();
     this.source = this.params.get("source");
-    this.dolphinService.dolphinUploaded$.subscribe((data) => this.dolphins.unshift(data));
+
+    this.dolphinService.dolphinUploaded$.subscribe((data) => {
+      this.select(data);
+      this.dolphins.unshift(data);
+    });
   }
 
   reloadPage(refresher): void {
