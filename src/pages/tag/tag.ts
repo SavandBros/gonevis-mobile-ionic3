@@ -6,7 +6,6 @@ import {
 import {Tag} from "../../models/tag";
 import {AuthProvider} from "../../providers/auth/auth-service";
 import {TagProvider} from "../../providers/tag/tag";
-import {DolphinSelectionPage} from "../dolphin-selection/dolphin-selection";
 import {CodekitProvider} from "../../providers/codekit/codekit";
 
 @IonicPage()
