@@ -11,4 +11,5 @@ import {EntriesPage} from './entries';
   ],
 })
 export class EntriesPageModule {
+  Options
 }
