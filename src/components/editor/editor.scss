@@ -2,7 +2,6 @@ editor {
   div.editor-buttons {
     position: fixed;
     bottom: 0;
-    text-align: center;
     width: 100%;
     background: #eee;
   }
@@ -14,5 +13,12 @@ editor {
   [contentEditable=true]:empty:not(:focus):before{
     content:attr(data-text);
     color: #999;
+  }
+
+  [contenteditable] {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
   }
 }
