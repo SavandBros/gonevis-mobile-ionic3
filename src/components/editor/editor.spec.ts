@@ -6,8 +6,11 @@ import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {HttpLoaderFactory} from "../../app/app.module";
 import {Http} from "@angular/http";
 import {EditorAction} from "./editor-action";
-import {Events} from "ionic-angular";
+import {AlertController, Events} from "ionic-angular";
 import {EventsMock} from "../../../test-config/mocks/ionic/events-mock";
+import {AlertControllerMock} from "../../../test-config/mocks/ionic/alert-controller-mock";
+import {CodekitProvider} from "../../providers/codekit/codekit";
+import {CodekitMock} from "../../../test-config/mocks/gonevis/codekit-mock";
 
 
 describe('Testing Editor Component', () => {
@@ -28,6 +31,8 @@ describe('Testing Editor Component', () => {
       ],
       providers: [
         {provide: Events, useClass: EventsMock},
+        {provide: AlertController, useClass: AlertControllerMock},
+        {provide: CodekitProvider, useClass: CodekitMock},
       ]
     });
   });
@@ -41,8 +46,8 @@ describe('Testing Editor Component', () => {
     expect(editorComponent instanceof EditorComponent).toBe(true);
   });
 
-  it('#actions should have 14 registered EditorActions', () => {
-    expect(editorComponent.actions.length).toEqual(7);
+  it('#actions should have 5 registered EditorActions', () => {
+    expect(editorComponent.actions.length).toEqual(5);
 
     for (let editorAction of editorComponent.actions) {
       expect(editorAction instanceof EditorAction).toBe(true);
