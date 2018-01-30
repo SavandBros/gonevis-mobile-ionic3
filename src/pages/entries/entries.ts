@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, ModalController, NavController, Refresher} from 'ionic-angular';
+import {Events, IonicPage, ModalController, NavController, Refresher} from 'ionic-angular';
 import {EntryProvider} from "../../providers/entry/entry";
 import {AuthProvider} from "../../providers/auth/auth-service";
 import {Entry} from "../../models/entry";
@@ -24,7 +24,7 @@ export class EntriesPage {
 
   constructor(public navCtrl: NavController, public authService: AuthProvider,
               public entryService: EntryProvider, public modalCtrl: ModalController,
-              public paginationService: PaginationProvider) {
+              public paginationService: PaginationProvider, public events: Events) {
     this.get();
 
     this.entryService.entryCreated$.subscribe((entry: Entry) => this.entries.unshift(entry));
@@ -32,6 +32,13 @@ export class EntriesPage {
       this.entries.forEach((entry: Entry, index: number) => {
         if (entry.id == updatedEntry.id) {
           this.entries[index] = updatedEntry;
+        }
+      });
+    });
+    this.events.subscribe("entry:removed", (id: string) => {
+      this.entries.forEach((entry: Entry, index: number) => {
+        if (entry.id == id) {
+          this.entries.splice(index, 1);
         }
       });
     });
@@ -48,7 +55,6 @@ export class EntriesPage {
     this.loading = true;
 
     this.entryService.all().subscribe((resp) => {
-      console.log(resp);
       this.entries = resp.results;
       this.loading = false;
       this.next = resp.next;
@@ -67,8 +73,8 @@ export class EntriesPage {
     commentModal.present();
   }
 
-  entryPage(entry?: Entry): void {
-    this.navCtrl.push(EntryPage, {entry: entry});
+  entryPage(id?: string): void {
+    this.navCtrl.push(EntryPage, {entryId: id});
   }
 
   loadMore(): void {
