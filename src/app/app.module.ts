@@ -28,6 +28,8 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
 import {PhotoViewer} from '@ionic-native/photo-viewer';
 import {InAppBrowser} from '@ionic-native/in-app-browser';
+import {Keyboard} from '@ionic-native/keyboard';
+
 
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
@@ -142,6 +144,7 @@ export function provideJwtInterceptor(backend: XHRBackend, options: RequestOptio
     StatusBar,
     PhotoViewer,
     InAppBrowser,
+    Keyboard,
     {provide: Settings, useFactory: provideSettings, deps: [Storage]},
     // Keep this to enable Ionic's runtime error handling during development
     {provide: ErrorHandler, useClass: IonicErrorHandler},
