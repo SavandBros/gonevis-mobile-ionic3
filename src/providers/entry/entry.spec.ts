@@ -19,6 +19,7 @@ describe("Testing EntryProvider", () => {
         EntryProvider,
         MockBackend,
         BaseRequestOptions,
+        Api,
         {
           provide: JwtInterceptorProvider,
           useFactory: (backend: MockBackend, options: BaseRequestOptions) => new JwtInterceptorProvider(backend, options),
