@@ -29,8 +29,12 @@
   </div>
 
   <!-- Site Settings -->
-  <div class="cover" text-center [style.background-image]="coverImage" *ngIf="site.media.coverImage"></div>
-  <form (ngSubmit)="updateSite()" margin-top id="siteForm" *ngIf="!loading">
+  <div class="cover" text-center [style.background-image]="coverImage" *ngIf="site.media.coverImage">
+    <button ion-button class="img-button" icon-only (click)="options('coverImage')">
+      <ion-icon name="image"></ion-icon>
+    </button>
+  </div>
+  <form (ngSubmit)="updateSite()" id="siteForm" *ngIf="!loading">
     <!-- Inputs -->
     <ion-item>
       <ion-label floating>Title</ion-label>
@@ -52,16 +56,15 @@
     </ion-item>
     <ion-grid>
       <ion-row margin-vertical>
-        <ion-col>
+        <ion-col *ngIf="!site.media.coverImage">
           <button ion-button block type="button" outline
-                  (click)="site.media.coverImage ? options('coverImage') : selectImage('coverImage')">
-            {{ site.media.coverImage ? "change cover image" : "set cover image" }}
+                  (click)="selectImage('coverImage')"> Set cover image
           </button>
         </ion-col>
         <ion-col>
           <button ion-button block type="button" outline
                   (click)="site.media.logo ? options('logo') : selectImage('logo')">
-            {{ site.media.logo ? "change logo" : "set logo" }}
+            {{ site.media.logo ? "change" : "set" }} logo
           </button>
         </ion-col>
       </ion-row>

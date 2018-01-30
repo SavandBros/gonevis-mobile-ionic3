@@ -4,5 +4,7 @@ page-settings {
     width: 100%;
     background-position: center 100%;
     background-size: cover;
+    position: relative;
+    z-index: 1;
   }
 }
