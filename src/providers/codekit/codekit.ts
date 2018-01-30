@@ -15,7 +15,7 @@ export class CodekitProvider {
     return this.sanitizer.bypassSecurityTrustStyle(`url(${coverImage})`);
   }
 
-  options(image): void {
+  options(image: string): void {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Options',
       buttons: [
