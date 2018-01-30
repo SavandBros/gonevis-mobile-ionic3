@@ -1,2 +1,29 @@
 page-entries {
+  ion-content {
+    background-color: #eeeeee !important;
+    padding: 0 !important;
+  }
+
+  .entries {
+    margin-bottom: 5px;
+
+    p.excerpt {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    b {
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .item-inner {
+      border-bottom: none !important;
+    }
+
+    ion-label {
+      white-space: unset;
+    }
+  }
 }
