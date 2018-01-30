@@ -4,8 +4,6 @@ import {Site} from "../../models/site";
 import {AuthProvider} from "../../providers/auth/auth-service";
 import {SiteProvider} from "../../providers/site/site";
 import {DomSanitizer, SafeStyle} from "@angular/platform-browser";
-import {DolphinSelectionPage} from "../dolphin-selection/dolphin-selection";
-import {DolphinFile} from "../../models/dolphin-file";
 import {AlertProvider} from "../../providers/alert/alert";
 import {CodekitProvider} from "../../providers/codekit/codekit";
 
