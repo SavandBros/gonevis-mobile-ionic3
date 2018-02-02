@@ -45,7 +45,8 @@ import {BaseModelProvider} from '../providers/base-model/base-model';
 import {EditorComponent} from "../components/editor/editor";
 import {ReaderProvider} from '../providers/reader/reader';
 import {ReaderPage} from "../pages/reader/reader";
-import { UserProvider } from '../providers/user/user';
+import {UserProvider} from '../providers/user/user';
+import {ParallaxDirective} from "../directives/parallax/parallax";
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -86,7 +87,8 @@ export function provideSettings(storage: Storage) {
     DolphinSelectionPage,
     EditorComponent,
     ReaderPage,
-    ProfilePage
+    ProfilePage,
+    ParallaxDirective
   ],
   imports: [
     BrowserModule,
