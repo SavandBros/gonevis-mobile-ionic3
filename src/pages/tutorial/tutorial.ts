@@ -1,9 +1,7 @@
-import { Component } from '@angular/core';
-import { MenuController, NavController } from 'ionic-angular';
-import { EntrancePage } from '../entrance/entrance'
-import { TranslateService } from '@ngx-translate/core';
-
-
+import {Component} from '@angular/core';
+import {MenuController, NavController} from 'ionic-angular';
+import {TranslateService} from '@ngx-translate/core';
+import {SigninPage} from "../signin/signin";
 
 export interface Slide {
   title: string;
@@ -50,7 +48,7 @@ export class TutorialPage {
   }
 
   startApp() {
-    this.navCtrl.setRoot(EntrancePage, {}, {
+    this.navCtrl.setRoot(SigninPage, {}, {
       animate: true,
       direction: 'forward'
     });
