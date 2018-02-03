@@ -4,7 +4,6 @@ import {Config, Nav, Platform} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 
-import {EntrancePage} from '../pages/entrance/entrance';
 import {AuthProvider} from '../providers/auth/auth-service';
 import {LangChangeEvent, TranslateService} from '@ngx-translate/core'
 import {TutorialPage} from "../pages/tutorial/tutorial";
@@ -16,6 +15,7 @@ import {SettingsPage} from "../pages/settings/settings";
 import {SiteProvider} from "../providers/site/site";
 import {ReaderPage} from "../pages/reader/reader";
 import {ProfilePage} from "../pages/profile/profile";
+import {SigninPage} from "../pages/signin/signin";
 
 @Component({
   templateUrl: 'app.html'
@@ -100,7 +100,7 @@ export class MyApp {
 
   onSignOut(): void {
     this.authService.unAuth();
-    this.nav.setRoot(EntrancePage);
+    this.nav.setRoot(SigninPage);
   }
 
   onCurrentSite(): void {
