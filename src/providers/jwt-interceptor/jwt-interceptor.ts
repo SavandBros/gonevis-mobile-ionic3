@@ -13,13 +13,16 @@ export class JwtInterceptorProvider extends Http {
 
   request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
     let token: string = localStorage.getItem("JWT");
-    if (typeof url === 'string') {
-      if (!options) {
-        options = {headers: new Headers()};
+
+    if (token) {
+      if (typeof url === 'string') {
+        if (!options) {
+          options = {headers: new Headers()};
+        }
+        options.headers.set('Authorization', `JWT ${token}`);
+      } else {
+        url.headers.set('Authorization', `JWT ${token}`);
       }
-      options.headers.set('Authorization', `JWT ${token}`);
-    } else {
-      url.headers.set('Authorization', `JWT ${token}`);
     }
     return super.request(url, options).catch(this.catchAuthError(this));
   };
