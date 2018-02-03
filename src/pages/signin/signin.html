@@ -1,0 +1,34 @@
+<ion-content>
+  <div class="s-box bg-white" padding margin>
+    <h2 text-center text-capitalize><b>{{ 'LOGIN_TITLE' | translate }}</b></h2>
+
+    <form [formGroup]="account" (ngSubmit)="signIn()">
+      <ion-list padding>
+
+        <!-- Username -->
+        <ion-item>
+          <ion-input type="text" formControlName="username" [placeholder]="'USERNAME' | translate"></ion-input>
+        </ion-item>
+
+        <!-- Password -->
+        <ion-item>
+          <ion-input type="password" formControlName="password" [placeholder]="'PASSWORD' | translate"></ion-input>
+        </ion-item>
+
+        <!-- Login Button -->
+        <button ion-item type="submit" color="primary" detail-none margin-top
+                text-uppercase [disabled]="!account.valid">
+          <b>{{ 'LOGIN_BUTTON' | translate }}</b>
+          <ion-icon name="arrow-dropright-circle" item-end></ion-icon>
+        </button>
+      </ion-list>
+    </form>
+  </div>
+
+  <div class="bot-detail" text-center>
+    <p>
+      Don't have an account?
+      <button ion-button (click)="toSignUp()" clear text-capitalize>Register</button>
+    </p>
+  </div>
+</ion-content>
