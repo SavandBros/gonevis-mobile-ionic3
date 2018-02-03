@@ -4,6 +4,7 @@ import {Http, Response} from '@angular/http';
 import { Api } from '../api';
 import {User} from '../../models/user';
 import 'rxjs/add/operator/map';
+import any = jasmine.any;
 
 @Injectable()
 export class AuthProvider {
@@ -76,23 +77,31 @@ export class AuthProvider {
     return JSON.parse(localStorage.getItem("site"));
   }
 
-  login(payload: any) {
-    let seq = this.api.post("account/login/", payload).share();
+  signIn(username: string, password: string): any {
+    return this.api.post("account/login/", {username: username, password: password})
+      .map((res: Response) => {
+        let data: any = res.json();
 
-    seq
-      .map(res => res.json())
-      .subscribe(res => {
-        if(res.status = "success") {
-          this.setToken(res.token);
-          this.setAuthUser(res.user);
-          this.setCurrentSite(res.user.sites[0]);
+        if (res.status == 200) {
+          this.setToken(data.token);
+          this.setAuthUser(data.user);
+          this.setCurrentSite(data.user.sites[0]);
           this.authenticated$.emit();
         }
+
+        return data;
       }, err => {
         console.error('ERROR', err);
       });
+  }
 
-    return seq;
+  signUp(payload: any): any {
+    return this.api.post("account/register-account-only/", payload)
+      .map((res: Response) => {
+        return res.json();
+      }, err => {
+        console.error('ERROR', err);
+      });
   }
 
   signOut(): void {
