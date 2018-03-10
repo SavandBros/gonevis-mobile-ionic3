@@ -82,8 +82,6 @@
   <allow-navigation href="http://192.168.0.111:8100"/>
   <allow-navigation href="http://192.168.0.123:8100"/>
   <allow-navigation href="http://192.168.0.111:8101"/>
-  <engine name="android" spec="^6.4.0"/>
-  <engine name="browser" spec="^4.1.0"/>
   <plugin name="com-sarriaroman-photoviewer" spec="^1.1.11"/>
   <plugin name="cordova-plugin-app-event" spec="^1.2.1"/>
   <plugin name="cordova-plugin-camera" spec="^3.0.0"/>
@@ -93,4 +91,9 @@
   <plugin name="cordova-plugin-statusbar" spec="^2.3.0"/>
   <plugin name="cordova-plugin-whitelist" spec="^1.3.3"/>
   <plugin name="ionic-plugin-keyboard" spec="^2.2.1"/>
+  <allow-navigation href="http://192.168.0.115:8100"/>
+  <plugin name="com.telerik.plugins.nativepagetransitions" spec="^0.6.5"/>
+  <engine name="android" spec="^6.4.0"/>
+  <engine name="browser" spec="^5.0.3"/>
+  <engine name="ios" spec="4.5.4"/>
 </widget>

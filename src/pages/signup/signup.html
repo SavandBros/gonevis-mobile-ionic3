@@ -1,44 +1,40 @@
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>{{ 'SIGNUP_TITLE' | translate }}</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
 <ion-content>
-  <form (submit)="doSignup()">
-    <ion-list>
+  <div class="s-box bg-white" padding margin>
+    <h2 text-center text-capitalize><b>{{ 'SIGNUP_TITLE' | translate }}</b></h2>
 
-      <ion-item>
-        <ion-label fixed>{{ 'NAME' | translate }}</ion-label>
-        <ion-input type="text" [(ngModel)]="account.name" name="name"></ion-input>
-      </ion-item>
+    <form [formGroup]="account" (ngSubmit)="signUp()">
+      <ion-list padding>
 
-      <ion-item>
-        <ion-label fixed>{{ 'EMAIL' | translate }}</ion-label>
-        <ion-input type="email" [(ngModel)]="account.email" name="email"></ion-input>
-      </ion-item>
+        <!-- Email -->
+        <ion-item>
+          <ion-input type="email" formControlName="email" [placeholder]="'EMAIL' | translate"></ion-input>
+        </ion-item>
 
-      <!--
-      Want to add a Username? Here you go:
+        <!-- Username -->
+        <ion-item>
+          <ion-input type="text" formControlName="username" [placeholder]="'USERNAME' | translate"></ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-label floating>Username</ion-label>
-        <ion-input type="text" [(ngModel)]="account.username" name="username"></ion-input>
-      </ion-item>
-      -->
+        <!-- Password -->
+        <ion-item>
+          <ion-input type="password" formControlName="password"
+                     [placeholder]="'PASSWORD' | translate" minlength="6"></ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-label fixed>{{ 'PASSWORD' | translate }}</ion-label>
-        <ion-input type="password" [(ngModel)]="account.password" name="password"></ion-input>
-      </ion-item>
+        <!-- Login Button -->
+        <button ion-item type="submit" color="secondary" detail-none margin-top
+                text-uppercase [disabled]="!account.valid">
+          <b>{{ 'SIGNUP_BUTTON' | translate }}</b>
+          <ion-icon name="add-circle" item-end></ion-icon>
+        </button>
+      </ion-list>
+    </form>
+  </div>
 
-      <div padding>
-        <button ion-button color="primary" block>{{ 'SIGNUP_BUTTON' | translate }}</button>
-      </div>
-
-    </ion-list>
-  </form>
+  <div class="bot-detail" text-center>
+    <p>
+      Already have an account?
+      <button ion-button (click)="toSignIn()" clear text-capitalize>Log in</button>
+    </p>
+  </div>
 </ion-content>

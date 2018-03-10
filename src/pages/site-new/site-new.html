@@ -1,0 +1,27 @@
+<ion-content padding>
+  <div class="s-box bg-white" padding margin>
+    <h2 text-center><b>{{ 'SITE_NEW_TITLE' | translate }}</b></h2>
+
+    <form [formGroup]="site" (ngSubmit)="createSite()">
+      <ion-list padding>
+
+        <!-- URL -->
+        <ion-item>
+          <ion-input type="text" formControlName="url" placeholder="example.gonevis.com"></ion-input>
+        </ion-item>
+
+        <!-- Title -->
+        <ion-item>
+          <ion-input type="text" formControlName="title" [placeholder]="'TITLE' | translate"></ion-input>
+        </ion-item>
+
+        <!-- Submit Button -->
+        <button ion-item color="primary" detail-none margin-top
+                text-uppercase>
+          <b>{{ 'SITE_NEW_BUTTON' | translate }}</b>
+          <ion-icon name="add-circle" item-end></ion-icon>
+        </button>
+      </ion-list>
+    </form>
+  </div>
+</ion-content>

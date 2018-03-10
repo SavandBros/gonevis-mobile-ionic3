@@ -10,7 +10,7 @@ export class AuthProvider {
 
   public authenticated$: EventEmitter<null> = new EventEmitter();
   public signOut$: EventEmitter<null> = new EventEmitter();
-  public currentSite$: EventEmitter<null> = new EventEmitter();
+  public currentSite$: EventEmitter<object> = new EventEmitter();
 
   constructor(public http: Http, public api: Api) {}
 
@@ -40,7 +40,6 @@ export class AuthProvider {
     localStorage.setItem("JWT", token);
   }
 
-
   getToken(): string {
     return localStorage.getItem("JWT");
   }
@@ -67,32 +66,41 @@ export class AuthProvider {
     return this.getAuthUser(true);
   }
 
-  setCurrentSite(siteData): void {
+  setCurrentSite(siteData: object): void {
     localStorage.setItem("site", JSON.stringify(siteData));
-    this.currentSite$.emit();
+    this.currentSite$.emit(siteData);
   }
 
   getCurrentSite(): any {
     return JSON.parse(localStorage.getItem("site"));
   }
 
-  login(payload: any) {
-    let seq = this.api.post("account/login/", payload).share();
+  signIn(username: string, password: string): any {
+    return this.api.post("account/login/", {username: username, password: password})
+      .map((res: Response) => {
+        let data: any = res.json();
 
-    seq
-      .map(res => res.json())
-      .subscribe(res => {
-        if(res.status = "success") {
-          this.setToken(res.token);
-          this.setAuthUser(res.user);
-          this.setCurrentSite(res.user.sites[0]);
+        if (res.status == 200) {
+          this.setToken(data.token);
+          this.setAuthUser(data.user);
+          this.setCurrentSite(data.user.sites[0]);
+
           this.authenticated$.emit();
         }
+
+        return data;
       }, err => {
         console.error('ERROR', err);
       });
+  }
 
-    return seq;
+  signUp(payload: any): any {
+    return this.api.post("account/register-account-only/", payload)
+      .map((res: Response) => {
+        return res.json();
+      }, err => {
+        console.error('ERROR', err);
+      });
   }
 
   signOut(): void {

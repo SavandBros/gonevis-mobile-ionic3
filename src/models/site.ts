@@ -11,6 +11,7 @@ export class SiteMedia {
 }
 
 export class Site {
+  id: string;
   title: string;
   url: string;
   absoluteUri: string;
@@ -21,6 +22,7 @@ export class Site {
   media: SiteMedia;
 
   constructor (data: any) {
+    this.id = data.id;
     this.title = data.title;
     this.url = data.url;
     this.absoluteUri = data.absolute_uri;

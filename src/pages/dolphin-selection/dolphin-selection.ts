@@ -8,13 +8,6 @@ import {DolphinProvider} from "../../providers/dolphin/dolphin";
 import {PaginationProvider} from "../../providers/pagination/pagination";
 import {Camera, CameraOptions} from "@ionic-native/camera";
 
-/**
- * Generated class for the DolphinSelectionPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-dolphin-selection',

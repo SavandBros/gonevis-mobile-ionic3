@@ -6,10 +6,9 @@ import {IonicStorageModule, Storage} from '@ionic/storage';
 
 import {MyApp} from './app.component';
 
-import {LoginPage} from '../pages/login/login';
-import {SignupPage} from '../pages/signup/signup';
 import {TutorialPage} from '../pages/tutorial/tutorial';
-import {EntrancePage} from '../pages/entrance/entrance';
+import {SigninPage} from "../pages/signin/signin";
+import {SignupPage} from "../pages/signup/signup";
 import {EntriesPage} from "../pages/entries/entries";
 import {EntryPage} from "../pages/entry/entry";
 import {TagsPage} from "../pages/tags/tags";
@@ -27,6 +26,7 @@ import {GoogleMaps} from '@ionic-native/google-maps';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
 import {PhotoViewer} from '@ionic-native/photo-viewer';
+import {NativePageTransitions} from '@ionic-native/native-page-transitions';
 
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
@@ -47,6 +47,7 @@ import {ReaderProvider} from '../providers/reader/reader';
 import {ReaderPage} from "../pages/reader/reader";
 import {UserProvider} from '../providers/user/user';
 import {ParallaxDirective} from "../directives/parallax/parallax";
+import {SiteNewPage} from "../pages/site-new/site-new";
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -72,10 +73,9 @@ export function provideSettings(storage: Storage) {
 @NgModule({
   declarations: [
     MyApp,
-    LoginPage,
+    SigninPage,
     SignupPage,
     TutorialPage,
-    EntrancePage,
     EntriesPage,
     CommentModalPage,
     EntryPage,
@@ -88,7 +88,8 @@ export function provideSettings(storage: Storage) {
     EditorComponent,
     ReaderPage,
     ProfilePage,
-    ParallaxDirective
+    ParallaxDirective,
+    SiteNewPage
   ],
   imports: [
     BrowserModule,
@@ -106,10 +107,9 @@ export function provideSettings(storage: Storage) {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    LoginPage,
+    SigninPage,
     SignupPage,
     TutorialPage,
-    EntrancePage,
     EntriesPage,
     CommentModalPage,
     EntryPage,
@@ -121,7 +121,8 @@ export function provideSettings(storage: Storage) {
     DolphinSelectionPage,
     EditorComponent,
     ReaderPage,
-    ProfilePage
+    ProfilePage,
+    SiteNewPage
   ],
   providers: [
     Api,
@@ -137,6 +138,7 @@ export function provideSettings(storage: Storage) {
     SplashScreen,
     StatusBar,
     PhotoViewer,
+    NativePageTransitions,
     {provide: Settings, useFactory: provideSettings, deps: [Storage]},
     // Keep this to enable Ionic's runtime error handling during development
     {provide: ErrorHandler, useClass: IonicErrorHandler},

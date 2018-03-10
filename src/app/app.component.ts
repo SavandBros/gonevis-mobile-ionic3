@@ -1,10 +1,9 @@
 import {Component, ViewChild} from '@angular/core';
-import {Config, Nav, Platform} from 'ionic-angular';
+import {Config, Events, Nav, Platform} from 'ionic-angular';
 
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 
-import {EntrancePage} from '../pages/entrance/entrance';
 import {AuthProvider} from '../providers/auth/auth-service';
 import {LangChangeEvent, TranslateService} from '@ngx-translate/core'
 import {TutorialPage} from "../pages/tutorial/tutorial";
@@ -16,6 +15,8 @@ import {SettingsPage} from "../pages/settings/settings";
 import {SiteProvider} from "../providers/site/site";
 import {ReaderPage} from "../pages/reader/reader";
 import {ProfilePage} from "../pages/profile/profile";
+import {SigninPage} from "../pages/signin/signin";
+import {SiteNewPage} from "../pages/site-new/site-new";
 
 @Component({
   templateUrl: 'app.html'
@@ -23,7 +24,6 @@ import {ProfilePage} from "../pages/profile/profile";
 export class MyApp {
   public rootPage: any;
   user: User;
-  currentSite: any;
   menuSide: string = "left";
 
   @ViewChild(Nav) nav: Nav;
@@ -32,13 +32,19 @@ export class MyApp {
 
   constructor(public translate: TranslateService, public platform: Platform,
               public authService: AuthProvider, private config: Config, private statusBar: StatusBar,
-              private splashScreen: SplashScreen, public siteService: SiteProvider) {
+              private splashScreen: SplashScreen, public siteService: SiteProvider,
+              public events: Events) {
+    this.user = this.authService.getAuthUser(true);
     this.initTranslate();
-
     this.setCurrentView("EntriesPage");
 
     if (this.authService.isAuth()) {
-      this.rootPage = EntriesPage;
+      console.log(this.user.getSites());
+      if (this.user.getSites().length > 0) {
+        this.rootPage = EntriesPage;
+      } else {
+        this.rootPage = SiteNewPage;
+      }
     } else {
       this.rootPage = TutorialPage;
     }
@@ -59,15 +65,15 @@ export class MyApp {
       console.debug(readySource);
     });
 
-    this.authService = authService;
-    this.user = this.authService.getAuthUser(true);
-    this.currentSite = this.authService.getCurrentSite();
-
     // Events
     this.authService.authenticated$.subscribe(() => this.onAuthenticate());
     this.authService.signOut$.subscribe(() => this.onSignOut());
-    this.authService.currentSite$.subscribe(() => this.onCurrentSite());
+    this.authService.currentSite$.subscribe((siteData) => this.onCurrentSite(siteData));
     this.siteService.siteUpdated$.subscribe((data) => this.siteUpdated(data));
+
+    events.subscribe('site:created', () => {
+      this.user = this.authService.getAuthUser(true)
+    });
 
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
       console.info(`Language change to ${event.lang}`);
@@ -100,20 +106,26 @@ export class MyApp {
 
   onSignOut(): void {
     this.authService.unAuth();
-    this.nav.setRoot(EntrancePage);
+    this.nav.setRoot(SigninPage);
   }
 
-  onCurrentSite(): void {
-    for (let page of this.pages) {
-      if (page.component.name === this.getCurrentView()) {
-        this.nav.setRoot(page.component);
+  onCurrentSite(siteData: object): void {
+    // If there was a site
+    if (siteData) {
+      // Loop into pages
+      for (let page of this.pages) {
+        if (page.component.name === this.getCurrentView()) {
+          this.nav.setRoot(page.component);
+        }
       }
+    } else {
+      this.nav.push(SiteNewPage);
     }
   }
 
   siteUpdated(data) {
     for (let site of this.user.sites) {
-      if (site.id == this.currentSite.id) {
+      if (site.id == this.authService.getCurrentSite().id) {
         site.title = data.title;
       }
     }
@@ -147,8 +159,6 @@ export class MyApp {
     let navigation = component ? component : ProfilePage;
 
     this.nav.setRoot(navigation);
-    this.rootPage = navigation;
-
     this.setCurrentView(navigation.name);
   }
 }
