@@ -4,14 +4,13 @@ import {Http, Response} from '@angular/http';
 import { Api } from '../api';
 import {User} from '../../models/user';
 import 'rxjs/add/operator/map';
-import any = jasmine.any;
 
 @Injectable()
 export class AuthProvider {
 
   public authenticated$: EventEmitter<null> = new EventEmitter();
   public signOut$: EventEmitter<null> = new EventEmitter();
-  public currentSite$: EventEmitter<null> = new EventEmitter();
+  public currentSite$: EventEmitter<object> = new EventEmitter();
 
   constructor(public http: Http, public api: Api) {}
 
@@ -41,7 +40,6 @@ export class AuthProvider {
     localStorage.setItem("JWT", token);
   }
 
-
   getToken(): string {
     return localStorage.getItem("JWT");
   }
@@ -68,9 +66,9 @@ export class AuthProvider {
     return this.getAuthUser(true);
   }
 
-  setCurrentSite(siteData): void {
+  setCurrentSite(siteData: object): void {
     localStorage.setItem("site", JSON.stringify(siteData));
-    this.currentSite$.emit();
+    this.currentSite$.emit(siteData);
   }
 
   getCurrentSite(): any {
@@ -86,6 +84,7 @@ export class AuthProvider {
           this.setToken(data.token);
           this.setAuthUser(data.user);
           this.setCurrentSite(data.user.sites[0]);
+
           this.authenticated$.emit();
         }
 
