@@ -92,4 +92,12 @@ export class User {
 
     return this.getFullName();
   }
+
+  getSites(): any {
+    if (this.sites.length > 0) {
+      return this.sites;
+    }
+
+    return [];
+  }
 }
