@@ -32,4 +32,11 @@ export class SiteProvider {
         return data;
       });
   }
+
+  create(payload: object): any {
+    return this.api.post("website/site/", payload)
+      .map((res: Response) => {
+        return res.json();
+      });
+  }
 }
