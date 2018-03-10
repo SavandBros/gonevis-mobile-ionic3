@@ -8,6 +8,7 @@
   "LOGIN": "Sign in",
   "SIGNUP": "Sign up",
   "LOGOUT": "Log out",
+  "TITLE": "Title",
 
   "TUTORIAL_SKIP_BUTTON" : "Skip",
   "TUTORIAL_CONTINUE_BUTTON" : "Continue",
@@ -52,6 +53,9 @@
 
   "SEARCH_TITLE": "Search",
   "SEARCH_PLACEHOLDER" : "Search the items list, e.g. \"Donald Duck\"",
+
+  "SITE_NEW_TITLE": "Create a new site",
+  "SITE_NEW_BUTTON": "Create",
 
   "POSTS": "Posts",
   "TAGS": "Tags",
