@@ -72,3 +72,24 @@ button.active {
 .fadeIn {
   animation-name: fadeIn;
 }
+
+
+// Main Content
+
+.main-content {
+  background-color: #fff;
+  width: 100%;
+}
+
+
+// Main button
+
+.main-button {
+  position: absolute;
+  top: -30px;
+  width: 55px;
+  height: 55px;
+  border-radius: 50px !important;
+  z-index: 1;
+  right: 20px;
+}

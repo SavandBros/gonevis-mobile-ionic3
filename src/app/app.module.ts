@@ -50,6 +50,7 @@ import {ReaderProvider} from '../providers/reader/reader';
 import {ReaderPage} from "../pages/reader/reader";
 import {UserProvider} from '../providers/user/user';
 import {CodekitProvider} from '../providers/codekit/codekit';
+import {ParallaxDirective} from "../directives/parallax/parallax";
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -95,7 +96,8 @@ export function provideJwtInterceptor(backend: XHRBackend, options: RequestOptio
     DolphinSelectionPage,
     EditorComponent,
     ReaderPage,
-    ProfilePage
+    ProfilePage,
+    ParallaxDirective
   ],
   imports: [
     BrowserModule,
