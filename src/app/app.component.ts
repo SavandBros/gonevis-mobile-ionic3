@@ -112,7 +112,7 @@ export class MyApp {
   }
 
   siteUpdated(data) {
-    for (let site of this.user.sites) {
+    for (let site of this.user.getSites()) {
       if (site.id == this.currentSite.id) {
         site.title = data.title;
       }
