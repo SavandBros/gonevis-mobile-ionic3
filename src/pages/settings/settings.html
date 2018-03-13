@@ -31,7 +31,7 @@
   <!-- Site Settings -->
   <div class="cover header-image" text-center [style.background-image]="coverImage" [hidden]="!site.media.coverImage"></div>
   <span class="main-content">
-    <button ion-button class="main-button" icon-only (click)="options('coverImage')" *ngIf="!loading && site.media.coverImage">
+    <button ion-button class="main-button" icon-only (click)="codekit.options('coverImage')" *ngIf="!loading && site.media.coverImage">
       <ion-icon name="image"></ion-icon>
     </button>
     <form (ngSubmit)="updateSite()" id="siteForm" *ngIf="!loading">
