@@ -35,6 +35,7 @@ export class AuthProvider {
   unAuth(): void {
     localStorage.removeItem("JWT");
     localStorage.removeItem("user");
+    localStorage.removeItem("site");
   }
 
   setToken(token: string): void {
@@ -60,7 +61,7 @@ export class AuthProvider {
   setAuthUser(userData: any, separateSites?: boolean): User {
     // Separated sites
     if (separateSites) {
-      userData.sites = this.getAuthUser(true).sites;
+      userData.sites = this.getAuthUser(true).getSites();
     }
 
     localStorage.setItem("user", JSON.stringify(userData));
