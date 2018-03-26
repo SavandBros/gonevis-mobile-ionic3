@@ -23,7 +23,6 @@ import {ProfilePage} from "../pages/profile/profile";
 export class MyApp {
   public rootPage: any;
   user: User;
-  currentSite: any;
   menuSide: string = "left";
 
   @ViewChild(Nav) nav: Nav;
@@ -61,7 +60,6 @@ export class MyApp {
 
     this.authService = authService;
     this.user = this.authService.getAuthUser(true);
-    this.currentSite = this.authService.getCurrentSite();
 
     // Events
     this.authService.authenticated$.subscribe(() => this.onAuthenticate());
@@ -113,7 +111,7 @@ export class MyApp {
 
   siteUpdated(data) {
     for (let site of this.user.getSites()) {
-      if (site.id == this.currentSite.id) {
+      if (this.authService.getCurrentSite().id == site.id) {
         site.title = data.title;
       }
     }
