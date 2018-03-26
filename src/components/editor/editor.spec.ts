@@ -6,7 +6,7 @@ import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {HttpLoaderFactory} from "../../app/app.module";
 import {Http} from "@angular/http";
 import {EditorAction} from "./editor-action";
-import {AlertController, Events} from "ionic-angular";
+import {AlertController, Events, IonicModule} from "ionic-angular";
 import {EventsMock} from "../../../test-config/mocks/ionic/events-mock";
 import {AlertControllerMock} from "../../../test-config/mocks/ionic/alert-controller-mock";
 import {CodekitProvider} from "../../providers/codekit/codekit";
@@ -21,6 +21,7 @@ describe('Testing Editor Component', () => {
     TestBed.configureTestingModule({
       declarations: [EditorComponent],
       imports: [
+        IonicModule,
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
