@@ -51,12 +51,12 @@
         <ion-row margin-vertical>
           <ion-col *ngIf="!site.media.coverImage">
             <button ion-button block type="button" outline
-                    (click)="selectImage('coverImage')"> Set cover image
+                    (click)="codekit.selectImage('coverImage', siteId)"> Set cover image
             </button>
           </ion-col>
           <ion-col>
             <button ion-button block type="button" outline
-                    (click)="site.media.logo ? options('logo') : selectImage('logo')">
+                    (click)="site.media.logo ? codekit.options('logo', siteId) : codekit.selectImage('logo', siteId)">
               {{ site.media.logo ? "change" : "set" }} logo
             </button>
           </ion-col>
