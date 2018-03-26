@@ -8,13 +8,6 @@ import {DolphinProvider} from "../../providers/dolphin/dolphin";
 import {PaginationProvider} from "../../providers/pagination/pagination";
 import {Camera, CameraOptions} from "@ionic-native/camera";
 
-/**
- * Generated class for the DolphinSelectionPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-dolphin-selection',
@@ -79,7 +72,10 @@ export class DolphinSelectionPage {
   }
 
   select(dolphin: DolphinFile | null): void {
-    this.events.publish('image:selected', dolphin, this.source);
+    let topic: string = "gonevisMobile.DolphinSelection:selected";
+    if (this.params.get("id")) topic = topic + ` ${this.params.get("id")}`;
+
+    this.events.publish(topic, dolphin, this.source);
     this.dismiss();
   }
 
