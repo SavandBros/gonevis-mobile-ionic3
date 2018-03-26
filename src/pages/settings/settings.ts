@@ -15,7 +15,7 @@ import {CodekitProvider} from "../../providers/codekit/codekit";
 export class SettingsPage {
 
   site: Site = new Site({});
-  editing: string;
+  siteId: string;
   coverImage: SafeStyle;
   updating: boolean;
   loading: boolean;
@@ -26,8 +26,9 @@ export class SettingsPage {
               public platform: Platform, public alertService: AlertProvider,
               public actionSheetCtrl: ActionSheetController, public codekit: CodekitProvider) {
     this.get();
+    this.siteId = authService.getCurrentSite().id;
 
-    events.subscribe('image:selected', (dolphin, source) =>  {
+    events.subscribe(`gonevisMobile.DolphinSelection:selected ${this.siteId}`, (dolphin, source) => {
       this.site.media[source] = dolphin ? dolphin : null;
       this.updateSite(true);
     });
@@ -64,10 +65,9 @@ export class SettingsPage {
       voting: this.site.voting
     };
 
-
     if (updateImage) {
       payload.cover_image = this.site.media.coverImage ? this.site.media.coverImage.id : null;
-      payload.logo = this.site.media.logo ? this.site.media.logo.id: null;
+      payload.logo = this.site.media.logo ? this.site.media.logo.id : null;
     }
 
     this.siteService.updateSite(payload).subscribe((resp) => {
