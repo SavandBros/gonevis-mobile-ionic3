@@ -27,7 +27,8 @@
       </ion-item>
 
       <!-- Cover Image -->
-      <button ion-item (click)="entry.media.coverImage ? codekit.options('coverImage') : codekit.selectImage('coverImage')">
+      <button ion-item
+              (click)="entry.media.coverImage ? codekit.options('coverImage', entry.id) : codekit.selectImage('coverImage', entry.id)">
         <ion-icon name="image" color="primary" item-start small></ion-icon>
         {{ entry.media.coverImage ? "Change" : "Set" }} Cover
       </button>
