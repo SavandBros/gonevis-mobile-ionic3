@@ -6,6 +6,7 @@ import {JwtInterceptorProvider} from "../jwt-interceptor/jwt-interceptor";
 import {EntryProvider} from "./entry";
 import {Entry} from "../../models/entry";
 import {AuthServiceProviderMock} from "../../../test-config/mocks/gonevis/auth-mock";
+import {Api} from "../api";
 
 
 describe("Testing EntryProvider", () => {
@@ -18,6 +19,7 @@ describe("Testing EntryProvider", () => {
         EntryProvider,
         MockBackend,
         BaseRequestOptions,
+        Api,
         {
           provide: JwtInterceptorProvider,
           useFactory: (backend: MockBackend, options: BaseRequestOptions) => new JwtInterceptorProvider(backend, options),
@@ -28,10 +30,10 @@ describe("Testing EntryProvider", () => {
     });
   });
 
-  beforeEach(inject([MockBackend, JwtInterceptorProvider, AuthProvider],
-    (mb: MockBackend, http: JwtInterceptorProvider, authService: AuthProvider) => {
+  beforeEach(inject([MockBackend, JwtInterceptorProvider, AuthProvider, Api],
+    (mb: MockBackend, http: JwtInterceptorProvider, authService: AuthProvider, api: Api) => {
       mockBackend = mb;
-      entryService = new EntryProvider(http, authService);
+      entryService = new EntryProvider(http, authService, api);
     }));
 
   it('should ...', inject([EntryProvider], (service: EntryProvider) => {

@@ -1,13 +1,25 @@
 <div id="geditor">
   <div class="{{ classes.actionbar }}">
 
-    <span *ngFor="let action of actions">
-      <button ion-button clear [innerHTML]="action.icon" (click)="action.result()"></button>
-    </span>
+    <div class="editor-buttons">
+      <ion-buttons float-start>
+        <button *ngFor="let action of actions" ion-button clear [innerHTML]="action.icon" (click)="action.result()">
+        </button>
+      </ion-buttons>
+
+      <ion-buttons float-end>
+        <button ion-button clear icon-only (click)="insertLink()">
+          <ion-icon name="link"></ion-icon>
+        </button>
+        <button ion-button clear icon-only (click)="insertImage()">
+          <ion-icon name="image"></ion-icon>
+        </button>
+      </ion-buttons>
+    </div>
 
     <div class="{{classes.content}}">
       <!--TODO: PreventTab-->
-      <div contenteditable="true" id="content" [innerHTML]="content"></div>
+      <div id="content" class="entry-content" contenteditable="true" data-text="Content" padding [innerHTML]="content"></div>
     </div>
 
   </div>

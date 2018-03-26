@@ -4,6 +4,7 @@ import 'rxjs/add/operator/map';
 import {Site} from "../../models/site";
 import {Api} from "../api";
 import {AuthProvider} from "../auth/auth-service";
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class SiteProvider {
@@ -13,22 +14,19 @@ export class SiteProvider {
   constructor(public authService: AuthProvider, public api: Api) {
   }
 
-  site() {
+  site(): Observable<Site> {
     return this.api.get("website/site/" + this.authService.getCurrentSite().id + "/settings/")
       .map((res: Response) => {
-        let data = res.json();
-        data = new Site(data);
-        return data;
+        return new Site(res.json());
       });
   }
 
-  updateSite(payload) {
+  updateSite(payload): Observable<Site> {
     return this.api.put("website/site/" + this.authService.getCurrentSite().id + "/update-settings/", payload)
       .map((res: Response) => {
-        let data = res.json();
-        data = new Site(data);
-
+        let data = new Site(res.json());
         this.siteUpdated$.emit(data);
+
         return data;
       });
   }

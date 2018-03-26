@@ -1,7 +1,7 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {Http, Response} from '@angular/http';
+import {Http} from '@angular/http';
 
-import { Api } from '../api';
+import {Api} from '../api';
 import {User} from '../../models/user';
 import 'rxjs/add/operator/map';
 
@@ -12,19 +12,20 @@ export class AuthProvider {
   public signOut$: EventEmitter<null> = new EventEmitter();
   public currentSite$: EventEmitter<null> = new EventEmitter();
 
-  constructor(public http: Http, public api: Api) {}
+  constructor(public http: Http, public api: Api) {
+  }
 
   // If useInstance is true, user data should be an User model
   // Else return a normal user object
   getAuthUser(useInstance: boolean): User | any {
-    if(!this.isAuth()) {
+    if (!this.isAuth()) {
       return false;
     }
 
     useInstance = useInstance || false;
     let userData = JSON.parse(localStorage.getItem("user"));
 
-    if(useInstance) {
+    if (useInstance) {
       return new User(userData);
     }
 
@@ -34,6 +35,7 @@ export class AuthProvider {
   unAuth(): void {
     localStorage.removeItem("JWT");
     localStorage.removeItem("user");
+    localStorage.removeItem("site");
   }
 
   setToken(token: string): void {
@@ -59,7 +61,7 @@ export class AuthProvider {
   setAuthUser(userData: any, separateSites?: boolean): User {
     // Separated sites
     if (separateSites) {
-      userData.sites = this.getAuthUser(true).sites;
+      userData.sites = this.getAuthUser(true).getSites();
     }
 
     localStorage.setItem("user", JSON.stringify(userData));
@@ -82,7 +84,7 @@ export class AuthProvider {
     seq
       .map(res => res.json())
       .subscribe(res => {
-        if(res.status = "success") {
+        if (res.status = "success") {
           this.setToken(res.token);
           this.setAuthUser(res.user);
           this.setCurrentSite(res.user.sites[0]);

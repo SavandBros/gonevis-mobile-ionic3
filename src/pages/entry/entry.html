@@ -1,11 +1,99 @@
+<ion-menu id="entryMenu" side="right" [content]="entryMenu" *ngIf="editing">
+  <!-- Header -->
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons end>
+        <button ion-button icon-only (click)="popover($event)">
+          <ion-icon name="more"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-title>Settings</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- Content -->
+  <ion-content>
+    <div class="cover" *ngIf="entry.media.coverImage"
+         [style.background-image]="codekit.bypassSecurityTrustStyle(entry.media.coverImage.thumbnail_256x256)"></div>
+    <ion-list no-lines>
+      <!-- Start Publication -->
+      <ion-item>
+        <ion-label>Start Publication</ion-label>
+        <ion-datetime displayFormat="MMM D, YYYY"
+                      pickerFormat="MMM D YYYY H m A"
+                      [(ngModel)]="entry.startPublication"
+                      [min]="minDate" max="2050" placeholder="MM/DD/YY">
+        </ion-datetime>
+      </ion-item>
+
+      <!-- Cover Image -->
+      <button ion-item
+              (click)="entry.media.coverImage ? codekit.options('coverImage', entry.id) : codekit.selectImage('coverImage', entry.id)">
+        <ion-icon name="image" color="primary" item-start small></ion-icon>
+        {{ entry.media.coverImage ? "Change" : "Set" }} Cover
+      </button>
+
+      <!-- Enable Comments -->
+      <ion-item>
+        <ion-icon name="chatbubbles" color="gonevis" item-start small></ion-icon>
+        <ion-label>Enable comments</ion-label>
+        <ion-toggle [(ngModel)]="entry.commentEnabled" name="commenting"></ion-toggle>
+      </ion-item>
+
+      <!--Featured-->
+      <ion-item>
+        <ion-icon name="star" color="gonevis" item-start small></ion-icon>
+        <ion-label>Featured</ion-label>
+        <ion-toggle [(ngModel)]="entry.featured" name="featured"></ion-toggle>
+      </ion-item>
+    </ion-list>
+
+    <!-- Status -->
+    <ion-list radio-group [(ngModel)]="entry.status" no-lines>
+      <ion-list-header>Status</ion-list-header>
+      <ion-item>
+        <ion-icon name="create" color="gonevis" item-start small></ion-icon>
+        <ion-label>Draft</ion-label>
+        <ion-radio value="0"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="paper" color="gonevis" item-start small></ion-icon>
+        <ion-label>Publish</ion-label>
+        <ion-radio value="1"></ion-radio>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
 <ion-header>
-  <ion-navbar>
-    <!--TODO: Translate-->
-    <ion-title>Entry</ion-title>
-  </ion-navbar>
+  <ion-toolbar color="dark">
+    <ion-buttons padding-left>
+      <button ion-button icon-only (click)="dismiss()" [disabled]="updating">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end padding-right>
+      <button ion-button color="secondary" icon-left (click)="save()" [disabled]="!entry.title || updating">
+        <span *ngIf="!updating">{{ editing ? "Save" : "Publish" }}</span>
+        <ion-spinner color="primary" *ngIf="updating"></ion-spinner>
+      </button>
+      <button ion-button menuToggle="entryMenu" float-end *ngIf="editing">
+        <ion-icon name="settings"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
-<!--TODO: Pass Entry content into the editor -->
-<ion-content padding>
+<ion-content #entryMenu>
+  <!-- Loading -->
+  <div text-center class="page-loader">
+    <ion-spinner *ngIf="loading"></ion-spinner>
+  </div>
+
+  <!-- Entry -->
+  <ion-item no-lines padding>
+    <ion-label floating>Title</ion-label>
+    <ion-input type="text" [(ngModel)]="entry.title" name="title" clearInput></ion-input>
+  </ion-item>
   <editor [content]="entry.content"></editor>
 </ion-content>

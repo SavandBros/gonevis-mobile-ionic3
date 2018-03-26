@@ -11,7 +11,7 @@ import {SignupPage} from '../pages/signup/signup';
 import {TutorialPage} from '../pages/tutorial/tutorial';
 import {EntrancePage} from '../pages/entrance/entrance';
 import {EntriesPage} from "../pages/entries/entries";
-import {EntryPage} from "../pages/entry/entry";
+import {EntryPage, Options} from "../pages/entry/entry";
 import {TagsPage} from "../pages/tags/tags";
 import {TagPage} from "../pages/tag/tag";
 import {DolphinsPage} from "../pages/dolphins/dolphins";
@@ -27,6 +27,9 @@ import {GoogleMaps} from '@ionic-native/google-maps';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
 import {PhotoViewer} from '@ionic-native/photo-viewer';
+import {InAppBrowser} from '@ionic-native/in-app-browser';
+import {Keyboard} from '@ionic-native/keyboard';
+
 
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
@@ -46,6 +49,7 @@ import {EditorComponent} from "../components/editor/editor";
 import {ReaderProvider} from '../providers/reader/reader';
 import {ReaderPage} from "../pages/reader/reader";
 import {UserProvider} from '../providers/user/user';
+import {CodekitProvider} from '../providers/codekit/codekit';
 import {ParallaxDirective} from "../directives/parallax/parallax";
 
 // The translate loader needs to know where to load i18n files
@@ -69,6 +73,10 @@ export function provideSettings(storage: Storage) {
   });
 }
 
+export function provideJwtInterceptor(backend: XHRBackend, options: RequestOptions) {
+  return new JwtInterceptorProvider(backend, options);
+}
+
 @NgModule({
   declarations: [
     MyApp,
@@ -79,6 +87,7 @@ export function provideSettings(storage: Storage) {
     EntriesPage,
     CommentModalPage,
     EntryPage,
+    Options,
     TagsPage,
     TagPage,
     DolphinsPage,
@@ -113,6 +122,7 @@ export function provideSettings(storage: Storage) {
     EntriesPage,
     CommentModalPage,
     EntryPage,
+    Options,
     TagsPage,
     TagPage,
     DolphinsPage,
@@ -127,9 +137,7 @@ export function provideSettings(storage: Storage) {
     Api,
     {
       provide: JwtInterceptorProvider,
-      useFactory: (backend: XHRBackend, options: RequestOptions) => {
-        return new JwtInterceptorProvider(backend, options);
-      },
+      useFactory: provideJwtInterceptor,
       deps: [XHRBackend, RequestOptions]
     },
     Camera,
@@ -137,6 +145,8 @@ export function provideSettings(storage: Storage) {
     SplashScreen,
     StatusBar,
     PhotoViewer,
+    InAppBrowser,
+    Keyboard,
     {provide: Settings, useFactory: provideSettings, deps: [Storage]},
     // Keep this to enable Ionic's runtime error handling during development
     {provide: ErrorHandler, useClass: IonicErrorHandler},
@@ -151,6 +161,7 @@ export function provideSettings(storage: Storage) {
     EntryProvider,
     ReaderProvider,
     UserProvider,
+    CodekitProvider,
   ]
 })
 export class AppModule {

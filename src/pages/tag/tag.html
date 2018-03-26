@@ -33,8 +33,8 @@
       <ion-row margin-vertical>
         <ion-col col-12 text-center>
           <button ion-button outline type="button"
-                  (click)="tag.media.coverImage ? options('coverImage') : selectImage('coverImage')">
-            {{ tag.media.coverImage ? "change cover image" : "set cover image" }}
+                  (click)="tag.media.coverImage ? codekit.options('coverImage') : codekit.selectImage('coverImage')">
+            {{ tag.media.coverImage ? "change" : "set" }} cover image
           </button>
         </ion-col>
       </ion-row>

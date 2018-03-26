@@ -6,7 +6,7 @@ import {
 import {Tag} from "../../models/tag";
 import {AuthProvider} from "../../providers/auth/auth-service";
 import {TagProvider} from "../../providers/tag/tag";
-import {DolphinSelectionPage} from "../dolphin-selection/dolphin-selection";
+import {CodekitProvider} from "../../providers/codekit/codekit";
 
 @IonicPage()
 @Component({
@@ -17,15 +17,12 @@ export class TagPage {
   tag: any;
   updating: boolean;
   editing: boolean;
-  updateImage: boolean;
   siteId: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public authService: AuthProvider,
               public tagService: TagProvider, public toastCtrl: ToastController, public modalCtrl: ModalController,
               public events: Events, public actionSheetCtrl: ActionSheetController, public platform: Platform,
-              public alertCtrl: AlertController) {
-    events.subscribe('image:selected', (dolphin, source) => this.onImageSelect(dolphin, source));
-
+              public alertCtrl: AlertController, public codekit: CodekitProvider) {
     this.siteId = this.authService.getCurrentSite().id;
 
     this.tag = new Tag({});
@@ -35,6 +32,16 @@ export class TagPage {
       this.tag = <Tag> JSON.parse(JSON.stringify(this.navParams.get("tag")));
       this.editing = true;
     }
+
+    events.subscribe('image:selected', (dolphin, source) => {
+      this.tag.media[source] = dolphin ? dolphin.id : null;
+      this.update(true);
+    });
+
+    this.codekit.onImageRemoved$.subscribe((image: string) => {
+      this.tag.media[image] = null;
+      this.update(true);
+    });
   }
 
   save(): void {
@@ -45,7 +52,7 @@ export class TagPage {
     }
   }
 
-  update(): void {
+  update(updateImage?: boolean): void {
     this.updating = true;
 
     let payload: any = {
@@ -55,14 +62,13 @@ export class TagPage {
       site: this.siteId
     };
 
-    if (this.updateImage) {
+    if (updateImage) {
       payload.cover_image = this.tag.media.coverImage ? this.tag.media.coverImage : null;
     }
 
     this.tagService.update(payload).subscribe((resp) => {
       this.updating = false;
       this.tag = resp;
-      this.navCtrl.pop();
 
     }, (err) => {
       this.updating = false;
@@ -95,66 +101,5 @@ export class TagPage {
       this.updating = false;
       console.log(err);
     });
-  }
-
-  options(image): void {
-    let actionSheet = this.actionSheetCtrl.create({
-      title: 'Options',
-      buttons: [
-        {
-          text: 'Change',
-          icon: !this.platform.is('ios') ? 'refresh' : null,
-          cssClass: 'action-icon-primary',
-          handler: () => this.selectImage(image)
-        },
-        {
-          text: 'Remove',
-          icon: !this.platform.is('ios') ? 'remove' : null,
-          role: 'Destructive',
-          cssClass: 'action-icon-danger',
-          handler: () => {
-            actionSheet.dismiss();
-
-            let alert = this.alertCtrl.create({
-              title: 'Are you sure?',
-              message: null,
-              buttons: [
-                {
-                  text: 'Cancel',
-                  role: 'cancel'
-                },
-                {
-                  text: 'Delete', handler: () => {
-                  this.tag.media[image] = null;
-                  this.updateImage = true;
-                  this.update();
-                }
-                }
-              ]
-            });
-            alert.present();
-
-            return false;
-          }
-        },
-        {
-          text: 'Cancel',
-          icon: !this.platform.is('ios') ? 'close' : null,
-          role: 'cancel'
-        },
-      ]
-    });
-
-    actionSheet.present();
-  }
-
-  selectImage(image: string): void {
-    let selectionModal = this.modalCtrl.create(DolphinSelectionPage, {source: image});
-    selectionModal.present();
-  }
-
-  onImageSelect(dolphin, source): void {
-    this.tag.media[source] = dolphin ? dolphin.id : null;
-    this.updateImage = true;
   }
 }

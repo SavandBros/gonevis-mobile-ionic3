@@ -1,4 +1,9 @@
 page-entry {
+  .cover {
+    height: 256px;
+    background-size: cover;
+    background-position: center;
+  }
 }
 textarea {
   max-width: 100%;
