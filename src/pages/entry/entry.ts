@@ -42,13 +42,15 @@ export class EntryPage {
       this.content = content;
     });
 
-    events.subscribe('image:selected', (dolphin, source) =>  {
-      this.entry.media[source] = dolphin ? dolphin : null;
-      this.update(true);
-    });
-
     this.codekit.onImageRemoved$.subscribe((image: string) => {
       this.entry.media[image] = null;
+      this.update(true);
+    });
+  }
+
+  eventDolphinSelection() {
+    this.events.subscribe(`gonevisMobile.DolphinSelection:selected ${this.entry.id}`, (dolphin, source) =>  {
+      this.entry.media[source] = dolphin ? dolphin : null;
       this.update(true);
     });
   }
@@ -59,6 +61,7 @@ export class EntryPage {
 
     this.entryService.get(this.navParams.get("entryId")).subscribe((resp) => {
       this.entry = resp;
+      this.eventDolphinSelection();
       this.content = this.entry.content;
       this.loading = false;
       document.getElementById("content").focus();
