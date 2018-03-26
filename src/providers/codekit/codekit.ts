@@ -15,7 +15,7 @@ export class CodekitProvider {
     return this.sanitizer.bypassSecurityTrustStyle(`url(${coverImage})`);
   }
 
-  options(image: string): void {
+  options(image: string, id?: string): void {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Options',
       buttons: [
@@ -23,7 +23,7 @@ export class CodekitProvider {
           text: 'Change',
           icon: !this.platform.is('ios') ? 'refresh' : null,
           cssClass: 'action-icon-primary',
-          handler: () => this.selectImage(image)
+          handler: () => this.selectImage(image, id)
         },
         {
           text: 'Remove',
@@ -62,8 +62,7 @@ export class CodekitProvider {
     actionSheet.present();
   }
 
-  selectImage(image: string): void | false {
-    let selectionModal = this.modalCtrl.create(DolphinSelectionPage, {source: image});
-    selectionModal.present();
+  selectImage(image: string, id: string): void | false {
+    this.modalCtrl.create(DolphinSelectionPage, {source: image, id: id}).present();
   }
 }
