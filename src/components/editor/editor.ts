@@ -30,7 +30,7 @@ export class EditorComponent {
       this.listener();
     }, 0);
 
-    this.events.subscribe('image:selected', (dolphin) => {
+    this.events.subscribe('gonevisMobile.DolphinSelection:selected', (dolphin) => {
       if (dolphin) EditorComponent.exec('insertImage', dolphin.file);
     });
   }
@@ -121,7 +121,7 @@ export class EditorComponent {
   }
 
   public insertImage() {
-    this.codekit.selectImage("editorAddImage");
+    this.codekit.selectImage("editorAddImage", null);
   };
 
   static exec(command: string, value?: any): void {
