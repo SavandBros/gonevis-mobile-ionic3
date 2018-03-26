@@ -1,9 +1,3 @@
-<!--
-  Generated template for the SettingsPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar color="primary">
@@ -21,7 +15,6 @@
 
 </ion-header>
 
-
 <ion-content parallax-header>
   <!-- Loading -->
   <div text-center class="page-loader">
@@ -31,7 +24,7 @@
   <!-- Site Settings -->
   <div class="cover header-image" text-center [style.background-image]="coverImage" [hidden]="!site.media.coverImage"></div>
   <span class="main-content">
-    <button ion-button class="main-button" icon-only (click)="codekit.options('coverImage')" *ngIf="!loading && site.media.coverImage">
+    <button ion-button class="main-button" icon-only (click)="codekit.options('coverImage', siteId)" *ngIf="!loading && site.media.coverImage">
       <ion-icon name="image"></ion-icon>
     </button>
     <form (ngSubmit)="updateSite()" id="siteForm" *ngIf="!loading">
